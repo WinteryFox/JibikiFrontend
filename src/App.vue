@@ -6,6 +6,7 @@
 </template>
 
 <script>
+    /// Import Jibiki components
     import Header from './components/Header.vue'
     import Search from './components/Search.vue'
 
@@ -20,8 +21,6 @@
 
 <style>
     body {
-        background: #222222;
-        color: #b9b9b9;
         font-size: 19px;
     }
 

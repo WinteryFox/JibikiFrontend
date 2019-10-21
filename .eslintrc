@@ -1,4 +1,5 @@
 {
+  "parser": "babel-eslint",
   "rules": {
     "vue/no-use-v-if-with-v-for": "off"
   }

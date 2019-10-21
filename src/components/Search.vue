@@ -1,155 +1,168 @@
 <template>
-    <div>
-        <div class="center">
-            <label>
-                <input class="search" accept="text/plain" placeholder="Search for English, Japanese or Romaji"
-                       v-model="search"
-                       v-on:keyup="query(search)"/>
-            </label>
-        </div>
-        <div>
-            <transition-group name="word" tag="div">
-                <div v-for="word in words" v-bind:key="word" class="word">
-                    <div class="entry">
-                        <div>
-                            <div id="furigana">{{word.forms[0].reading}}</div>
-                            <div id="kanji">{{word.forms[0].kanji}}</div>
-                        </div>
-                    </div>
-                    <div class="senses">
-                        <div class="sens" :key="sens" v-for="(sens, i) in word.senses">
-                            <div class="posses">
-                                <span v-for="pos in sens.pos" class="pos">{{pos}}</span>
-                            </div>
-                            <div class="flds">
-                                <div v-for="fld in sens.fld" class="fld">{{fld}}</div>
-                            </div>
-                            <div>
-                                <div>{{i + 1}}. {{sens.gloss.join('; ')}}</div>
-                                <div class="note">{{sens.notes}}</div>
-                                <div class="note">{{sens.misc.join('; ')}}</div>
-                            </div>
-                        </div>
-                        <div class="forms small">
-                            <div v-if="word.forms.length > 1">Other forms</div>
-                            <div v-for="(form, i) in word.forms" v-if="i > 0">
+    <div class="centered">
+        <md-content class="md-elevation-3">
+            <div class="center">
+                <md-field md-inline>
+                    <label>
+                        <md-icon>search</md-icon>
+                        Search English, Japanese or Romaji
+                    </label>
+                    <md-input accept="text/plain"
+                              v-model="search"
+                              v-on:keyup="query(search)" autofocus>
+                    </md-input>
+                </md-field>
+            </div>
+            <div>
+                <transition name="word" tag="div">
+                    <div>
+                        <div class="word" v-if="words.length > 0">{{words.length}} results</div>
+                        <div class="word" v-for="word in words" v-bind:key="word">
+                            <div class="entry">
                                 <div>
-                                    {{form.kanji}} <span class="note">{{form.kanji_info}}</span>
-                                </div>
-                                <div>
-                                    {{form.reading}} <span class="note">{{form.reading_info}}</span>
+                                    <div id="furigana" v-if="word.forms[0].kanji !== null">{{word.forms[0].reading}}
+                                    </div>
+                                    <div v-else class="kanji">{{word.forms[0].reading}}</div>
+                                    <div class="kanji" v-if="word.forms[0].kanji !== null">{{word.forms[0].kanji}}</div>
                                 </div>
                             </div>
+                            <div class="senses">
+                                <div class="sens" :key="sens" v-for="(sens, i) in word.senses">
+                                    <div class="posses">
+                                        <md-chip class="md-raised md-primary" :key="pos" v-for="(pos, pi) in sens.pos">
+                                            {{pos}}
+                                            <md-tooltip class="md-raised md-primary">{{sens.pos_info[pi]}}</md-tooltip>
+                                        </md-chip>
+                                    </div>
+                                    <div class="flds">
+                                        <md-chip class="md-raised md-primary" :key="fld" v-for="fld in sens.fld">{{fld}}</md-chip>
+                                    </div>
+                                    <div>
+                                        <div>{{i + 1}}. {{sens.gloss.join('; ')}}</div>
+                                        <div class="note">{{sens.notes}}</div>
+                                        <div class="note">{{sens.misc}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="forms small">
+                                <div v-if="word.forms.length > 1">Other forms</div>
+                                <div v-for="(form, i) in word.forms" v-if="i > 0">
+                                    <div>
+                                        {{form.kanji}} <span class="note">{{form.kanji_info}}</span>
+                                        【{{form.reading}}】 <span class="note">{{form.reading_info}}</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </transition-group>
-        </div>
+                </transition>
+            </div>
+        </md-content>
     </div>
 </template>
 
-<style scoped>
-    .small {
-        font-size: 14px;
-    }
-
-    .forms {
-        padding-top: 6px;
-    }
-
-    .posses {
-        margin-bottom: 6px;
-    }
-
-    .flds {
-        margin-bottom: 6px;
-    }
-
-    .pos {
-        display: inline-block;
-        background-color: #ff7783;
-        border-radius: 3px;
-        padding: 1px 10px;
-        font-size: 12px;
-        color: #545454;
-    }
-
-    .fld {
-        display: inline-block;
-        background-color: #f666ff;
-        border-radius: 3px;
-        padding: 1px 10px;
-        font-size: 12px;
-        color: #545454;
-    }
-
-    .word-enter-active, .word-leave-active {
-        transition: all .5s;
-    }
-
-    .word-enter, .word-leave-to {
-        opacity: 0;
-        transform: translateX(-30px);
-    }
-
-    .word-leave, .word-leave-to {
-        transform: translateX(30px);
-    }
-
-    .search {
-        margin: 0 auto 30px;
-        width: 80%;
-        position: relative;
-        border-radius: 8px;
-        padding: 12px 12px 12px 48px;
-        box-sizing: border-box;
-        font-size: 16px;
-        line-height: 1.5;
-        flex: 1;
-        background: #b9b9b9 url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNjY2IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMTEiIGN5PSIxMSIgcj0iOCIvPjxwYXRoIGQ9Ik0yMSAyMWwtNC00Ii8+PC9zdmc+") no-repeat 12px 12px;
-    }
-
-    .note {
-        font-size: 14px;
-        color: #808080
-    }
-
-    .entry {
-        float: left;
-    }
-
-    #furigana {
-
-    }
-
-    #kanji {
-        font-size: 36px;
-    }
-
-    .word {
-        width: 80%;
+<style scoped lang="scss">
+    .centered {
         display: flex;
-        flex-wrap: nowrap;
-        flex-direction: row;
-        align-content: center;
-        align-items: flex-start;
+        align-items: center;
         justify-content: center;
-        padding: 16px;
-        margin: 0 auto 16px;
-        border-bottom: 1px solid gray;
-    }
+        position: relative;
 
-    .word .entry {
-        text-align: left;
-        display: inline-block;
-        width: 150px;
-        max-width: 33.333%;
-    }
+        .small {
+            font-size: 14px;
+        }
 
-    .word .senses {
-        text-align: left;
-        display: block;
-        width: calc(100% - 125px);
+        .md-content {
+            z-index: 1;
+            padding: 40px;
+            width: 100%;
+            position: relative;
+        }
+
+        .forms {
+            padding-top: 6px;
+        }
+
+        .posses {
+            margin-bottom: 6px;
+        }
+
+        .flds {
+            margin-bottom: 6px;
+        }
+
+        .pos {
+            display: inline-block;
+            background-color: #b9b9b9;
+            border-radius: 3px;
+            padding: 1px 10px;
+            margin: 2px;
+            font-size: 12px;
+            color: #212121;
+        }
+
+        .fld {
+            display: inline-block;
+            background-color: #b9b9b9;
+            border-radius: 3px;
+            padding: 1px 10px;
+            font-size: 12px;
+            color: #212121;
+        }
+
+        .word-enter-active, .word-leave-active {
+            transition: all .5s;
+        }
+
+        .word-enter, .word-leave-to {
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+
+        .word-leave, .word-leave-to {
+            transform: translateX(30px);
+        }
+
+        .note {
+            font-size: 14px;
+            color: #808080
+        }
+
+        .entry {
+            float: left;
+        }
+
+        #furigana {
+            font-size: 14px;
+        }
+
+        .kanji {
+            font-size: 36px;
+        }
+
+        .word {
+            display: flex;
+            flex-wrap: nowrap;
+            flex-direction: row;
+            align-content: center;
+            align-items: flex-start;
+            padding: 16px;
+            margin: 0 auto 16px;
+            border-bottom: 1px solid gray;
+        }
+
+        .word .entry {
+            text-align: left;
+            display: inline-block;
+            width: 150px;
+            max-width: 33.333%;
+        }
+
+        .word .senses {
+            text-align: left;
+            display: block;
+            width: calc(80% - 150px);
+        }
     }
 </style>
 
@@ -173,6 +186,17 @@
                 } else {
                     this.words = []
                 }
+            },
+
+            arrayEquals(a1, a2) {
+                if (a1.length !== a2.length)
+                    return false;
+
+                for (var i = 0; i < a1.length; i++) {
+                    if (a1[i] !== a2[i])
+                        return false;
+                }
+                return true;
             }
         }
     }
