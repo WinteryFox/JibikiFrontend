@@ -1,61 +1,56 @@
 <template>
     <div class="centered">
         <md-content class="md-elevation-3">
-            <div class="center">
-                <md-field md-inline>
-                    <label>
-                        <md-icon>search</md-icon>
-                        Search English, Japanese or Romaji
-                    </label>
-                    <md-input accept="text/plain"
-                              v-model="search"
-                              v-on:keyup="query(search)" autofocus>
-                    </md-input>
-                </md-field>
-            </div>
+            <md-field md-inline>
+                <label>
+                    <md-icon>search</md-icon>
+                    Search English, Japanese or Romaji
+                </label>
+                <md-input accept="text/plain"
+                          v-model="search"
+                          v-on:keyup="searchWord(search)" autofocus>
+                </md-input>
+            </md-field>
             <div>
-                <transition name="word" tag="div">
-                    <div>
-                        <div class="word" v-if="words.length > 0">{{words.length}} results</div>
-                        <div class="word" v-for="word in words" v-bind:key="word">
-                            <div class="entry">
-                                <div>
-                                    <div id="furigana" v-if="word.forms[0].kanji !== null">{{word.forms[0].reading}}
-                                    </div>
-                                    <div v-else class="kanji">{{word.forms[0].reading}}</div>
-                                    <div class="kanji" v-if="word.forms[0].kanji !== null">{{word.forms[0].kanji}}</div>
-                                </div>
+                <div class="word" v-if="words.length > 0">{{words.length}} results</div>
+                <div class="word" v-for="word in words" v-bind:key="word">
+                    <div class="entry">
+                        <div>
+                            <div id="furigana" v-if="word.forms[0].kanji !== null">{{word.forms[0].reading}}
                             </div>
-                            <div class="senses">
-                                <div class="sens" :key="sens" v-for="(sens, i) in word.senses">
-                                    <div class="posses">
-                                        <md-chip class="md-raised md-primary" :key="pos" v-for="(pos, pi) in sens.pos">
-                                            {{pos}}
-                                            <md-tooltip class="md-raised md-primary">{{sens.pos_info[pi]}}</md-tooltip>
-                                        </md-chip>
-                                    </div>
-                                    <div class="flds">
-                                        <md-chip class="md-raised md-primary" :key="fld" v-for="fld in sens.fld">{{fld}}</md-chip>
-                                    </div>
-                                    <div>
-                                        <div>{{i + 1}}. {{sens.gloss.join('; ')}}</div>
-                                        <div class="note">{{sens.notes}}</div>
-                                        <div class="note">{{sens.misc}}</div>
-                                    </div>
-                                </div>
+                            <div v-else class="kanji">{{word.forms[0].reading}}</div>
+                            <div class="kanji" v-if="word.forms[0].kanji !== null">{{word.forms[0].kanji}}</div>
+                        </div>
+                    </div>
+                    <div class="senses">
+                        <div class="sens" :key="sens" v-for="(sens, i) in word.senses">
+                            <div class="tags">
+                                <md-chip class="md-raised md-primary" :key="pos" v-for="(pos, pi) in sens.pos">
+                                    {{pos}}
+                                    <md-tooltip class="md-raised md-primary">{{sens.pos_info[pi]}}</md-tooltip>
+                                </md-chip>
+                                <md-chip class="md-raised md-accent" :key="fld" v-for="(fld, pi) in sens.fld">
+                                    {{fld}}
+                                    <md-tooltip class="md-raised md-primary">{{sens.fld_info[pi]}}</md-tooltip>
+                                </md-chip>
                             </div>
-                            <div class="forms small">
-                                <div v-if="word.forms.length > 1">Other forms</div>
-                                <div v-for="(form, i) in word.forms" v-if="i > 0">
-                                    <div>
-                                        {{form.kanji}} <span class="note">{{form.kanji_info}}</span>
-                                        【{{form.reading}}】 <span class="note">{{form.reading_info}}</span>
-                                    </div>
-                                </div>
+                            <div>
+                                <div>{{i + 1}}. {{sens.gloss.join('; ')}}</div>
+                                <div class="note">{{sens.notes}}</div>
+                                <div class="note">{{sens.misc}}</div>
                             </div>
                         </div>
                     </div>
-                </transition>
+                    <div class="forms small">
+                        <div v-if="word.forms.length > 1">Other forms</div>
+                        <div v-for="(form, i) in word.forms" v-if="i > 0">
+                            <div>
+                                {{form.kanji}} <span class="note">{{form.kanji_info}}</span>
+                                【{{form.reading}}】 <span class="note">{{form.reading_info}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </md-content>
     </div>
@@ -83,31 +78,8 @@
             padding-top: 6px;
         }
 
-        .posses {
+        .tags {
             margin-bottom: 6px;
-        }
-
-        .flds {
-            margin-bottom: 6px;
-        }
-
-        .pos {
-            display: inline-block;
-            background-color: #b9b9b9;
-            border-radius: 3px;
-            padding: 1px 10px;
-            margin: 2px;
-            font-size: 12px;
-            color: #212121;
-        }
-
-        .fld {
-            display: inline-block;
-            background-color: #b9b9b9;
-            border-radius: 3px;
-            padding: 1px 10px;
-            font-size: 12px;
-            color: #212121;
         }
 
         .word-enter-active, .word-leave-active {
@@ -138,6 +110,7 @@
 
         .kanji {
             font-size: 36px;
+            line-height: initial;
         }
 
         .word {
@@ -171,14 +144,13 @@
 
     export default {
         name: 'Search',
-        data() {
-            return {
-                search: "",
-                words: []
-            }
-        },
+        data: () => ({
+            search: null,
+            type: "word",
+            words: []
+        }),
         methods: {
-            query(text) {
+            searchWord(text) {
                 if (text !== "") {
                     axios.get('http://localhost:8080/word?q=' + encodeURIComponent(text))
                         .then(response => this.words = response.data)
@@ -186,17 +158,6 @@
                 } else {
                     this.words = []
                 }
-            },
-
-            arrayEquals(a1, a2) {
-                if (a1.length !== a2.length)
-                    return false;
-
-                for (var i = 0; i < a1.length; i++) {
-                    if (a1[i] !== a2[i])
-                        return false;
-                }
-                return true;
             }
         }
     }
