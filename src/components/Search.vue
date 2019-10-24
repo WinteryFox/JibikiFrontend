@@ -8,19 +8,17 @@
                 </label>
                 <md-input accept="text/plain"
                           v-model="search"
-                          v-on:keyup="searchWord(search)" autofocus>
+                          v-on:keyup="getWord(search)" autofocus>
                 </md-input>
             </md-field>
             <div>
                 <div class="word" v-if="words.length > 0">{{words.length}} results</div>
-                <div class="word" v-for="word in words" v-bind:key="word">
+                <div class="word" v-for="word in words" v-bind:key="word.id">
                     <div class="entry">
-                        <div>
-                            <div id="furigana" v-if="word.forms[0].kanji !== null">{{word.forms[0].reading}}
-                            </div>
-                            <div v-else class="kanji">{{word.forms[0].reading}}</div>
-                            <div class="kanji" v-if="word.forms[0].kanji !== null">{{word.forms[0].kanji}}</div>
+                        <div id="furigana" v-if="word.forms[0].kanji !== null">{{word.forms[0].reading}}
                         </div>
+                        <div v-else class="kanji">{{word.forms[0].reading}}</div>
+                        <div class="kanji" v-if="word.forms[0].kanji !== null">{{word.forms[0].kanji}}</div>
                     </div>
                     <div class="senses">
                         <div class="sens" :key="sens" v-for="(sens, i) in word.senses">
@@ -147,17 +145,25 @@
         data: () => ({
             search: null,
             type: "word",
-            words: []
+            words: [],
+            kanji: []
         }),
+
         methods: {
-            searchWord(text) {
-                if (text !== "") {
-                    axios.get('http://localhost:8080/word?q=' + encodeURIComponent(text))
+            getWord(word) {
+                if (word !== "") {
+                    axios.get('http://localhost:8080/word?q=' + encodeURIComponent(word))
                         .then(response => this.words = response.data)
-                        .catch(e => alert(e)) /// TODO: Make prettier
+                        .catch(e => alert(e)) // TODO
                 } else {
                     this.words = []
                 }
+            },
+
+            getKanji(kanji) {
+                axios.get('http://localhost:8080/kanji?q=' + encodeURIComponent(kanji))
+                    .then(response => this.kanji = response.data)
+                    .catch(e => alert(e)) // TODO
             }
         }
     }
