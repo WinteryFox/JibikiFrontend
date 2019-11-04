@@ -141,12 +141,10 @@
     import axios from 'axios'
 
     export default {
-        name: 'Search',
+        name: 'WordSearch',
         data: () => ({
             search: null,
-            type: "word",
-            words: [],
-            kanji: []
+            words: []
         }),
 
         methods: {
@@ -158,12 +156,6 @@
                 } else {
                     this.words = []
                 }
-            },
-
-            getKanji(kanji) {
-                axios.get('http://localhost:8080/kanji?q=' + encodeURIComponent(kanji))
-                    .then(response => this.kanji = response.data)
-                    .catch(e => alert(e)) // TODO
             }
         }
     }

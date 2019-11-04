@@ -1,7 +1,10 @@
 <template>
-    <md-toolbar>
-        <h3 class="md-title">Jibiki</h3>
-    </md-toolbar>
+    <div>
+        <md-tabs md-alignment="centered" md-sync-route>
+            <md-tab id="tab-words" md-label="Words" to="/words"/>
+            <md-tab id="tab-kanji" md-label="Kanji" to="/kanji"/>
+        </md-tabs>
+    </div>
 </template>
 
 <style scoped lang="scss">

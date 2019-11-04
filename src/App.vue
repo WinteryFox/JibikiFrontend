@@ -1,20 +1,17 @@
 <template>
     <div id="app">
         <Header/>
-        <Search/>
+        <router-view/>
     </div>
 </template>
 
 <script>
-    /// Import Jibiki components
     import Header from './components/Header.vue'
-    import Search from './components/Search.vue'
 
     export default {
         name: 'App',
         components: {
-            Header,
-            Search
+            Header
         }
     }
 </script>
