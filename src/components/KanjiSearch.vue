@@ -5,10 +5,12 @@
                 <md-icon>search</md-icon>
                 Search English, Kanji or reading
             </label>
-            <md-input accept="text/plain" v-model="this.$route.params.kanji" autofocus>
+            <md-input accept="text/plain"
+                      v-model="search"
+                      v-on:keyup="getKanji(search)" autofocus>
             </md-input>
         </md-field>
-        <div class="md-layout" v-for="kanji in kanji">
+        <div class="md-layout" v-for="kanji in this.kanji">
             <div class="md-layout-item kanji">
                 {{kanji.literal}}
             </div>
@@ -25,14 +27,15 @@
             </div>
             <div class="md-layout-item">
                 <div>
-                    <p>Kunyomi</p>
-                    <p v-for="kunyomi in kanji.kunyomi">{{kunyomi}}</p>
+                    <p v-if="kanji.kunyomi.length > 0">Kunyomi</p>
+                    <p>{{kanji.kunyomi.join(', ')}}</p>
                 </div>
                 <div>
-                    <p>Onyomi</p>
-                    <p v-for="onyomi in kanji.onyomi">{{onyomi}}</p>
+                    <p v-if="kanji.onyomi.length > 0">Onyomi</p>
+                    <p>{{kanji.onyomi.join(', ')}}</p>
                 </div>
             </div>
+            <md-divider/>
         </div>
     </md-content>
 </template>
@@ -49,25 +52,23 @@
     export default {
         name: "KanjiSearch",
         data: () => ({
+            search: "",
             kanji: []
         }),
 
         methods: {
             getKanji(kanji) {
-                axios.get('http://localhost:8080/kanji?q=' + encodeURIComponent(kanji))
-                    .then(response => this.kanji = response.data)
-                    .catch(e => alert(e)) // TODO
-            }
-        },
+                this.kanji = [];
 
-        watch: {
-            $route(to, from) {
-                this.getKanji(to)
+                for (let i = 0; i < kanji.length; i++)
+                    axios.get('http://localhost:8080/kanji?q=' + encodeURIComponent(kanji.charAt(i)))
+                        .then(response => {
+                            if (Array.isArray(response.data) && response.data.length) {
+                                this.kanji.push(response.data[0])
+                            }
+                        })
+                        .catch(e => alert(e)) // TODO
             }
-        },
-
-        beforeMount() {
-            this.getKanji(this.$route.params.kanji)
         }
     }
 </script>

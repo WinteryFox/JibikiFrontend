@@ -12,8 +12,8 @@ import VueRouter from "vue-router";
 const router = new VueRouter({
     mode: 'history',
     routes: [
-        {path: '/words/:word', component: WordSearch},
-        {path: '/kanji/:kanji', component: KanjiSearch}
+        {path: '/words', component: WordSearch},
+        {path: '/kanji', component: KanjiSearch}
     ]
 });
 

@@ -143,7 +143,7 @@
     export default {
         name: 'WordSearch',
         data: () => ({
-            search: null,
+            search: "",
             words: []
         }),
 
