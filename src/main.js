@@ -9,6 +9,7 @@ import Home from './components/Home.vue'
 import MissingPage from './components/MissingPage.vue'
 import WordSearch from './components/WordSearch.vue'
 import KanjiSearch from './components/KanjiSearch'
+import Documentation from './components/Documentation'
 import VueRouter from "vue-router";
 
 const router = new VueRouter({
@@ -17,7 +18,8 @@ const router = new VueRouter({
         {path: '/', component: Home},
         {path: '/words', component: WordSearch},
         {path: '/kanji', component: KanjiSearch},
-        {path: '/*', component: MissingPage}
+        {path: '/docs', component: Documentation},
+        {path: '*', component: MissingPage}
     ]
 });
 
