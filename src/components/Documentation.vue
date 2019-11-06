@@ -5,7 +5,7 @@
             You've found your way to the API documentation, greetings!
             All endpoints start with <span class="route">https://api.jibiki.com</span>
         </p>
-        <md-content class="md-elevation-3" v-for="doc in documentation">
+        <md-content class="md-elevation-3" :key="doc.route" v-for="doc in documentation">
             <div class="md-layout md-gutter">
                 <div class="md-layout-item">
                     <h3 class="route">
@@ -23,7 +23,7 @@
                                 <md-table-head>Parameter</md-table-head>
                                 <md-table-head>Description</md-table-head>
                             </md-table-row>
-                            <md-table-row v-for="parameter in doc.parameters">
+                            <md-table-row :key="parameter.parameter" v-for="parameter in doc.parameters">
                                 <md-table-cell>{{parameter.parameter}}</md-table-cell>
                                 <md-table-cell>{{parameter.description}}</md-table-cell>
                             </md-table-row>
