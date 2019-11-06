@@ -6,7 +6,7 @@
             All endpoints start with <span class="route">https://api.jibiki.com/</span>
         </p>
         <md-content class="md-elevation-3" v-for="doc in documentation">
-            <div class="md-layout">
+            <div class="md-layout md-gutter">
                 <div class="md-layout-item">
                     <h3 class="route">
                         {{doc.route}}
@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="md-layout-item">
-                    <h4>Example payload for <span class="link">{{doc.example}}</span></h4>
+                    <h4>Example payload for <span class="route">{{doc.example}}</span></h4>
                     <pre><code>{{doc.payload}}</code></pre>
                 </div>
             </div>
@@ -39,6 +39,23 @@
         </md-content>
     </div>
 </template>
+
+<style scoped lang="scss">
+    .route {
+        color: hotpink;
+    }
+
+    pre code {
+        background-color: #141414;
+        border: 1px solid #d1e8ff;
+        display: block;
+        font-size: 12px;
+    }
+
+    .md-layout {
+        margin: 15px;
+    }
+</style>
 
 <script>
     export default {
@@ -154,20 +171,3 @@
         }),
     }
 </script>
-
-<style scoped lang="scss">
-    .link {
-        color: hotpink;
-    }
-
-    .route {
-        color: hotpink;
-    }
-
-    pre code {
-        background-color: #141414;
-        border: 1px solid #d1e8ff;
-        display: block;
-        font-size: 12px;
-    }
-</style>
