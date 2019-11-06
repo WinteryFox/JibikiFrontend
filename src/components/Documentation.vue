@@ -3,7 +3,7 @@
         <h1>Introduction</h1>
         <p>
             You've found your way to the API documentation, greetings!
-            All endpoints start with <span class="route">https://api.jibiki.com/</span>
+            All endpoints start with <span class="route">https://api.jibiki.com</span>
         </p>
         <md-content class="md-elevation-3" v-for="doc in documentation">
             <div class="md-layout md-gutter">
@@ -32,7 +32,7 @@
                 </div>
                 <div class="md-layout-item">
                     <h4>Example payload for <span class="route">{{doc.example}}</span></h4>
-                    <pre><code>{{doc.payload}}</code></pre>
+                    <pre><code v-html="highlight(doc.payload)"></code></pre>
                 </div>
             </div>
             <md-divider/>
@@ -50,6 +50,7 @@
         border: 1px solid #d1e8ff;
         display: block;
         font-size: 12px;
+        padding: 10px;
     }
 
     .md-layout {
@@ -60,6 +61,28 @@
 <script>
     export default {
         name: "Documentation",
+
+        methods: {
+            highlight(json) {
+                json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+                    let cls = 'darkorange';
+                    if (/^"/.test(match)) {
+                        if (/:$/.test(match)) {
+                            cls = 'red';
+                        } else {
+                            cls = 'green';
+                        }
+                    } else if (/true|false/.test(match)) {
+                        cls = 'blue';
+                    } else if (/null/.test(match)) {
+                        cls = 'magenta';
+                    }
+                    return '<span style="color: ' + cls + '">' + match + '</span>';
+                });
+            }
+        },
+
         data: () => ({
             documentation: [
                 {
