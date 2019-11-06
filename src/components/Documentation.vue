@@ -32,11 +32,9 @@
                 </div>
                 <div class="md-layout-item">
                     <h4>Example payload for <span class="route">{{doc.example}}</span></h4>
-                    <pre>
-                        <code><span :key="i"
+                    <pre><code><span :key="i"
                                     v-for="(line, i) in highlight(doc.payload).split(/\n/)"><span class="number">{{i + 1}}</span> <span
-                                v-html="line + '\n'"></span></span></code>
-                    </pre>
+                                v-html="line + '\n'"></span></span></code></pre>
                 </div>
             </div>
             <md-divider/>
