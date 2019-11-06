@@ -13,7 +13,7 @@
                         <md-chip class="md-primary">{{doc.type}}</md-chip>
                     </h3>
                     <div>
-                        <h3>Description</h3>
+                        <h5>Description</h5>
                         <p>{{doc.description}}</p>
                     </div>
                     <div>
