@@ -37,7 +37,7 @@
                     <h4>Example payload for <span class="route">{{doc.example}}</span></h4>
                     <pre><code><span :key="i"
                                      v-for="(line, i) in highlight(doc.payload).split(/\n/)"><span class="number">{{i + 1}}</span> <span
-                            v-html="line + '\n'"></span></span></code></pre>
+                            v-html="line + '\n'" :key="line"></span></span></code></pre>
                 </div>
             </div>
             <md-divider/>
@@ -45,9 +45,39 @@
     </div>
 </template>
 
+<style lang="scss">
+    @import "~vue-material/dist/theme/engine";
+
+    .number {
+        color: md-get-palette-color(gray, 600);
+    }
+
+    .key {
+        color: md-get-palette-color(purple, 300);
+    }
+
+    .value {
+        color: md-get-palette-color(lightgreen, 400);
+    }
+
+    .boolean {
+        color: md-get-palette-color(orange, 700);
+    }
+
+    .null {
+        color: md-get-palette-color(orange, 700);
+    }
+
+    .integer {
+        color: md-get-palette-color(lightblue, A200);
+    }
+</style>
+
 <style scoped lang="scss">
+    @import "~vue-material/dist/theme/engine";
+
     .route {
-        color: hotpink;
+        color: md-get-palette-color(pink, A100);
     }
 
     .introduction {
@@ -55,18 +85,14 @@
     }
 
     pre code {
-        background-color: #141414;
-        border: 1px solid #d1e8ff;
+        background-color: md-get-palette-color(gray, 900);
+        border: 1px solid md-get-palette-color(gray, 500);
         display: block;
         font-size: 12px;
         padding: 10px;
         max-width: 430px;
         max-height: 600px;
         overflow: auto;
-
-        .number {
-            color: grey;
-        }
     }
 
     .md-layout {
@@ -82,19 +108,19 @@
             highlight(json) {
                 json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
                 return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
-                    let cls = 'darkorange';
+                    let cls = 'integer';
                     if (/^"/.test(match)) {
                         if (/:$/.test(match)) {
-                            cls = 'red';
+                            cls = 'key';
                         } else {
-                            cls = 'green';
+                            cls = 'value';
                         }
                     } else if (/true|false/.test(match)) {
-                        cls = 'blue';
+                        cls = 'boolean';
                     } else if (/null/.test(match)) {
-                        cls = 'magenta';
+                        cls = 'null';
                     }
-                    return '<span style="color: ' + cls + '">' + match + '</span>';
+                    return '<span class="' + cls + '">' + match + '</span>';
                 });
             }
         },
