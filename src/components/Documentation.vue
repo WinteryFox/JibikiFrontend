@@ -1,10 +1,13 @@
 <template>
     <div>
-        <h1>Introduction</h1>
-        <p>
-            You've found your way to the API documentation, greetings!
-            All endpoints start with <span class="route">https://api.jibiki.com</span>
-        </p>
+        <md-content class="md-elevation-3">
+            <div class="introduction">
+                <h1>Introduction</h1>
+                You've found your way to the API documentation, greetings!
+                All endpoints start with <span class="route">https://api.jibiki.com</span>
+                and every response is in JSON.
+            </div>
+        </md-content>
         <md-content class="md-elevation-3" :key="doc.route" v-for="doc in documentation">
             <div class="md-layout md-gutter">
                 <div class="md-layout-item">
@@ -33,8 +36,8 @@
                 <div class="md-layout-item">
                     <h4>Example payload for <span class="route">{{doc.example}}</span></h4>
                     <pre><code><span :key="i"
-                                    v-for="(line, i) in highlight(doc.payload).split(/\n/)"><span class="number">{{i + 1}}</span> <span
-                                v-html="line + '\n'"></span></span></code></pre>
+                                     v-for="(line, i) in highlight(doc.payload).split(/\n/)"><span class="number">{{i + 1}}</span> <span
+                            v-html="line + '\n'"></span></span></code></pre>
                 </div>
             </div>
             <md-divider/>
@@ -47,12 +50,19 @@
         color: hotpink;
     }
 
+    .introduction {
+        padding: 20px;
+    }
+
     pre code {
         background-color: #141414;
         border: 1px solid #d1e8ff;
         display: block;
         font-size: 12px;
         padding: 10px;
+        max-width: 430px;
+        max-height: 600px;
+        overflow: auto;
 
         .number {
             color: grey;
@@ -104,55 +114,64 @@
                     "example": "/word?q=house",
                     "payload": "[\n" +
                         "  {\n" +
-                        "    \"id\": 17579,\n" +
+                        "    \"id\": 17578,\n" +
                         "    \"forms\": [\n" +
                         "      {\n" +
                         "        \"kanji\": \"家\",\n" +
                         "        \"kanji_info\": null,\n" +
-                        "        \"reading\": \"うち\",\n" +
-                        "        \"reading_info\": null\n" +
-                        "      },\n" +
-                        "      {\n" +
-                        "        \"kanji\": \"家\",\n" +
-                        "        \"kanji_info\": null,\n" +
-                        "        \"reading\": \"ち\",\n" +
+                        "        \"reading\": \"いえ\",\n" +
                         "        \"reading_info\": null\n" +
                         "      }\n" +
                         "    ],\n" +
                         "    \"senses\": [\n" +
                         "      {\n" +
                         "        \"gloss\": [\n" +
-                        "          \"home (one's own)\",\n" +
-                        "          \"house\"\n" +
+                        "          \"dwelling\",\n" +
+                        "          \"house\",\n" +
+                        "          \"residence\"\n" +
                         "        ],\n" +
                         "        \"pos\": [\n" +
-                        "          \"adj-no\",\n" +
                         "          \"n\"\n" +
                         "        ],\n" +
                         "        \"pos_info\": [\n" +
-                        "          \"nouns which may take the genitive case particle `no'\",\n" +
                         "          \"noun (common) (futsuumeishi)\"\n" +
                         "        ],\n" +
                         "        \"fld\": [],\n" +
                         "        \"fld_info\": [],\n" +
                         "        \"notes\": null,\n" +
-                        "        \"misc\": \"word usually written using kana alone\"\n" +
+                        "        \"misc\": null\n" +
                         "      },\n" +
                         "      {\n" +
                         "        \"gloss\": [\n" +
-                        "          \"(one's) family\",\n" +
-                        "          \"(one's) household\"\n" +
+                        "          \"family\",\n" +
+                        "          \"household\"\n" +
                         "        ],\n" +
                         "        \"pos\": [\n" +
-                        "          \"pn\"\n" +
+                        "          \"n\"\n" +
                         "        ],\n" +
                         "        \"pos_info\": [\n" +
-                        "          \"pronoun\"\n" +
+                        "          \"noun (common) (futsuumeishi)\"\n" +
                         "        ],\n" +
                         "        \"fld\": [],\n" +
                         "        \"fld_info\": [],\n" +
                         "        \"notes\": null,\n" +
-                        "        \"misc\": \"word usually written using kana alone\"\n" +
+                        "        \"misc\": null\n" +
+                        "      },\n" +
+                        "      {\n" +
+                        "        \"gloss\": [\n" +
+                        "          \"family name\",\n" +
+                        "          \"lineage\"\n" +
+                        "        ],\n" +
+                        "        \"pos\": [\n" +
+                        "          \"n\"\n" +
+                        "        ],\n" +
+                        "        \"pos_info\": [\n" +
+                        "          \"noun (common) (futsuumeishi)\"\n" +
+                        "        ],\n" +
+                        "        \"fld\": [],\n" +
+                        "        \"fld_info\": [],\n" +
+                        "        \"notes\": null,\n" +
+                        "        \"misc\": null\n" +
                         "      }\n" +
                         "    ]\n" +
                         "  }\n" +
