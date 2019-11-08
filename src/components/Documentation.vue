@@ -10,7 +10,7 @@
         </md-content>
         <md-content class="md-elevation-3" :key="doc.route" v-for="doc in documentation">
             <div class="md-layout md-gutter">
-                <div class="md-layout-item">
+                <div class="md-layout-item md-size-55">
                     <h3 class="route">
                         {{doc.route}}
                         <md-chip class="md-primary">{{doc.type}}</md-chip>
@@ -33,7 +33,7 @@
                         </md-table>
                     </div>
                 </div>
-                <div class="md-layout-item">
+                <div class="md-layout-item md-size-45">
                     <h4>Example payload for <span class="route">{{doc.example}}</span></h4>
                     <pre><code><span :key="i"
                                      v-for="(line, i) in highlight(doc.payload).split(/\n/)"><span class="number">{{i + 1}}</span> <span
@@ -94,7 +94,6 @@
         display: block;
         font-size: 12px;
         padding: 10px;
-        max-width: 430px;
         max-height: 600px;
         overflow: auto;
     }
