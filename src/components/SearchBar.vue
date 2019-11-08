@@ -7,13 +7,16 @@
 </template>
 
 <script>
-    import debounce from 'lodash.debounce'
+    import debounce from 'lodash.debounce';
 
     export default {
         name: "SearchBar",
 
         props: {
-            label: String
+            label: {
+                type: String,
+                default: "Type here to search"
+            }
         },
 
         data: () => ({
@@ -21,20 +24,14 @@
         }),
 
         methods: {
-            search() {
-                console.log('Im not gay');
-                debounce(() => {
-                    console.log('arent you gay');
-                    this.$emit('search', this.searchField)
-                }, 2000)
-            }
+            search: debounce(function() {
+                this.$emit('search', this.searchField)
+            }, 200)
         }
     }
 </script>
 
 <style scoped lang="scss">
-    @import '~vue-material/dist/theme/engine';
-
     .md-field {
         margin: 0 auto;
         max-width: 50%;
