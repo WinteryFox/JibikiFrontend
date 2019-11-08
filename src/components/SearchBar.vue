@@ -1,20 +1,34 @@
 <template>
     <md-field md-inline md-clearable>
         <md-icon>search</md-icon>
-        <label>
-            Search English, Kanji or reading
-        </label>
-        <md-input accept="text/plain" v-model="search" autofocus/>
+        <label>{{label}}</label>
+        <md-input accept="text/plain" v-model="searchField" v-on:input="search" autofocus/>
     </md-field>
 </template>
 
 <script>
+    import debounce from 'lodash.debounce'
+
     export default {
         name: "SearchBar",
 
+        props: {
+            label: String
+        },
+
         data: () => ({
-            search: ""
-        })
+            searchField: ""
+        }),
+
+        methods: {
+            search() {
+                console.log('Im not gay');
+                debounce(() => {
+                    console.log('arent you gay');
+                    this.$emit('search', this.searchField)
+                }, 2000)
+            }
+        }
     }
 </script>
 
@@ -22,8 +36,7 @@
     @import '~vue-material/dist/theme/engine';
 
     .md-field {
-        max-width: 50%;
         margin: 0 auto;
-        border: 2px md-get-palette-color(gray, 200);
+        max-width: 50%;
     }
 </style>

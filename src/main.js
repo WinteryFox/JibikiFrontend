@@ -2,7 +2,8 @@ import Vue from 'vue'
 
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
-import 'vue-material/dist/theme/default-dark.css'
+import './themes/light.scss'
+import './themes/dark.scss'
 
 import App from './App.vue'
 import Home from './components/Home.vue'
@@ -29,7 +30,7 @@ Vue.use(VueMaterial);
 Vue.use(VueRouter);
 
 new Vue({
-    components: { App },
+    components: {App},
     router,
     render: h => h(App)
 }).$mount('#app');

@@ -9,6 +9,9 @@
             <md-tab id="tab-discord" md-label="Discord" href="https://discord.gg/aKTwN5c"
                     md-icon="https://discordapp.com/assets/f8389ca1a741a115313bede9ac02e2c0.svg"/>
         </md-tabs>
+        <md-button class="md-icon-button" v-on:click="changeTheme">
+            <md-icon>invert_colors</md-icon>
+        </md-button>
     </div>
 </template>
 
@@ -25,10 +28,34 @@
         transform: translate(0, -50%);
         font-size: 40px;
     }
+
+    .md-button {
+        position: absolute;
+        right: 25px;
+        z-index: 2;
+        top: 50%;
+        transform: translate(0, -50%);
+    }
 </style>
 
 <script>
+    import Vue from 'vue'
+
     export default {
-        name: "Header"
+        name: "Header",
+        methods: {
+            changeTheme() {
+                let i;
+                if (this.isDark) {
+                    Vue.material.theming.theme = 'default';
+                } else {
+                    Vue.material.theming.theme = 'dark';
+                }
+                this.isDark = !this.isDark;
+            }
+        },
+        data: () => ({
+            isDark: false
+        })
     }
 </script>
