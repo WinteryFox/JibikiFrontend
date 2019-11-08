@@ -71,6 +71,10 @@
     .integer {
         color: md-get-palette-color(lightblue, A200);
     }
+
+    .brace {
+        color: md-get-palette-color(gray, 200);
+    }
 </style>
 
 <style scoped lang="scss">
@@ -107,7 +111,7 @@
         methods: {
             highlight(json) {
                 json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-                return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+                return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?|([\[{}\],]))/g, function (match) {
                     let cls = 'integer';
                     if (/^"/.test(match)) {
                         if (/:$/.test(match)) {
@@ -119,6 +123,8 @@
                         cls = 'boolean';
                     } else if (/null/.test(match)) {
                         cls = 'null';
+                    } else if (/[\[{}\],]/.test(match)) {
+                        cls = 'brace';
                     }
                     return '<span class="' + cls + '">' + match + '</span>';
                 });
