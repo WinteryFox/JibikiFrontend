@@ -1,15 +1,6 @@
 <template>
     <div class="root">
-        <md-field md-inline>
-            <label>
-                <md-icon>search</md-icon>
-                Search English, Kanji or reading
-            </label>
-            <md-input accept="text/plain"
-                      v-model="search"
-                      v-on:keyup="getKanji(search)" autofocus>
-            </md-input>
-        </md-field>
+        <SearchBar @keydown="getKanji(this.search)"></SearchBar>
         <md-content class="md-elevation-3" :key="kanji.literal" v-for="kanji in this.kanji">
             <div class="md-layout">
                 <div class="md-layout-item">
@@ -59,12 +50,15 @@
 </style>
 
 <script>
+    import SearchBar from './SearchBar'
     import axios from 'axios'
 
     export default {
         name: "KanjiSearch",
+        components: {
+            SearchBar
+        },
         data: () => ({
-            search: "",
             kanji: []
         }),
 
