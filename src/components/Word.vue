@@ -3,8 +3,8 @@
         <div class="md-layout">
             <div class="md-layout-item md-size-20">
                 <div class="reading" v-if="word.forms[0].kanji != null">{{word.forms[0].reading}}</div>
-                <h1 class="kanji" v-if="word.forms[0].kanji != null">{{word.forms[0].kanji}}</h1>
-                <h1 class="kanji" v-else>{{word.forms[0].reading}}</h1>
+                <div class="kanji" v-if="word.forms[0].kanji != null">{{word.forms[0].kanji}}</div>
+                <div class="kanji" v-else>{{word.forms[0].reading}}</div>
                 <div class="note" v-if="word.forms[0].kanji_info != null">{{word.forms[0].kanjiInfo}}</div>
                 <div class="note" v-if="word.forms[0].reading_info != null">{{word.forms[0].readingInfo}}</div>
             </div>
@@ -45,7 +45,7 @@
     @import '~vue-material/dist/theme/engine';
 
     .md-layout {
-        margin: 30px;
+        margin: 15px 30px;
 
         .md-layout-item {
             padding: 20px 0;
@@ -66,8 +66,8 @@
         }
 
         .kanji {
-            margin-top: 10px;
             font-size: 36px;
+            line-height: normal;
         }
     }
 </style>

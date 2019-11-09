@@ -6,16 +6,18 @@
 </template>
 
 <script>
-    import SearchBar from "@/components/SearchBar";
-    import Word from "@/components/Word";
+    import SearchBar from "./SearchBar";
+    import Word from "./Word";
     import axios from 'axios'
 
     export default {
         name: 'WordSearch',
+
         components: {
             SearchBar,
             Word
         },
+
         data: () => ({
             words: []
         }),

@@ -1,7 +1,7 @@
 <template>
     <md-content class="md-elevation-3">
         <div class="md-layout">
-            <div class="md-layout-item">
+            <div class="md-layout-item md-size-20">
                 <h1>{{kanji.literal}}</h1>
                 <div class="chip">
                     <md-chip v-if="kanji.grade != null" class="md-raised md-primary">
@@ -15,11 +15,11 @@
                 </div>
             </div>
 
-            <div class="md-layout-item">
-                <p v-for="(meaning, i) in kanji.meaning">{{i + 1}}. {{meaning}}</p>
+            <div class="md-layout-item md-size-60">
+                <div class="meaning" v-for="(meaning, i) in kanji.meaning">{{i + 1}}. {{meaning}}</div>
             </div>
 
-            <div class="md-layout-item">
+            <div class="md-layout-item md-size-20">
                 <div>
                     <p v-if="kanji.kunyomi.length > 0">Kunyomi</p>
                     <p>{{kanji.kunyomi.join(', ')}}</p>
@@ -45,7 +45,7 @@
 
 <style scoped lang="scss">
     .md-layout {
-        margin: 30px;
+        margin: 15px 30px;
 
         .kanji {
             font-size: 36px;
@@ -53,6 +53,10 @@
 
         .chip {
             padding-top: 10px;
+        }
+
+        .md-size-60 {
+            padding-top: 15px;
         }
     }
 </style>

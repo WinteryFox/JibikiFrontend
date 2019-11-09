@@ -6,8 +6,8 @@
 </template>
 
 <script>
-    import SearchBar from '@/components/SearchBar'
-    import Kanji from "@/components/Kanji";
+    import SearchBar from './SearchBar'
+    import Kanji from "./Kanji";
     import axios from 'axios'
 
     export default {

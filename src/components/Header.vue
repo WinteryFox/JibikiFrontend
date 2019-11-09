@@ -16,6 +16,12 @@
 </template>
 
 <style scoped lang="scss">
+    @import '~vue-material/dist/theme/engine';
+
+    span {
+        color: md-get-palette-color(pink, 200);
+    }
+
     div {
         position: relative;
     }
