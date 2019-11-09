@@ -32,6 +32,10 @@
                     this.words = []
                 }
             }
+        },
+
+        mounted() {
+            this.$el.getElementsByTagName("input")[0].focus();
         }
     }
 </script>

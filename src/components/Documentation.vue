@@ -149,9 +149,9 @@
                         "    \"forms\": [\n" +
                         "      {\n" +
                         "        \"kanji\": \"家\",\n" +
-                        "        \"kanji_info\": null,\n" +
+                        "        \"kanjiInfo\": null,\n" +
                         "        \"reading\": \"いえ\",\n" +
-                        "        \"reading_info\": null\n" +
+                        "        \"readingInfo\": null\n" +
                         "      }\n" +
                         "    ],\n" +
                         "    \"senses\": [\n" +
@@ -162,13 +162,12 @@
                         "          \"residence\"\n" +
                         "        ],\n" +
                         "        \"pos\": [\n" +
-                        "          \"n\"\n" +
-                        "        ],\n" +
-                        "        \"pos_info\": [\n" +
-                        "          \"noun (common) (futsuumeishi)\"\n" +
+                        "          {\n" +
+                        "            \"pos\": \"n\",\n" +
+                        "            \"posInfo\": \"noun (common) (futsuumeishi)\"\n" +
+                        "          }\n" +
                         "        ],\n" +
                         "        \"fld\": [],\n" +
-                        "        \"fld_info\": [],\n" +
                         "        \"notes\": null,\n" +
                         "        \"misc\": null\n" +
                         "      },\n" +
@@ -178,13 +177,12 @@
                         "          \"household\"\n" +
                         "        ],\n" +
                         "        \"pos\": [\n" +
-                        "          \"n\"\n" +
-                        "        ],\n" +
-                        "        \"pos_info\": [\n" +
-                        "          \"noun (common) (futsuumeishi)\"\n" +
+                        "          {\n" +
+                        "            \"pos\": \"n\",\n" +
+                        "            \"posInfo\": \"noun (common) (futsuumeishi)\"\n" +
+                        "          }\n" +
                         "        ],\n" +
                         "        \"fld\": [],\n" +
-                        "        \"fld_info\": [],\n" +
                         "        \"notes\": null,\n" +
                         "        \"misc\": null\n" +
                         "      },\n" +
@@ -194,13 +192,12 @@
                         "          \"lineage\"\n" +
                         "        ],\n" +
                         "        \"pos\": [\n" +
-                        "          \"n\"\n" +
-                        "        ],\n" +
-                        "        \"pos_info\": [\n" +
-                        "          \"noun (common) (futsuumeishi)\"\n" +
+                        "          {\n" +
+                        "            \"pos\": \"n\",\n" +
+                        "            \"posInfo\": \"noun (common) (futsuumeishi)\"\n" +
+                        "          }\n" +
                         "        ],\n" +
                         "        \"fld\": [],\n" +
-                        "        \"fld_info\": [],\n" +
                         "        \"notes\": null,\n" +
                         "        \"misc\": null\n" +
                         "      }\n" +

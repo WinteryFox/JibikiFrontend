@@ -33,6 +33,10 @@
                         })
                         .catch(e => alert(e)) // TODO
             }
+        },
+
+        mounted() {
+            this.$el.getElementsByTagName("input")[0].focus();
         }
     }
 </script>
