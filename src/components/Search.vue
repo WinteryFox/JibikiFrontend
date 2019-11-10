@@ -8,44 +8,12 @@
                     :placeholder="label"
                     @input="$emit('search', searchField)"
                     autofocus/>
+            <md-button class="md-icon-button" @click="clear">
+                <md-icon>clear</md-icon>
+            </md-button>
         </label>
     </md-content>
 </template>
-
-<style scoped lang="scss">
-    @import '~vue-material/dist/theme/engine';
-
-    div {
-        margin: 40px auto;
-        width: 50%;
-        border: 1px solid gray;
-        border-radius: 25px;
-
-        .md-icon {
-            padding: 20px;
-            vertical-align: sub;
-        }
-
-        ::placeholder {
-            font-size: 14px;
-        }
-
-        .dark {
-            color: md-get-color-by-theme(dark, text-primary);
-        }
-
-        .light {
-            color: md-get-color-by-theme(light, text-primary);
-        }
-
-        input {
-            font-size: 20px;
-            background: none;
-            border: none;
-            width: 90%;
-        }
-    }
-</style>
 
 <script>
     export default {
@@ -61,6 +29,15 @@
         data: () => ({
             searchField: ""
         }),
+
+        methods: {
+            clear() {
+                if (this.searchField !== "") {
+                    this.searchField = "";
+                    this.$emit("search", "");
+                }
+            }
+        },
 
         computed: {
             isDark() {
@@ -94,3 +71,38 @@
         }
     }
 </script>
+
+<style scoped lang="scss">
+    @import '~vue-material/dist/theme/engine';
+
+    div {
+        margin: 40px auto;
+        width: 50%;
+        border: 1px solid gray;
+        border-radius: 25px;
+
+        .md-icon {
+            padding: 20px;
+            vertical-align: sub;
+        }
+
+        ::placeholder {
+            font-size: 14px;
+        }
+
+        .dark {
+            color: md-get-color-by-theme(dark, text-primary);
+        }
+
+        .light {
+            color: md-get-color-by-theme(light, text-primary);
+        }
+
+        input {
+            font-size: 20px;
+            background: none;
+            border: none;
+            width: 80%;
+        }
+    }
+</style>
