@@ -2,11 +2,13 @@
     <div>
         <Search
                 label="Search for kanji, meaning or reading"
-                @search="getKanji"/>
-        <Kanji
-                v-bind:key="k.literal"
-                v-bind:kanji="k"
-                v-for="k in this.kanji"/>
+                :searching="isSearching"
+                @search="getKanji">
+            <Kanji
+                    v-bind:key="k.literal"
+                    v-bind:kanji="k"
+                    v-for="k in this.kanji"/>
+        </Search>
     </div>
 </template>
 
@@ -23,22 +25,27 @@
             Kanji
         },
         data: () => ({
-            kanji: []
+            kanji: [],
+            isSearching: false
         }),
 
         methods: {
-            getKanji: debounce(function(kanji) {
+            getKanji(kanji) {
                 this.kanji = [];
+
+                if (kanji.length > 0)
+                    this.isSearching = true;
 
                 for (let i = 0; i < kanji.length; i++)
                     axios.get('http://localhost:8080/kanji?q=' + encodeURIComponent(kanji.charAt(i)))
                         .then(response => {
                             if (Array.isArray(response.data) && response.data.length) {
-                                this.kanji.push(response.data[0])
+                                this.kanji.push(response.data[0]);
                             }
+                            this.isSearching = false;
                         })
                         .catch(e => alert(e)) // TODO
-            }, 200)
+            }
         },
 
         mounted() {

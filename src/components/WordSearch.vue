@@ -2,11 +2,13 @@
     <div>
         <Search
                 label="Search for Japanese, English or romaji"
-                @search="getWord"/>
-        <Word
-                v-bind:word="word"
-                v-bind:key="word.id"
-                v-for="word in words"/>
+                :searching="isSearching"
+                @search="getWord">
+            <Word
+                    v-bind:word="word"
+                    v-bind:key="word.id"
+                    v-for="word in words"/>
+        </Search>
     </div>
 </template>
 
@@ -25,19 +27,24 @@
         },
 
         data: () => ({
-            words: []
+            words: [],
+            isSearching: false
         }),
 
         methods: {
-            getWord: debounce(function(word) {
+            getWord(word) {
                 if (word !== "") {
+                    this.isSearching = true;
                     axios.get('http://localhost:8080/word?q=' + encodeURIComponent(word))
-                        .then(response => this.words = response.data)
+                        .then(response => {
+                            this.words = response.data;
+                            this.isSearching = false;
+                        })
                         .catch(e => alert(e)) // TODO
                 } else {
                     this.words = []
                 }
-            }, 200)
+            }
         }
     }
 </script>
