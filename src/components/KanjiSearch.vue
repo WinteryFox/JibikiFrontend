@@ -1,19 +1,25 @@
 <template>
     <div>
-        <SearchBar label="Search for kanji, meaning or reading" v-on:search="getKanji"/>
-        <Kanji v-bind:key="k.literal" v-bind:kanji="k" v-for="k in this.kanji"></Kanji>
+        <Search
+                label="Search for kanji, meaning or reading"
+                @search="getKanji"/>
+        <Kanji
+                v-bind:key="k.literal"
+                v-bind:kanji="k"
+                v-for="k in this.kanji"/>
     </div>
 </template>
 
 <script>
-    import SearchBar from './SearchBar'
+    import Search from "./Search";
     import Kanji from "./Kanji";
-    import axios from 'axios'
+    import debounce from "lodash.debounce";
+    import axios from "axios";
 
     export default {
         name: "KanjiSearch",
         components: {
-            SearchBar,
+            Search,
             Kanji
         },
         data: () => ({
@@ -21,7 +27,7 @@
         }),
 
         methods: {
-            getKanji(kanji) {
+            getKanji: debounce(function(kanji) {
                 this.kanji = [];
 
                 for (let i = 0; i < kanji.length; i++)
@@ -32,7 +38,7 @@
                             }
                         })
                         .catch(e => alert(e)) // TODO
-            }
+            }, 200)
         },
 
         mounted() {

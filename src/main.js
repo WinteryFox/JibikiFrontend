@@ -12,6 +12,13 @@ import WordSearch from './components/WordSearch.vue'
 import KanjiSearch from './components/KanjiSearch'
 import Documentation from './components/Documentation'
 import VueRouter from "vue-router";
+import Vuex from 'vuex'
+
+Vue.config.productionTip = false;
+
+Vue.use(VueMaterial);
+Vue.use(VueRouter);
+Vue.use(Vuex);
 
 const router = new VueRouter({
     mode: 'history',
@@ -24,13 +31,35 @@ const router = new VueRouter({
     ]
 });
 
-Vue.config.productionTip = false;
+const store = new Vuex.Store({
+    strict: process.env.NODE_ENV !== 'production',
 
-Vue.use(VueMaterial);
-Vue.use(VueRouter);
+    state: {
+        isDark: false
+    },
+
+    getters: {
+        isDark: state => {
+            return state.isDark
+        }
+    },
+
+    mutations: {
+        toggleTheme(state) {
+            state.isDark = !state.isDark;
+        }
+    },
+
+    actions: {
+        toggleTheme() {
+            this.commit('toggleTheme')
+        }
+    }
+});
 
 new Vue({
     components: {App},
     router,
+    store,
     render: h => h(App)
 }).$mount('#app');

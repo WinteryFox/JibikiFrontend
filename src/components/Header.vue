@@ -49,19 +49,16 @@
 
     export default {
         name: "Header",
+
         methods: {
             changeTheme() {
-                let i;
-                if (this.isDark) {
+                if (this.$store.getters.isDark) {
                     Vue.material.theming.theme = 'default';
                 } else {
                     Vue.material.theming.theme = 'dark';
                 }
-                this.isDark = !this.isDark;
+                this.$store.dispatch('toggleTheme');
             }
         },
-        data: () => ({
-            isDark: false
-        })
     }
 </script>

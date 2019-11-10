@@ -1,20 +1,26 @@
 <template>
     <div>
-        <SearchBar label="Search for Japanese, English or romaji" @search="getWord"></SearchBar>
-        <Word v-bind:word="word" v-bind:key="word.id" v-for="word in words"></Word>
+        <Search
+                label="Search for Japanese, English or romaji"
+                @search="getWord"/>
+        <Word
+                v-bind:word="word"
+                v-bind:key="word.id"
+                v-for="word in words"/>
     </div>
 </template>
 
 <script>
-    import SearchBar from "./SearchBar";
+    import Search from "./Search";
     import Word from "./Word";
-    import axios from 'axios'
+    import debounce from "lodash.debounce";
+    import axios from "axios";
 
     export default {
         name: 'WordSearch',
 
         components: {
-            SearchBar,
+            Search,
             Word
         },
 
@@ -23,7 +29,7 @@
         }),
 
         methods: {
-            getWord(word) {
+            getWord: debounce(function(word) {
                 if (word !== "") {
                     axios.get('http://localhost:8080/word?q=' + encodeURIComponent(word))
                         .then(response => this.words = response.data)
@@ -31,11 +37,7 @@
                 } else {
                     this.words = []
                 }
-            }
-        },
-
-        mounted() {
-            this.$el.getElementsByTagName("input")[0].focus();
+            }, 200)
         }
     }
 </script>
