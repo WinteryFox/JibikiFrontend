@@ -7,7 +7,7 @@
             <Kanji
                     v-bind:key="k.literal"
                     v-bind:kanji="k"
-                    v-for="k in this.kanji"/>
+                    v-for="k in kanji"/>
         </Search>
     </div>
 </template>

@@ -13,12 +13,16 @@ import KanjiSearch from './components/KanjiSearch'
 import Documentation from './components/Documentation'
 import VueRouter from "vue-router";
 import Vuex from 'vuex'
+import VueCookies from 'vue-cookies'
 
 Vue.config.productionTip = false;
 
 Vue.use(VueMaterial);
 Vue.use(VueRouter);
 Vue.use(Vuex);
+Vue.use(VueCookies);
+
+VueCookies.config(-1);
 
 const router = new VueRouter({
     mode: 'history',
@@ -35,18 +39,18 @@ const store = new Vuex.Store({
     strict: process.env.NODE_ENV !== 'production',
 
     state: {
-        isDark: false
+
     },
 
     getters: {
-        isDark: state => {
-            return state.isDark
+        isDark: () => {
+            return VueCookies.get("isDark") === "true";
         }
     },
 
     mutations: {
-        toggleTheme(state) {
-            state.isDark = !state.isDark;
+        toggleTheme() {
+            VueCookies.set("isDark", !(VueCookies.get("isDark") === "true"));
         }
     },
 

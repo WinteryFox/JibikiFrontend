@@ -46,19 +46,24 @@
 
 <script>
     import Vue from 'vue'
+    import Theme from '../mixins/Theme'
 
     export default {
         name: "Header",
 
-        methods: {
-            changeTheme() {
-                if (this.$store.getters.isDark) {
-                    Vue.material.theming.theme = 'default';
-                } else {
-                    Vue.material.theming.theme = 'dark';
-                }
-                this.$store.dispatch('toggleTheme');
-            }
+        mixins: {
+            Theme
         },
+
+        methods: {
+            changeTheme: function() {
+                this.toggleTheme();
+            }
+        }
+
+        /*mounted() {
+            if (this.$cookies.get("isDark") === "true")
+                Vue.material.theming.theme = "dark"
+        }*/
     }
 </script>
