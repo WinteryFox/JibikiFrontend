@@ -56,7 +56,7 @@ const store = new Vuex.Store({
                 Vue.material.theming.theme = "dark";
 
             state.isDark = !state.isDark;
-            VueCookies.set("isDark", state.isDark)
+            VueCookies.set("isDark", state.isDark);
         }
     },
 
