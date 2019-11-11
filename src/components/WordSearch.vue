@@ -15,7 +15,6 @@
 <script>
     import Search from "./Search";
     import Word from "./Word";
-    import debounce from "lodash.debounce";
     import axios from "axios";
 
     export default {

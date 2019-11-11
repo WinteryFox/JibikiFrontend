@@ -15,7 +15,6 @@
 <script>
     import Search from "./Search";
     import Kanji from "./Kanji";
-    import debounce from "lodash.debounce";
     import axios from "axios";
 
     export default {

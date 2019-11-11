@@ -39,27 +39,36 @@ const store = new Vuex.Store({
     strict: process.env.NODE_ENV !== 'production',
 
     state: {
-
+        isDark: VueCookies.get("isDark") === "true"
     },
 
     getters: {
-        isDark: () => {
-            return VueCookies.get("isDark") === "true";
+        isDark: (state) => {
+            return state.isDark;
         }
     },
 
     mutations: {
-        toggleTheme() {
-            VueCookies.set("isDark", !(VueCookies.get("isDark") === "true"));
+        toggleTheme(state) {
+            if (state.isDark)
+                Vue.material.theming.theme = "light";
+            else
+                Vue.material.theming.theme = "dark";
+
+            state.isDark = !state.isDark;
+            VueCookies.set("isDark", state.isDark)
         }
     },
 
     actions: {
-        toggleTheme() {
-            this.commit('toggleTheme')
-        }
+
     }
 });
+
+if (store.getters.isDark)
+    Vue.material.theming.theme = "dark";
+else
+    Vue.material.theming.theme = "light";
 
 new Vue({
     components: {App},
