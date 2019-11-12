@@ -26,12 +26,4 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
-
-    .center {
-        text-align: center;
-    }
-
-    .container {
-        display: block;
-    }
 </style>

@@ -6,8 +6,12 @@
         theme: dark
 ));
 
-.github .md-theme-dark svg {
+.md-theme-dark .github svg {
   fill: #ffffff !important;
+}
+
+.md-theme-dark .theme i {
+  color: #c3c3c3 !important;
 }
 
 @import "~vue-material/dist/theme/all";
