@@ -7,18 +7,20 @@
             <md-tab id="tab-kanji" md-label="Kanji" to="/kanji" md-icon="/kanji.svg"/>
             <md-tab id="tab-documentation" md-label="API Docs" to="/docs" md-icon="library_books"/>
         </md-tabs>
-        <md-button class="md-icon-button discord" href="https://discord.gg/aKTwN5c" target="_blank">
-            <md-icon md-src="https://discordapp.com/assets/f8389ca1a741a115313bede9ac02e2c0.svg"/>
-        </md-button>
-        <md-button class="md-icon-button patreon" href="https://patreon.com/Jibiki" target="_blank">
-            <md-icon md-src="/patreon.svg"/>
-        </md-button>
-        <md-button class="md-icon-button github" href="https://github.com/WinteryFox" target="_blank">
-            <md-icon md-src="/github.svg"/>
-        </md-button>
-        <md-button class="md-icon-button theme" v-on:click="changeTheme">
-            <md-icon>invert_colors</md-icon>
-        </md-button>
+        <div class="icons">
+            <md-button class="md-icon-button discord" href="https://discord.gg/aKTwN5c" target="_blank">
+                <md-icon md-src="https://discordapp.com/assets/f8389ca1a741a115313bede9ac02e2c0.svg"/>
+            </md-button>
+            <md-button class="md-icon-button patreon" href="https://patreon.com/Jibiki" target="_blank">
+                <md-icon md-src="/patreon.svg"/>
+            </md-button>
+            <md-button class="md-icon-button github" href="https://github.com/WinteryFox" target="_blank">
+                <md-icon md-src="/github.svg"/>
+            </md-button>
+            <md-button class="md-icon-button theme" v-on:click="changeTheme">
+                <md-icon>invert_colors</md-icon>
+            </md-button>
+        </div>
     </div>
 </template>
 
@@ -37,32 +39,17 @@
         position: absolute;
         z-index: 2;
         top: 50%;
-        left: 25px;
+        padding-left: 25px;
         transform: translate(0, -50%);
         font-size: 40px;
     }
 
-    .theme {
-        right: 10px;
-    }
-
-    .github {
-        right: 50px;
-    }
-
-    .patreon {
-        right: 90px;
-    }
-
-    .discord {
-        right: 130px;
-    }
-
-    .md-button {
+    .icons {
         position: absolute;
         z-index: 2;
         top: 50%;
         transform: translate(0, -50%);
+        right: 0;
     }
 </style>
 
