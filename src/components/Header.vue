@@ -10,6 +10,9 @@
         <md-button class="md-icon-button discord" href="https://discord.gg/aKTwN5c" target="_blank">
             <md-icon md-src="https://discordapp.com/assets/f8389ca1a741a115313bede9ac02e2c0.svg"/>
         </md-button>
+        <md-button class="md-icon-button patreon" href="https://patreon.com/Jibiki" target="_blank">
+            <md-icon md-src="/patreon.svg"/>
+        </md-button>
         <md-button class="md-icon-button github" href="https://github.com/WinteryFox" target="_blank">
             <md-icon md-src="/github.svg"/>
         </md-button>
@@ -40,15 +43,19 @@
     }
 
     .theme {
-        right: 25px;
+        right: 10px;
     }
 
     .github {
-        right: 70px;
+        right: 50px;
+    }
+
+    .patreon {
+        right: 90px;
     }
 
     .discord {
-        right: 115px;
+        right: 130px;
     }
 
     .md-button {
@@ -64,7 +71,7 @@
         name: "Header",
 
         methods: {
-            changeTheme: function() {
+            changeTheme: function () {
                 this.$store.commit("toggleTheme");
             }
         }

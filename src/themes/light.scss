@@ -6,4 +6,8 @@
         theme: light
 ));
 
+.github .md-theme-light svg {
+  fill: #171515 !important;
+}
+
 @import "~vue-material/dist/theme/all";
