@@ -6,7 +6,7 @@
                     {{sentence.sentence}}
                 </div>
                 <div class="translation" v-for="(translation, i) in sentence.translations">
-                    {{i + 1}}. {{translation.sentence}}
+                    <span class="number">{{i + 1}}.</span> {{translation.sentence}}
                 </div>
             </div>
         </div>
@@ -32,12 +32,18 @@
             padding: 20px 0;
         }
 
-        .source {
+        .number {
+            font-size: 16px;
+        }
 
+        .source {
+            font-size: 20px;
+            margin-bottom: 10px;
         }
 
         .translation {
-
+            font-size: 20px;
+            color: md-get-palette-color(gray, 400);
         }
     }
 </style>

@@ -1,7 +1,7 @@
 <template>
     <div>
         <Search
-                label="Search for Japanese, English or romaji"
+                label="Search for Japanese or English"
                 :searching="isSearching"
                 @search="getSentence">
             <Sentence
