@@ -3,45 +3,45 @@
         <Search
                 label="Search for Japanese, English or romaji"
                 :searching="isSearching"
-                @search="getWord">
-            <Word
-                    v-bind:word="word"
-                    v-bind:key="word.id"
-                    v-for="word in words"/>
+                @search="getSentence">
+            <Sentence
+                    v-bind:sentence="sentence"
+                    v-bind:key="sentence.id"
+                    v-for="sentence in sentences"/>
         </Search>
     </div>
 </template>
 
 <script>
     import Search from "./Search";
-    import Word from "./Word";
+    import Sentence from "./Sentence";
     import axios from "axios";
 
     export default {
-        name: 'WordSearch',
+        name: 'SentenceSearch',
 
         components: {
             Search,
-            Word
+            Sentence
         },
 
         data: () => ({
-            words: [],
+            sentences: [],
             isSearching: false
         }),
 
         methods: {
-            getWord(word) {
-                if (word !== "") {
+            getSentence(query) {
+                if (query !== "") {
                     this.isSearching = true;
-                    axios.get('http://localhost:8080/words?q=' + encodeURIComponent(word))
+                    axios.get('http://localhost:8080/sentences?q=' + encodeURIComponent(query))
                         .then(response => {
-                            this.words = response.data;
+                            this.sentences = response.data;
                             this.isSearching = false;
                         })
                         .catch(e => alert(e)) // TODO
                 } else {
-                    this.words = []
+                    this.sentences = []
                 }
             }
         }

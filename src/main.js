@@ -14,6 +14,7 @@ import Documentation from './components/Documentation'
 import VueRouter from "vue-router";
 import Vuex from 'vuex'
 import VueCookies from 'vue-cookies'
+import SentenceSearch from "./components/SentenceSearch";
 
 Vue.config.productionTip = false;
 
@@ -30,6 +31,7 @@ const router = new VueRouter({
         {path: '/', component: Home},
         {path: '/words', component: WordSearch},
         {path: '/kanji', component: KanjiSearch},
+        {path: '/sentences', component: SentenceSearch},
         {path: '/docs', component: Documentation},
         {path: '*', component: MissingPage}
     ]
