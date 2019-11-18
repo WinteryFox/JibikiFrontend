@@ -30,7 +30,7 @@
         margin: 15px 30px;
 
         .md-divider {
-            margin-bottom: 10px;
+            margin: 10px 0;
         }
 
         .md-layout-item {
@@ -48,7 +48,7 @@
 
         .translation {
             font-size: 20px;
-            color: md-get-palette-color(gray, 400);
+            color: md-get-palette-color(gray, 500);
         }
     }
 </style>

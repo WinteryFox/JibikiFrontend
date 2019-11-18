@@ -34,7 +34,7 @@
             getSentence(query) {
                 if (query !== "") {
                     this.isSearching = true;
-                    axios.get('http://localhost:8080/sentences?q=' + encodeURIComponent(query))
+                    axios.get('http://localhost:8080/sentences?query=' + encodeURIComponent(query))
                         .then(response => {
                             this.sentences = response.data;
                             this.isSearching = false;

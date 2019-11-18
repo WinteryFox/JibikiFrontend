@@ -34,7 +34,7 @@
             getWord(word) {
                 if (word !== "") {
                     this.isSearching = true;
-                    axios.get('http://localhost:8080/words?q=' + encodeURIComponent(word))
+                    axios.get('http://localhost:8080/words?query=' + encodeURIComponent(word))
                         .then(response => {
                             this.words = response.data;
                             this.isSearching = false;

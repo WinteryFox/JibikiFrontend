@@ -52,7 +52,7 @@
         }
 
         .md-chip {
-            margin: 10px 0;
+            margin: 10px 3px;
         }
 
         .note {
