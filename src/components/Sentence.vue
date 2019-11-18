@@ -6,7 +6,8 @@
                     {{sentence.sentence}}
                 </div>
                 <div class="translation" v-for="(translation, i) in sentence.translations">
-                    <span class="number">{{i + 1}}.</span> {{translation.sentence}}
+                    <md-divider/>
+                    {{translation.sentence}}
                 </div>
             </div>
         </div>
@@ -27,6 +28,10 @@
 
     .md-layout {
         margin: 15px 30px;
+
+        .md-divider {
+            margin-bottom: 10px;
+        }
 
         .md-layout-item {
             padding: 20px 0;
