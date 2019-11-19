@@ -1,0 +1,46 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: circleci/node:7.10
+    working_directory: /tmp/jibikifrontend
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - dependencies-{{ checksum "package.json" }}
+            - dependencies-
+      - run: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: dependencies-{{ checksum "package.json" }}
+      - persist_to_workspace:
+          root: dist
+          paths:
+            - dist
+  deploy:
+    machine:
+      enabled: true
+    steps:
+      - attach_workspace:
+          at: /tmp/jibikifrontend/dist
+      - run:
+          name: Delete old files
+          command: |
+            ssh $SSH_USER@$SSH_HOST "rm jibikifrontend -r"
+      - run:
+          name: Upload JibikiFrontend
+          command: |
+            scp /tmp/jibikifrontend/dist $SSH_USER@$SSH_HOST:~/jibikifrontend
+
+workflows:
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
