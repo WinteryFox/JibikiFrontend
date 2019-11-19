@@ -1,3 +1,6 @@
+[![Jibiki](https://img.shields.io/discord/635150469664210996.svg?color=7289da&label=Jibiki&logo=discord&style=flat-square)](https://discord.gg/635150469664210996)
+[![CircleCI](https://circleci.com/gh/WinteryFox/JibikiFrontend.svg?style=svg)](https://circleci.com/gh/WinteryFox/JibikiFrontend)
+
 # Jibiki Frontend
 
 JibikiFrontend is the frontend repository of [Jibiki](https://jibiki.app/),
