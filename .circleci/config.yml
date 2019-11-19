@@ -35,7 +35,7 @@ jobs:
       - run:
           name: Upload JibikiFrontend
           command: |
-            scp /tmp/jibikifrontend/dist $SSH_USER@$SSH_HOST:~/jibikifrontend
+            scp -r /tmp/jibikifrontend/dist $SSH_USER@$SSH_HOST:~/jibikifrontend
 
 workflows:
   build-and-deploy:
