@@ -12,3 +12,5 @@ for Jibiki.
 3. `cd` into the repository
 4. Install dependencies by running `npm install`
 5. Start the frontend by running `npm run serve`
+6. The frontend can now be found at `localhost` but will not work fully without
+also installing [JibikiAPI](https://github.com/WinteryFox/JibikiAPI)
