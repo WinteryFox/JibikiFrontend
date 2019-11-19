@@ -19,7 +19,7 @@ jobs:
       - store_artifacts:
           path: ./dist
       - persist_to_workspace:
-          root: dist
+          root: .
           paths:
             - dist
   deploy:
