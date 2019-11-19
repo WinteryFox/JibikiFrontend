@@ -15,7 +15,7 @@
             <md-button class="md-icon-button patreon" href="https://patreon.com/Jibiki" target="_blank">
                 <md-icon md-src="/patreon.svg"/>
             </md-button>
-            <md-button class="md-icon-button github" href="https://github.com/WinteryFox" target="_blank">
+            <md-button class="md-icon-button github" href="https://github.com/WinteryFox/JibikiAPI" target="_blank">
                 <md-icon md-src="/github.svg"/>
             </md-button>
             <md-button class="md-icon-button theme" v-on:click="changeTheme">
