@@ -15,6 +15,9 @@ jobs:
           paths:
             - node_modules
           key: dependencies-{{ checksum "package.json" }}
+      - run: npm run build
+      - store_artifacts:
+          path: ./dist
       - persist_to_workspace:
           root: dist
           paths:
