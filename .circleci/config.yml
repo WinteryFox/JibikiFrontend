@@ -31,11 +31,11 @@ jobs:
       - run:
           name: Delete old files
           command: |
-            ssh $SSH_USER@$SSH_HOST "rm ~/jibikifrontend -rf"
+            ssh $SSH_USER@$SSH_HOST "sudo rm /usr/share/nginx/html/* -rf"
       - run:
           name: Upload JibikiFrontend
           command: |
-            scp -r /tmp/jibikifrontend/dist $SSH_USER@$SSH_HOST:~/jibikifrontend
+            scp -ra /tmp/jibikifrontend/dist/. $SSH_USER@$SSH_HOST:/usr/share/nginx/html
 
 workflows:
   build-and-deploy:
