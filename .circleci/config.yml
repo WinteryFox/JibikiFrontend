@@ -31,7 +31,7 @@ jobs:
       - run:
           name: Delete old files
           command: |
-            ssh $SSH_USER@$SSH_HOST "sudo rm -rf /usr/share/nginx/html/*"
+            ssh $SSH_USER@$SSH_HOST "rm -rf /usr/share/nginx/html/*"
       - run:
           name: Upload JibikiFrontend
           command: |
