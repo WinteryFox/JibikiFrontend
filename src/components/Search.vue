@@ -27,7 +27,9 @@
         <md-progress-spinner
                 v-if="searching"
                 md-mode="indeterminate"/>
-        <slot/>
+        <div class="content">
+            <slot/>
+        </div>
     </div>
 </template>
 
@@ -111,6 +113,12 @@
 
 <style scoped lang="scss">
     @import '~vue-material/dist/theme/engine';
+
+    @media screen and (max-width: 768px) {
+        div.bar {
+            width: 90%;
+        }
+    }
 
     .md-progress-spinner {
         z-index: 0;
