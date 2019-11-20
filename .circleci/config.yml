@@ -35,11 +35,7 @@ jobs:
       - run:
           name: Upload JibikiFrontend
           command: |
-            scp -r /tmp/jibikifrontend/dist $SSH_USER@$SSH_HOST:/usr/share/nginx/html
-      - run:
-          name: Move files out of dist folder
-          command: |
-            ssh $SSH_USER@$SSH_HOST "mv /usr/share/nginx/html/dist/* /usr/share/nginx/html"
+            scp -r /tmp/jibikifrontend/dist/dist/* $SSH_USER@$SSH_HOST:/usr/share/nginx/html
 
 workflows:
   build-and-deploy:
