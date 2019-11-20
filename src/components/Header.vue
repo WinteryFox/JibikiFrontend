@@ -1,12 +1,12 @@
 <template>
     <div>
-        <span>Jibiki</span>
+        <span>Jibiki <small>BETA</small></span>
         <md-tabs md-alignment="centered" md-sync-route>
             <md-tab id="tab-home" md-label="Home" to="/" md-icon="home" exact/>
             <md-tab id="tab-words" md-label="Words" to="/words" md-icon="translate"/>
             <md-tab id="tab-kanji" md-label="Kanji" to="/kanji" md-icon="/kanji.svg"/>
             <md-tab id="tab-sentences" md-label="Sentences" to="/sentences" md-icon="translate"/>
-            <md-tab id="tab-documentation" md-label="API Docs" to="/docs" md-icon="library_books"/>
+            <md-tab id="tab-documentation" md-label="Developer" to="/docs" md-icon="library_books"/>
         </md-tabs>
         <div class="icons">
             <md-button class="md-icon-button discord" href="https://discord.gg/aKTwN5c" target="_blank">
@@ -51,6 +51,10 @@
         top: 50%;
         transform: translate(0, -50%);
         right: 0;
+    }
+
+    small {
+        font-size: 20px;
     }
 </style>
 

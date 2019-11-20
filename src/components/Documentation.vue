@@ -25,10 +25,12 @@
                             <md-table-row>
                                 <md-table-head>Parameter</md-table-head>
                                 <md-table-head>Description</md-table-head>
+                                <md-table-head>Required</md-table-head>
                             </md-table-row>
                             <md-table-row :key="parameter.parameter" v-for="parameter in doc.parameters">
                                 <md-table-cell>{{parameter.parameter}}</md-table-cell>
                                 <md-table-cell>{{parameter.description}}</md-table-cell>
+                                <md-table-cell>{{parameter.required}}</md-table-cell>
                             </md-table-row>
                         </md-table>
                     </div>
@@ -133,16 +135,17 @@
         data: () => ({
             documentation: [
                 {
-                    "route": "/word",
+                    "route": "/words",
                     "type": "GET",
                     "description": "Query for any word",
                     "parameters": [
                         {
-                            "parameter": "q",
-                            "description": "The word to search for in Japanese or English"
+                            "parameter": "query",
+                            "description": "The word to search for in Japanese or English",
+                            "required": "Yes"
                         }
                     ],
-                    "example": "/word?q=house",
+                    "example": "/word?query=house",
                     "payload": "[\n" +
                         "  {\n" +
                         "    \"id\": 17578,\n" +
@@ -211,19 +214,20 @@
                     "description": "Query for any single kanji",
                     "parameters": [
                         {
-                            "parameter": "q",
-                            "description": "The kanji to search for"
+                            "parameter": "query",
+                            "description": "The kanji to search for",
+                            "required": "Yes"
                         }
                     ],
-                    "example": "/kanji?q=日",
+                    "example": "/kanji?query=日",
                     "payload": "[\n" +
                         "  {\n" +
                         "    \"id\": 2160,\n" +
                         "    \"literal\": \"日\",\n" +
                         "    \"meaning\": [\n" +
-                        "      \"Japan\",\n" +
                         "      \"counter for days\",\n" +
                         "      \"day\",\n" +
+                        "      \"Japan\",\n" +
                         "      \"sun\"\n" +
                         "    ],\n" +
                         "    \"kunyomi\": [\n" +
@@ -240,6 +244,43 @@
                         "    \"frequency\": 1,\n" +
                         "    \"jlpt\": 4,\n" +
                         "    \"radicalName\": null\n" +
+                        "  }\n" +
+                        "]"
+                },
+                {
+                    "route": "/sentences",
+                    "type": "GET",
+                    "description": "Query for example sentences",
+                    "parameters": [
+                        {
+                            "parameter": "query",
+                            "description": "The keywords to search for",
+                            "required": "Yes"
+                        },
+                        {
+                            "parameter": "minLength",
+                            "description": "The minimum length (in characters) of the source sentence",
+                            "required": "No"
+                        },
+                        {
+                            "parameter": "maxLength",
+                            "description": "The maximum length (in characters) of the source sentence",
+                            "required": "No"
+                        }
+                    ],
+                    "example": "/sentences?query=greetings",
+                    "payload": "[\n" +
+                        "  {\n" +
+                        "    \"id\": 19911,\n" +
+                        "    \"language\": \"eng\",\n" +
+                        "    \"sentence\": \"The visitors were greeted with warm handshakes.\",\n" +
+                        "    \"translations\": [\n" +
+                        "      {\n" +
+                        "        \"id\": 182792,\n" +
+                        "        \"language\": \"jpn\",\n" +
+                        "        \"sentence\": \"客たちは暖かい握手で迎えられた。\"\n" +
+                        "      }\n" +
+                        "    ]\n" +
                         "  }\n" +
                         "]"
                 }
