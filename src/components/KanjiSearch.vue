@@ -36,7 +36,7 @@
                     this.isSearching = true;
 
                 for (let i = 0; i < kanji.length; i++)
-                    axios.get('http://localhost:8080/kanji?query=' + encodeURIComponent(kanji.charAt(i)))
+                    axios.get(this.$hostname + '/kanji?query=' + encodeURIComponent(kanji.charAt(i)))
                         .then(response => {
                             if (Array.isArray(response.data) && response.data.length) {
                                 this.kanji.push(response.data[0]);

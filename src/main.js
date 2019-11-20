@@ -62,10 +62,13 @@ const store = new Vuex.Store({
         }
     },
 
-    actions: {
-
-    }
+    actions: {}
 });
+
+if (process.env.NODE_ENV !== 'production')
+    Vue.prototype.$hostname = 'http://localhost:8080';
+else
+    Vue.prototype.$hostname = 'http://api.jibiki.app';
 
 if (store.getters.isDark)
     Vue.material.theming.theme = "dark";
