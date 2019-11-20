@@ -29,6 +29,10 @@ jobs:
       - attach_workspace:
           at: /tmp/jibikifrontend/dist
       - run:
+          name: Delete old files
+          command: |
+            ssh $SSH_USER@$SSH_HOST "sudo rm -rf /usr/share/nginx/html/*"
+      - run:
           name: Upload JibikiFrontend
           command: |
             scp -r /tmp/jibikifrontend/dist/* $SSH_USER@$SSH_HOST:/usr/share/nginx/html
