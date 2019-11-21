@@ -266,6 +266,11 @@
                             "parameter": "maxLength",
                             "description": "The maximum length (in characters) of the source sentence",
                             "required": "No"
+                        },
+                        {
+                            "parameter": "language",
+                            "description": "The source/primary language to show results for, can be one of jpn for Japanese or eng for English",
+                            "required": "No"
                         }
                     ],
                     "example": "/sentences?query=greetings",

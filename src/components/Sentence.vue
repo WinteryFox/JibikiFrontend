@@ -5,11 +5,25 @@
                 <div class="source">
                     {{sentence.sentence}}
                 </div>
-                <div class="translation" v-for="(translation, i) in sentence.translations">
+                <div class="translation" v-for="(translation, i) in sentence.translations" v-if="isExtended">
                     <md-divider/>
                     {{translation.sentence}}
                 </div>
             </div>
+            <md-button class="md-icon-button" @click="isExtended = !isExtended">
+                <md-tooltip v-if="!isExtended">
+                    Show translation
+                </md-tooltip>
+                <md-tooltip v-else>
+                    Hide translation
+                </md-tooltip>
+                <md-icon v-if="!isExtended">
+                    expand_more
+                </md-icon>
+                <md-icon v-else>
+                    expand_less
+                </md-icon>
+            </md-button>
         </div>
     </md-content>
 </template>
@@ -19,7 +33,10 @@
         name: "Sentence",
         props: {
             sentence: Object
-        }
+        },
+        data: () => ({
+            isExtended: true
+        })
     }
 </script>
 
@@ -28,6 +45,20 @@
 
     .md-layout {
         margin: 15px 30px;
+
+        @media screen and (max-width: 768px) {
+            .source {
+                padding-top: 10px;
+            }
+
+            .md-icon-button {
+                margin: 2px auto !important;
+            }
+        }
+
+        .md-icon-button {
+            margin: 15px auto;
+        }
 
         .md-divider {
             margin: 10px 0;
@@ -44,11 +75,6 @@
         .source {
             font-size: 20px;
             margin-bottom: 10px;
-        }
-
-        .translation {
-            font-size: 20px;
-            color: md-get-palette-color(gray, 500);
         }
     }
 </style>

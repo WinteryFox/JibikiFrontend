@@ -4,15 +4,27 @@
             <span>Jibiki <small>BETA</small></span>
             <div class="icons">
                 <md-button class="md-icon-button discord" href="https://discord.gg/aKTwN5c" target="_blank">
+                    <md-tooltip>
+                        Join Discord server
+                    </md-tooltip>
                     <md-icon md-src="https://discordapp.com/assets/f8389ca1a741a115313bede9ac02e2c0.svg"/>
                 </md-button>
                 <md-button class="md-icon-button patreon" href="https://patreon.com/Jibiki" target="_blank">
+                    <md-tooltip>
+                        Become a Patron
+                    </md-tooltip>
                     <md-icon md-src="/patreon.svg"/>
                 </md-button>
                 <md-button class="md-icon-button github" href="https://github.com/WinteryFox/JibikiAPI" target="_blank">
+                    <md-tooltip>
+                        GitHub
+                    </md-tooltip>
                     <md-icon md-src="/github.svg"/>
                 </md-button>
                 <md-button class="md-icon-button theme" v-on:click="changeTheme">
+                    <md-tooltip>
+                        Switch themes
+                    </md-tooltip>
                     <md-icon>invert_colors</md-icon>
                 </md-button>
             </div>
