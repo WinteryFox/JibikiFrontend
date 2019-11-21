@@ -35,15 +35,12 @@
                 if (kanji.length > 0)
                     this.isSearching = true;
 
-                for (let i = 0; i < kanji.length; i++)
-                    axios.get(this.$hostname + '/kanji?query=' + encodeURIComponent(kanji.charAt(i)))
-                        .then(response => {
-                            if (Array.isArray(response.data) && response.data.length) {
-                                this.kanji.push(response.data[0]);
-                            }
-                            this.isSearching = false;
-                        })
-                        .catch(e => alert(e)) // TODO
+                axios.get(this.$hostname + '/kanji?query=' + encodeURIComponent(kanji))
+                    .then(response => {
+                        this.kanji = response.data;
+                        this.isSearching = false;
+                    })
+                    .catch(e => alert(e)) // TODO
             }
         },
 
