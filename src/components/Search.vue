@@ -110,7 +110,7 @@
                 }
             },
 
-            $route(to, from) {
+            $route(to) {
                 if (this.$route.query.query !== undefined && this.$route.query.query !== null) {
                     this.searchField = to.query.query;
                 } else {
