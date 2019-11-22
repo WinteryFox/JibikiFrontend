@@ -145,7 +145,7 @@
                             "required": "Yes"
                         }
                     ],
-                    "example": "/word?query=house",
+                    "example": "/words?query=house",
                     "payload": "[\n" +
                         "  {\n" +
                         "    \"id\": 17578,\n" +
