@@ -28,11 +28,11 @@ VueCookies.config(-1);
 const router = new VueRouter({
     mode: 'history',
     routes: [
-        {path: '/', component: Home},
-        {path: '/words', component: WordSearch},
-        {path: '/kanji', component: KanjiSearch},
-        {path: '/sentences', component: SentenceSearch},
-        {path: '/docs', component: Documentation},
+        {path: '/', name: '', component: Home},
+        {path: '/words', name: 'words', component: WordSearch},
+        {path: '/kanji', name: 'kanji', component: KanjiSearch},
+        {path: '/sentences', name: 'sentences', component: SentenceSearch},
+        {path: '/docs', name: 'docs', component: Documentation},
         {path: '*', component: MissingPage}
     ]
 });

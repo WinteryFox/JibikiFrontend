@@ -58,8 +58,11 @@
         methods: {
             clear() {
                 if (this.searchField !== "") {
+                    this.$router.push({
+                        name: this.$router.currentRoute.name,
+                        query: {}
+                    });
                     this.searchField = "";
-                    this.$emit("search", "");
                 }
             },
 
@@ -68,9 +71,19 @@
             },
 
             typing: debounce(function () {
-                this.$emit("search", this.searchField);
+                if (this.searchField !== "") {
+                    this.$router.push({
+                        name: this.$router.currentRoute.name,
+                        query: {query: this.searchField}
+                    });
+                } else {
+                    this.$router.push({
+                        name: this.$router.currentRoute.name,
+                        query: {}
+                    });
+                }
                 this.isTyping = false;
-            }, 300),
+            }, 500),
 
             search() {
                 this.isTyping = true;
@@ -95,10 +108,24 @@
                     input.classList.remove("light");
                     input.classList.add("dark");
                 }
+            },
+
+            $route(to, from) {
+                if (this.$route.query.query !== undefined && this.$route.query.query !== null) {
+                    this.searchField = to.query.query;
+                } else {
+                    this.searchField = ""
+                }
+                this.$emit("search", this.searchField);
             }
         },
 
         mounted() {
+            if (this.$route.query.query !== undefined && this.$route.query.query !== null) {
+                this.searchField = this.$route.query.query;
+                this.$emit("search", this.searchField);
+            }
+
             const input = this.$el.getElementsByTagName("input")[0];
 
             if (this.isDark)
