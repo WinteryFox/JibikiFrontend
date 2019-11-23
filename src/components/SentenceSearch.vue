@@ -1,10 +1,25 @@
 <template>
     <div>
+        <md-button class="md-icon-button" @click="isExtended = !isExtended">
+            <md-tooltip v-if="!isExtended">
+                Show all translations
+            </md-tooltip>
+            <md-tooltip v-else>
+                Hide all translations
+            </md-tooltip>
+            <md-icon v-if="!isExtended">
+                expand_more
+            </md-icon>
+            <md-icon v-else>
+                expand_less
+            </md-icon>
+        </md-button>
         <Search
                 label="Search for Japanese or English"
                 :searching="isSearching"
                 @search="getSentence">
             <Sentence
+                    :is-extended="isExtended"
                     v-bind:sentence="sentence"
                     v-bind:key="sentence.id"
                     v-for="sentence in sentences"/>
@@ -27,7 +42,8 @@
 
         data: () => ({
             sentences: [],
-            isSearching: false
+            isSearching: false,
+            isExtended: true
         }),
 
         methods: {
@@ -47,3 +63,18 @@
         }
     }
 </script>
+
+<style scoped lang="scss">
+    @media screen and (max-width: 768px) {
+        .md-icon-button {
+            position: static;
+            right: calc(50% - 25px) !important;
+            top: 137px;
+        }
+    }
+
+    .md-icon-button {
+        position: absolute;
+        right: 25px;
+    }
+</style>

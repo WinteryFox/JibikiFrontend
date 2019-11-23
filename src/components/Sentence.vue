@@ -5,7 +5,7 @@
                 <div class="source">
                     {{sentence.sentence}}
                 </div>
-                <div class="translation" v-for="(translation, i) in sentence.translations" v-if="isExtended">
+                <div class="translation" v-for="translation in sentence.translations" v-if="isExtended">
                     <md-divider/>
                     {{translation.sentence}}
                 </div>
@@ -32,11 +32,9 @@
     export default {
         name: "Sentence",
         props: {
-            sentence: Object
-        },
-        data: () => ({
+            sentence: Object,
             isExtended: true
-        })
+        }
     }
 </script>
 
