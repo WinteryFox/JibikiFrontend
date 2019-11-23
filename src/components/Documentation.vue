@@ -4,7 +4,7 @@
             <div class="introduction">
                 <h1>Introduction</h1>
                 You've found your way to the API documentation, greetings!
-                All endpoints start with <span class="route">https://api.jibiki.com</span>
+                All endpoints start with <span class="route">https://api.jibiki.app</span>
                 and every response is in JSON.
             </div>
         </md-content>
