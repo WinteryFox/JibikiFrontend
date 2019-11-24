@@ -13,7 +13,7 @@
 </template>
 
 <script>
-    import Search from "./Search";
+    import Search from "../Search";
     import Word from "./Word";
     import axios from "axios";
 

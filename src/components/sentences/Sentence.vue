@@ -39,7 +39,7 @@
 </script>
 
 <style scoped lang="scss">
-    @import '~vue-material/dist/theme/engine';
+    @import '../../../node_modules/vue-material/dist/theme/engine';
 
     .md-layout {
         margin: 15px 30px;

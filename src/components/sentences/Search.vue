@@ -18,6 +18,7 @@
                 label="Search for Japanese or English"
                 :searching="isSearching"
                 @search="getSentence">
+            <Filters #filters/>
             <Sentence
                     :is-extended="isExtended"
                     v-bind:sentence="sentence"
@@ -28,8 +29,9 @@
 </template>
 
 <script>
-    import Search from "./Search";
+    import Search from "../Search";
     import Sentence from "./Sentence";
+    import Filters from './Filters';
     import axios from "axios";
 
     export default {
@@ -37,7 +39,8 @@
 
         components: {
             Search,
-            Sentence
+            Sentence,
+            Filters
         },
 
         data: () => ({

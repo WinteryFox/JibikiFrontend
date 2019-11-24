@@ -13,7 +13,7 @@
 </template>
 
 <script>
-    import Search from "./Search";
+    import Search from "../Search";
     import Kanji from "./Kanji";
     import axios from "axios";
 
