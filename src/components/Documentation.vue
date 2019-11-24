@@ -143,6 +143,11 @@
                             "parameter": "query",
                             "description": "The word to search for in Japanese or English",
                             "required": "Yes"
+                        },
+                        {
+                            "parameter": "page",
+                            "description": "The page to return, pages are 0-indexed and are 50 entries long",
+                            "required": "No"
                         }
                     ],
                     "example": "/words?query=house",
@@ -270,6 +275,11 @@
                         {
                             "parameter": "language",
                             "description": "The source/primary language to show results for, can be one of jpn for Japanese or eng for English",
+                            "required": "No"
+                        },
+                        {
+                            "parameter": "page",
+                            "description": "The page to return, pages are 0-indexed and are 50 entries long",
                             "required": "No"
                         }
                     ],
