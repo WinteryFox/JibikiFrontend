@@ -1,7 +1,11 @@
 <template>
     <div>
         <md-content>
-            <span>Jibiki <small>BETA</small></span>
+            <span>
+                <img alt="jibiki logo" class="logo" src="/icons/fox.svg">
+                <img alt="jibiki text" class="text" src="/icons/jibiki.svg">
+                <small>BETA</small>
+            </span>
             <div class="icons">
                 <md-button class="md-icon-button discord" href="https://discord.gg/aKTwN5c" target="_blank">
                     <md-tooltip>
@@ -21,11 +25,19 @@
                     </md-tooltip>
                     <md-icon md-src="/github.svg"/>
                 </md-button>
-                <md-button class="md-icon-button theme" v-on:click="changeTheme">
+                <md-button @click="changeTheme" class="md-icon-button theme">
                     <md-tooltip>
                         Switch themes
                     </md-tooltip>
                     <md-icon>invert_colors</md-icon>
+                </md-button>
+                <md-button @click="login" class="md-icon-button">
+                    <md-tooltip>
+                        Login
+                    </md-tooltip>
+                    <md-avatar class="md-avatar-icon">
+                        A
+                    </md-avatar>
                 </md-button>
             </div>
         </md-content>
@@ -64,6 +76,17 @@
 
 <style scoped lang="scss">
     @import '~vue-material/dist/theme/engine';
+
+    .logo {
+        width: 30px;
+        top: 20px;
+        margin-right: 10px;
+    }
+
+    .text {
+        top: 10px;
+        width: 100px;
+    }
 
     .md-content {
         top: 35px;
