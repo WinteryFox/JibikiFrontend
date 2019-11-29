@@ -2,9 +2,7 @@
     <div class="header">
         <md-content>
             <span>
-                <img alt="jibiki logo" class="logo" src="/icons/fox.svg"/>
-                <h3>Jibiki</h3>
-                <small>BETA</small>
+                <h3 class="logo">Jibiki <small class="text">BETA</small></h3>
             </span>
             <div class="icons">
                 <md-button class="md-icon-button discord" href="https://discord.gg/aKTwN5c" target="_blank">
@@ -143,7 +141,7 @@
         position: relative;
 
         .logo {
-            width: 30px;
+            line-height: normal;
             top: 20px;
             margin-right: 10px;
         }
@@ -177,9 +175,6 @@
 
         span {
             color: md-get-palette-color(pink, 200);
-        }
-
-        span {
             position: absolute;
             z-index: 2;
             top: 50%;
@@ -203,8 +198,8 @@
 </style>
 
 <style lang="scss">
-    .header {
-        @media screen and (max-width: 768px) {
+    @media screen and (max-width: 768px) {
+        .header {
             .content {
                 min-height: 50%;
                 max-height: 50%;
