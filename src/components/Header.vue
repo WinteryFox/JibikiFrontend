@@ -1,7 +1,9 @@
 <template>
-    <div>
+    <div class="header">
         <md-content>
-            <span>Jibiki <small>BETA</small></span>
+            <span>
+                <h3 class="logo">Jibiki <small class="text">BETA</small></h3>
+            </span>
             <div class="icons">
                 <md-button class="md-icon-button discord" href="https://discord.gg/aKTwN5c" target="_blank">
                     <md-tooltip>
@@ -21,11 +23,26 @@
                     </md-tooltip>
                     <md-icon md-src="/github.svg"/>
                 </md-button>
-                <md-button class="md-icon-button theme" v-on:click="changeTheme">
+                <md-button @click="changeTheme" class="md-icon-button theme">
                     <md-tooltip>
                         Switch themes
                     </md-tooltip>
                     <md-icon>invert_colors</md-icon>
+                </md-button>
+                <md-button @click="showLogin = true" v-if="user === undefined || user === null"
+                           class="md-icon-button">
+                    <md-tooltip>
+                        Login or register
+                    </md-tooltip>
+                    <md-icon>account_circle</md-icon>
+                </md-button>
+                <md-button v-else class="md-icon-button" to="/profile">
+                    <md-tooltip>
+                        {{user.username}}
+                    </md-tooltip>
+                    <md-avatar class="md-avatar-icon">
+                        {{user.username[0]}}
+                    </md-avatar>
                 </md-button>
             </div>
         </md-content>
@@ -36,84 +53,172 @@
             <md-tab id="tab-sentences" md-label="Sentences" to="/sentences" md-icon="translate"/>
             <md-tab id="tab-documentation" md-label="Developer" to="/docs" md-icon="library_books"/>
         </md-tabs>
+        <div class="login">
+            <md-dialog :md-active.sync="showLogin">
+                <md-dialog-title>
+                    Login
+                </md-dialog-title>
+
+                <md-dialog-content>
+                    <md-field>
+                        <label>Email</label>
+                        <md-input name="username" required v-model="loginForm.email"/>
+                        <span class="md-error" v-if="loginForm.email">
+                            Email is required
+                        </span>
+                    </md-field>
+                    <md-field>
+                        <label>Password</label>
+                        <md-input name="password" required type="password" v-model="loginForm.password"/>
+                        <span class="md-error">
+                            Password is required
+                        </span>
+                    </md-field>
+                </md-dialog-content>
+
+                <md-dialog-actions>
+                    <md-button @click="showLogin = false" class="md-primary">
+                        Close
+                    </md-button>
+                    <md-button @click="toggle" class="md-primary">
+                        Register
+                    </md-button>
+                    <md-button @click="login" class="md-primary">
+                        Login
+                    </md-button>
+                </md-dialog-actions>
+            </md-dialog>
+            <md-dialog :md-active.sync="showRegister">
+                <md-dialog-title>
+                    Register
+                </md-dialog-title>
+
+                <md-dialog-content>
+                    <md-field>
+                        <label>Username</label>
+                        <md-input name="username" required v-model="registerForm.username"/>
+                        <span class="md-error" v-if="registerForm.username">
+                            Username is required
+                        </span>
+                    </md-field>
+                    <md-field>
+                        <label>Email</label>
+                        <md-input name="email" required v-model="registerForm.email"/>
+                        <span class="md-error" v-if="registerForm.email">
+                            Email is required
+                        </span>
+                    </md-field>
+                    <md-field>
+                        <label>Password</label>
+                        <md-input name="password" type="password" required v-model="registerForm.password"/>
+                        <span class="md-error" v-if="registerForm.password">
+                            Password is required
+                        </span>
+                    </md-field>
+                </md-dialog-content>
+
+                <md-dialog-actions>
+                    <md-button @click="showRegister = false" class="md-primary">
+                        Close
+                    </md-button>
+                    <md-button @click="register" class="md-primary">
+                        Register
+                    </md-button>
+                </md-dialog-actions>
+            </md-dialog>
+        </div>
     </div>
 </template>
-
-<style lang="scss">
-    @media screen and (max-width: 768px) {
-        .content {
-            min-height: 50%;
-            max-height: 50%;
-        }
-
-        .md-tabs-navigation .md-button {
-            font-size: 10px;
-        }
-
-        .md-layout .md-layout-item {
-            .md-chip {
-                margin: 0 0 5px 0;
-            }
-
-            padding: 0 !important;
-            min-width: 100%;
-            max-width: 100%;
-        }
-    }
-</style>
 
 <style scoped lang="scss">
     @import '~vue-material/dist/theme/engine';
 
-    .md-content {
-        top: 35px;
+    .login {
+
     }
 
-    @media screen and (max-width: 768px) {
-        .md-button {
-            margin: 1px;
+    .header {
+        position: relative;
+
+        .logo {
+            line-height: normal;
+            top: 20px;
+            margin-right: 10px;
+        }
+
+        .text {
+            top: 10px;
+            width: 100px;
         }
 
         .md-content {
-            top: 0;
-            height: 55px;
+            top: 35px;
         }
 
-        .md-tabs {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
+        @media screen and (max-width: 768px) {
+            .md-button {
+                margin: 1px;
+            }
+
+            .md-content {
+                top: 0;
+                height: 55px;
+            }
+
+            .md-tabs {
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                z-index: 2;
+            }
+        }
+
+        span {
+            color: md-get-palette-color(pink, 200);
+            position: absolute;
             z-index: 2;
+            top: 50%;
+            padding-left: 25px;
+            transform: translate(0, -50%);
+            font-size: 40px;
+        }
+
+        .icons {
+            position: absolute;
+            z-index: 2;
+            top: 50%;
+            transform: translate(0, -50%);
+            right: 0;
+        }
+
+        small {
+            font-size: 20px;
         }
     }
+</style>
 
-    span {
-        color: md-get-palette-color(pink, 200);
-    }
+<style lang="scss">
+    @media screen and (max-width: 768px) {
+        .header {
+            .content {
+                min-height: 50%;
+                max-height: 50%;
+            }
 
-    div {
-        position: relative;
-    }
+            .md-tabs-navigation .md-button {
+                font-size: 10px;
+            }
 
-    span {
-        position: absolute;
-        z-index: 2;
-        top: 50%;
-        padding-left: 25px;
-        transform: translate(0, -50%);
-        font-size: 40px;
-    }
+            .md-layout .md-layout-item {
+                .md-chip {
+                    margin: 0 0 5px 0;
+                }
 
-    .icons {
-        position: absolute;
-        z-index: 2;
-        top: 50%;
-        transform: translate(0, -50%);
-        right: 0;
-    }
-
-    small {
-        font-size: 20px;
+                padding: 0 !important;
+                min-width: 100%;
+                max-width: 100%;
+            }
+        }
     }
 </style>
 
@@ -124,6 +229,42 @@
         methods: {
             changeTheme: function () {
                 this.$store.commit("toggleTheme");
+            },
+
+            toggle() {
+                this.showLogin = false;
+                this.showRegister = true;
+            },
+
+            login() {
+                this.$store.dispatch('getToken', this.loginForm);
+                this.$store.dispatch('getUser');
+                this.showLogin = false;
+            },
+
+            register() {
+                this.$store.dispatch('register', this.registerForm);
+                this.showRegister = false;
+            }
+        },
+
+        data: () => ({
+            showLogin: false,
+            showRegister: false,
+            loginForm: {
+                email: "",
+                password: ""
+            },
+            registerForm: {
+                username: "",
+                email: "",
+                password: ""
+            }
+        }),
+
+        computed: {
+            user() {
+                return this.$store.getters.getUser;
             }
         }
     }

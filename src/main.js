@@ -8,15 +8,23 @@ import './themes/dark.scss'
 import App from './App.vue'
 import Home from './components/Home.vue'
 import MissingPage from './components/MissingPage.vue'
-import WordSearch from './components/WordSearch.vue'
-import KanjiSearch from './components/KanjiSearch'
+import WordSearch from './components/words/Search.vue'
+import KanjiSearch from './components/kanji/Search'
 import Documentation from './components/Documentation'
+import Profile from "./components/Profile";
 import VueRouter from "vue-router";
 import Vuex from 'vuex'
 import VueCookies from 'vue-cookies'
-import SentenceSearch from "./components/SentenceSearch";
+import SentenceSearch from "./components/sentences/Search";
+import axios from 'axios'
+import qs from 'querystring'
 
 Vue.config.productionTip = false;
+
+if (process.env.NODE_ENV !== 'production')
+    Vue.prototype.$hostname = 'http://localhost:8080';
+else
+    Vue.prototype.$hostname = 'https://api.jibiki.app';
 
 Vue.use(VueMaterial);
 Vue.use(VueRouter);
@@ -33,6 +41,7 @@ const router = new VueRouter({
         {path: '/kanji', name: 'kanji', component: KanjiSearch},
         {path: '/sentences', name: 'sentences', component: SentenceSearch},
         {path: '/docs', name: 'docs', component: Documentation},
+        {path: '/profile', name: 'profile', component: Profile},
         {path: '*', component: MissingPage}
     ]
 });
@@ -41,12 +50,17 @@ const store = new Vuex.Store({
     strict: process.env.NODE_ENV !== 'production',
 
     state: {
-        isDark: VueCookies.get("isDark") === "true"
+        isDark: VueCookies.get("isDark") === "true",
+        user: null
     },
 
     getters: {
         isDark: (state) => {
             return state.isDark;
+        },
+
+        getUser: (state) => {
+            return state.user;
         }
     },
 
@@ -59,16 +73,70 @@ const store = new Vuex.Store({
 
             state.isDark = !state.isDark;
             VueCookies.set("isDark", state.isDark);
+        },
+
+        setUser(state, user) {
+            state.user = user;
         }
     },
 
-    actions: {}
+    actions: {
+        getUser(store) {
+            axios.get(
+                Vue.prototype.$hostname + '/users/@me',
+                {
+                    withCredentials: true
+                })
+                .then(response => {
+                    store.commit('setUser', response.data);
+                })
+                .catch(err => {
+                })
+        },
+
+        getToken(store, form) {
+            axios.post(
+                Vue.prototype.$hostname + '/users/login',
+                qs.stringify(form),
+                {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    withCredentials: true
+                })
+                .then(response => {
+                    store.dispatch('getUser')
+                })
+                .catch(err => alert("Invalid email or password"))
+        },
+
+        register(store, form) {
+            axios.post(
+                Vue.prototype.$hostname + '/users/create',
+                qs.stringify(form),
+                {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                })
+                .then(() => {
+                    store.dispatch(
+                        'getToken',
+                        {
+                            email: form.email,
+                            password: form.password
+                        }
+                    );
+                })
+                .catch(() => {
+                    alert("An account with that email already exists")
+                })
+        }
+    }
 });
 
-if (process.env.NODE_ENV !== 'production')
-    Vue.prototype.$hostname = 'http://localhost:8080';
-else
-    Vue.prototype.$hostname = 'https://api.jibiki.app';
+store.dispatch('getUser').then(ignored => {
+});
 
 if (store.getters.isDark)
     Vue.material.theming.theme = "dark";

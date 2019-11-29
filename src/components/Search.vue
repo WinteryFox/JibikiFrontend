@@ -9,10 +9,16 @@
                         :placeholder="label"
                         @input="search"
                         autofocus/>
-                <md-button class="md-icon-button" @click="clear">
+                <md-button class="md-icon-button clear" @click="clear">
                     <md-icon>clear</md-icon>
                 </md-button>
+                <md-button class="md-icon-button filters" @click="filtersExtended = !filtersExtended">
+                    <md-icon>filter_list</md-icon>
+                </md-button>
             </label>
+            <div v-if="filtersExtended">
+                <slot name="filters"/>
+            </div>
         </md-content>
         <md-empty-state
                 v-if="searchField === '' && !isTyping"
@@ -52,7 +58,8 @@
 
         data: () => ({
             searchField: "",
-            isTyping: false
+            isTyping: false,
+            filtersExtended: false
         }),
 
         methods: {
@@ -150,7 +157,7 @@
     .md-progress-spinner {
         z-index: 0;
         position: absolute;
-        margin: 0 45%;
+        margin: 0 calc(50% - 25px);
     }
 
     .bar {
@@ -164,7 +171,13 @@
             vertical-align: sub;
         }
 
-        .md-button {
+        .clear {
+            float: right;
+            position: absolute;
+            margin-left: 40px;
+        }
+
+        .filters {
             float: right;
             position: absolute;
         }
@@ -181,11 +194,16 @@
             color: md-get-color-by-theme(light, text-primary);
         }
 
+        input:focus {
+            outline: none;
+        }
+
         input {
+            outline: none;
             font-size: 20px;
             background: none;
             border: none;
-            width: calc(100% - 85px);
+            width: calc(100% - 120px);
         }
     }
 </style>
