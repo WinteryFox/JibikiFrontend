@@ -31,12 +31,20 @@
                     </md-tooltip>
                     <md-icon>invert_colors</md-icon>
                 </md-button>
-                <md-button @click="showLogin = true" class="md-icon-button">
+                <md-button v-if="this.user === undefined || user === null" @click="showLogin = true" class="md-icon-button">
                     <md-tooltip>
                         Login
                     </md-tooltip>
                     <md-avatar class="md-avatar-icon">
                         A
+                    </md-avatar>
+                </md-button>
+                <md-button v-else class="md-icon-button" to="/profile">
+                    <md-tooltip>
+                        {{this.user.username}}
+                    </md-tooltip>
+                    <md-avatar class="md-avatar-icon">
+                        {{this.user.username[0]}}
                     </md-avatar>
                 </md-button>
             </div>
@@ -75,7 +83,7 @@
                     <md-button @click="showLogin = false" class="md-primary">
                         Close
                     </md-button>
-                    <md-button @click="login" class="md-primary">
+                    <md-button @click="getToken" class="md-primary">
                         Login
                     </md-button>
                 </md-dialog-actions>
@@ -191,23 +199,38 @@
                 this.$store.commit("toggleTheme");
             },
 
-            login() {
+            getToken() {
                 const body = {
                     email: this.form.email,
                     password: this.form.password
                 };
 
-                const headers = {
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    withCredentials: true
-                };
-
-                axios.post(this.$hostname + '/users/login', qs.stringify(body), headers)
+                axios.post(
+                    this.$hostname + '/users/login',
+                    qs.stringify(body),
+                    {
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        withCredentials: true
+                    })
                     .then(ignored => {
-                        axios.get(this.$hostname + '/users/@me')
-                    });
+                        this.login()
+                    })
+                    .catch(err => alert(err.message))
+            },
+
+            login() {
+                axios.get(
+                    this.$hostname + '/users/@me',
+                    {
+                        withCredentials: true
+                    })
+                    .then(response => {
+                        this.user = response.data;
+                        this.showLogin = false;
+                    })
+                    .catch(err => alert(err.message))
             }
         },
 
@@ -218,6 +241,12 @@
                 password: ""
             },
             user: null
-        })
+        }),
+
+        mounted() {
+            if (this.$cookies.get("token") !== null && this.$cookies.get("token") !== undefined) {
+                this.login()
+            }
+        }
     }
 </script>
