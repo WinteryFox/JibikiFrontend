@@ -31,7 +31,7 @@
                     </md-tooltip>
                     <md-icon>invert_colors</md-icon>
                 </md-button>
-                <md-button v-if="this.user === undefined || user === null" @click="showLogin = true"
+                <md-button @click="showLogin = true" v-if="user === undefined || user === null"
                            class="md-icon-button">
                     <md-tooltip>
                         Login or register
@@ -40,10 +40,10 @@
                 </md-button>
                 <md-button v-else class="md-icon-button" to="/profile">
                     <md-tooltip>
-                        {{this.user.username}}
+                        {{user.username}}
                     </md-tooltip>
                     <md-avatar class="md-avatar-icon">
-                        {{this.user.username[0]}}
+                        {{user.username[0]}}
                     </md-avatar>
                 </md-button>
             </div>
@@ -82,10 +82,10 @@
                     <md-button @click="showLogin = false" class="md-primary">
                         Close
                     </md-button>
-                    <md-button @click="showLogin = false; showRegister = true" class="md-primary">
+                    <md-button @click="toggle" class="md-primary">
                         Register
                     </md-button>
-                    <md-button @click="getToken" class="md-primary">
+                    <md-button @click="login" class="md-primary">
                         Login
                     </md-button>
                 </md-dialog-actions>
@@ -228,9 +228,6 @@
 </style>
 
 <script>
-    import axios from 'axios'
-    import qs from 'querystring'
-
     export default {
         name: "Header",
 
@@ -239,53 +236,20 @@
                 this.$store.commit("toggleTheme");
             },
 
-            getToken() {
-                axios.post(
-                    this.$hostname + '/users/login',
-                    qs.stringify(this.loginForm),
-                    {
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        },
-                        withCredentials: true
-                    })
-                    .then(ignored => {
-                        this.login()
-                    })
-                    .catch(err => alert(err.message))
+            toggle() {
+                this.showLogin = false;
+                this.showRegister = true;
             },
 
             login() {
-                axios.get(
-                    this.$hostname + '/users/@me',
-                    {
-                        withCredentials: true
-                    })
-                    .then(response => {
-                        this.user = response.data;
-                        this.showLogin = false;
-                    })
-                    .catch(err => alert(err.message))
+                this.$store.dispatch('getToken', this.loginForm);
+                this.$store.dispatch('getUser');
+                this.showLogin = false;
             },
 
             register() {
-                axios.post(
-                    this.$hostname + '/users/create',
-                    qs.stringify(this.registerForm),
-                    {
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        }
-                    })
-                    .then(response => {
-                        this.showRegister = false;
-                        this.loginForm.email = this.registerForm.email;
-                        this.loginForm.password = this.registerForm.password;
-                        this.getToken();
-                    })
-                    .catch(err => {
-                        alert("An account with that email already exists")
-                    })
+                this.$store.dispatch('register', this.registerForm);
+                this.showRegister = false;
             }
         },
 
@@ -300,13 +264,12 @@
                 username: "",
                 email: "",
                 password: ""
-            },
-            user: null
+            }
         }),
 
-        mounted() {
-            if (this.$cookies.get("token") !== null && this.$cookies.get("token") !== undefined) {
-                this.login()
+        computed: {
+            user() {
+                return this.$store.getters.getUser;
             }
         }
     }
