@@ -2,8 +2,8 @@
     <div class="header">
         <md-content>
             <span>
-                <img alt="jibiki logo" class="logo" src="/icons/fox.svg">
-                <img alt="jibiki text" class="text" src="/icons/jibiki.svg">
+                <img alt="jibiki logo" class="logo" src="/icons/fox.svg"/>
+                <h3>Jibiki</h3>
                 <small>BETA</small>
             </span>
             <div class="icons">
@@ -31,13 +31,12 @@
                     </md-tooltip>
                     <md-icon>invert_colors</md-icon>
                 </md-button>
-                <md-button v-if="this.user === undefined || user === null" @click="showLogin = true" class="md-icon-button">
+                <md-button v-if="this.user === undefined || user === null" @click="showLogin = true"
+                           class="md-icon-button">
                     <md-tooltip>
-                        Login
+                        Login or register
                     </md-tooltip>
-                    <md-avatar class="md-avatar-icon">
-                        A
-                    </md-avatar>
+                    <md-icon>account_circle</md-icon>
                 </md-button>
                 <md-button v-else class="md-icon-button" to="/profile">
                     <md-tooltip>
@@ -65,15 +64,15 @@
                 <md-dialog-content>
                     <md-field>
                         <label>Email</label>
-                        <md-input name="username" required v-model="form.email"/>
-                        <span class="md-error" v-if="form.email">
+                        <md-input name="username" required v-model="loginForm.email"/>
+                        <span class="md-error" v-if="loginForm.email">
                             Email is required
                         </span>
                     </md-field>
                     <md-field>
                         <label>Password</label>
-                        <md-input name="password" required type="password" v-model="form.password"/>
-                        <span class="md-error" v-if="form.password">
+                        <md-input name="password" required type="password" v-model="loginForm.password"/>
+                        <span class="md-error">
                             Password is required
                         </span>
                     </md-field>
@@ -83,8 +82,49 @@
                     <md-button @click="showLogin = false" class="md-primary">
                         Close
                     </md-button>
+                    <md-button @click="showLogin = false; showRegister = true" class="md-primary">
+                        Register
+                    </md-button>
                     <md-button @click="getToken" class="md-primary">
                         Login
+                    </md-button>
+                </md-dialog-actions>
+            </md-dialog>
+            <md-dialog :md-active.sync="showRegister">
+                <md-dialog-title>
+                    Register
+                </md-dialog-title>
+
+                <md-dialog-content>
+                    <md-field>
+                        <label>Username</label>
+                        <md-input name="username" required v-model="registerForm.username"/>
+                        <span class="md-error" v-if="registerForm.username">
+                            Username is required
+                        </span>
+                    </md-field>
+                    <md-field>
+                        <label>Email</label>
+                        <md-input name="email" required v-model="registerForm.email"/>
+                        <span class="md-error" v-if="registerForm.email">
+                            Email is required
+                        </span>
+                    </md-field>
+                    <md-field>
+                        <label>Password</label>
+                        <md-input name="password" type="password" required v-model="registerForm.password"/>
+                        <span class="md-error" v-if="registerForm.password">
+                            Password is required
+                        </span>
+                    </md-field>
+                </md-dialog-content>
+
+                <md-dialog-actions>
+                    <md-button @click="showRegister = false" class="md-primary">
+                        Close
+                    </md-button>
+                    <md-button @click="register" class="md-primary">
+                        Register
                     </md-button>
                 </md-dialog-actions>
             </md-dialog>
@@ -200,14 +240,9 @@
             },
 
             getToken() {
-                const body = {
-                    email: this.form.email,
-                    password: this.form.password
-                };
-
                 axios.post(
                     this.$hostname + '/users/login',
-                    qs.stringify(body),
+                    qs.stringify(this.loginForm),
                     {
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded'
@@ -231,12 +266,38 @@
                         this.showLogin = false;
                     })
                     .catch(err => alert(err.message))
+            },
+
+            register() {
+                axios.post(
+                    this.$hostname + '/users/create',
+                    qs.stringify(this.registerForm),
+                    {
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        }
+                    })
+                    .then(response => {
+                        this.showRegister = false;
+                        this.loginForm.email = this.registerForm.email;
+                        this.loginForm.password = this.registerForm.password;
+                        this.getToken();
+                    })
+                    .catch(err => {
+                        alert("An account with that email already exists")
+                    })
             }
         },
 
         data: () => ({
             showLogin: false,
-            form: {
+            showRegister: false,
+            loginForm: {
+                email: "",
+                password: ""
+            },
+            registerForm: {
+                username: "",
                 email: "",
                 password: ""
             },
