@@ -3,6 +3,12 @@
         <div class="md-layout">
             <div class="md-layout-item md-size-20">
                 <h1 class="kanji">{{kanji.literal}}</h1>
+                <div class="buttons">
+                    <md-button
+                            :to="'/words?query=' + encodeURIComponent(kanji.literal + '*')">
+                        View words
+                    </md-button>
+                </div>
                 <div class="chip">
                     <md-chip v-if="kanji.radicalName != null" class="md-raised md-primary">
                         {{kanji.radicalName}}
@@ -76,6 +82,11 @@
 <style scoped lang="scss">
     .md-layout {
         margin: 15px 30px;
+
+        .buttons .md-button {
+            margin-left: 0;
+            background-color: rgba(white, 0.1);
+        }
 
         .kanji {
             margin: 10px 0 0;
