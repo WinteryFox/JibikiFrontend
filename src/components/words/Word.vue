@@ -10,13 +10,13 @@
 
                 <div class="buttons">
                     <md-button
-                            v-if="word.forms[0].kanji != null"
-                            :to="'/sentences?query=' + encodeURIComponent(word.forms[0].kanji)">
+                            v-if="word.forms[0].kanji == null || word.senses[0].misc === 'word usually written using kana alone'"
+                            :to="'/sentences?query=' + encodeURIComponent(word.forms[0].reading)">
                         View sentences
                     </md-button>
                     <md-button
                             v-else
-                            :to="'/sentences?query=' + encodeURIComponent(word.forms[0].reading)">
+                            :to="'/sentences?query=' + encodeURIComponent(word.forms[0].kanji)">
                         View sentences
                     </md-button>
                 </div>
