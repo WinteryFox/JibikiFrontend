@@ -127,6 +127,9 @@
                 </md-dialog-actions>
             </md-dialog>
         </div>
+        <md-snackbar md-position="center" :md-active.sync="showSnackbar" md-persistent>
+            <span v-if="user != null">Welcome {{user.username}}!</span>
+        </md-snackbar>
     </div>
 </template>
 
@@ -240,6 +243,7 @@
                 this.$store.dispatch('getToken', this.loginForm);
                 this.$store.dispatch('getUser');
                 this.showLogin = false;
+                this.showSnackbar = true;
             },
 
             register() {
@@ -251,6 +255,7 @@
         data: () => ({
             showLogin: false,
             showRegister: false,
+            showSnackbar: false,
             loginForm: {
                 email: "",
                 password: ""

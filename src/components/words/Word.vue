@@ -7,6 +7,19 @@
                 <div class="kanji" v-else>{{word.forms[0].reading}}</div>
                 <div class="note" v-if="word.forms[0].kanji_info != null">{{word.forms[0].kanjiInfo}}</div>
                 <div class="note" v-if="word.forms[0].reading_info != null">{{word.forms[0].readingInfo}}</div>
+
+                <div class="buttons">
+                    <md-button
+                            v-if="word.forms[0].kanji != null"
+                            :to="'/sentences?query=' + encodeURIComponent(word.forms[0].kanji)">
+                        View sentences
+                    </md-button>
+                    <md-button
+                            v-else
+                            :to="'/sentences?query=' + encodeURIComponent(word.forms[0].reading)">
+                        View sentences
+                    </md-button>
+                </div>
             </div>
 
             <div class="md-layout-item md-size-60">
@@ -42,10 +55,15 @@
 </template>
 
 <style scoped lang="scss">
-    @import '../../../node_modules/vue-material/dist/theme/engine';
+    @import '~vue-material/dist/theme/engine';
 
     .md-layout {
         margin: 15px 30px;
+
+        .buttons .md-button {
+            margin-left: 0;
+            background-color: rgba(white, 0.1);
+        }
 
         .md-layout-item {
             padding: 20px 0;
