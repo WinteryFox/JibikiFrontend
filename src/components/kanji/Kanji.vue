@@ -51,12 +51,12 @@
 
             <div class="md-layout-item md-size-20">
                 <div>
-                    <p v-if="kanji.kunyomi.length > 0">Kunyomi</p>
-                    <p>{{kanji.kunyomi.join(', ')}}</p>
-                </div>
-                <div>
                     <p v-if="kanji.onyomi.length > 0">Onyomi</p>
                     <p>{{kanji.onyomi.join(', ')}}</p>
+                </div>
+                <div>
+                    <p v-if="kanji.kunyomi.length > 0">Kunyomi</p>
+                    <p>{{kanji.kunyomi.join(', ')}}</p>
                 </div>
             </div>
         </div>
