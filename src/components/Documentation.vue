@@ -102,6 +102,19 @@
 
     .md-layout {
         margin: 15px;
+
+        @media screen and (max-width: 768px) {
+            div {
+                padding: 0 !important;
+                text-align: center;
+                min-width: 100%;
+                max-width: 100%;
+            }
+
+            pre code {
+                text-align: left;
+            }
+        }
     }
 </style>
 

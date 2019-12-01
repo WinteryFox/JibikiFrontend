@@ -83,9 +83,23 @@
     .md-layout {
         margin: 15px 30px;
 
+        @media screen and (max-width: 768px) {
+            div {
+                padding: 0 !important;
+                text-align: center;
+                min-width: 100%;
+                max-width: 100%;
+            }
+
+            .chip {
+                margin-bottom: 5px;
+            }
+        }
+
         .buttons .md-button {
             margin-left: 0;
             background-color: rgba(white, 0.1);
+            z-index: 1;
         }
 
         .kanji {
