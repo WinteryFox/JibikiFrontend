@@ -56,6 +56,7 @@
 
         .md-icon-button {
             margin: 15px auto;
+            z-index: 1;
         }
 
         .md-divider {
