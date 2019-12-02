@@ -12,7 +12,7 @@
                 <md-button class="md-icon-button clear" @click="clear">
                     <md-icon>clear</md-icon>
                 </md-button>
-                <md-button class="md-icon-button filters" @click="filtersExtended = !filtersExtended">
+                <md-button @click="filtersExtended = !filtersExtended" class="md-icon-button filters" v-if="!noFilters">
                     <md-icon>filter_list</md-icon>
                 </md-button>
             </label>
@@ -20,21 +20,23 @@
                 <slot name="filters"/>
             </div>
         </md-content>
-        <md-empty-state
-                v-if="searchField === '' && !isTyping"
-                md-icon="search"
-                md-label="Time to start searching!"
-                md-description="Start typing above to search for anything and everything you want!"/>
-        <md-empty-state
-                v-if="searchField !== '' && isEmpty() && !isTyping && !searching"
-                md-icon="clear"
-                md-label="No results!"
-                md-description="Maybe try searching for something else?"/>
-        <md-progress-spinner
-                v-if="searching"
-                md-mode="indeterminate"/>
-        <div class="content">
-            <slot/>
+        <div v-if="!noState">
+            <md-empty-state
+                    md-description="Start typing above to search for anything and everything you want!"
+                    md-icon="search"
+                    md-label="Time to start searching!"
+                    v-if="searchField === '' && !isTyping"/>
+            <md-empty-state
+                    md-description="Maybe try searching for something else?"
+                    md-icon="clear"
+                    md-label="No results!"
+                    v-if="searchField !== '' && isEmpty() && !isTyping && !searching"/>
+            <md-progress-spinner
+                    md-mode="indeterminate"
+                    v-if="searching"/>
+            <div class="content">
+                <slot/>
+            </div>
         </div>
     </div>
 </template>
@@ -51,6 +53,14 @@
                 default: "Type here to search"
             },
             searching: {
+                type: Boolean,
+                default: false
+            },
+            noState: {
+                type: Boolean,
+                default: false
+            },
+            noFilters: {
                 type: Boolean,
                 default: false
             }

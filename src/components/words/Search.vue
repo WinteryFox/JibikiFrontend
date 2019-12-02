@@ -5,8 +5,8 @@
                 :searching="isSearching"
                 @search="getWord">
             <Word
-                    v-bind:word="word"
-                    v-bind:key="word.id"
+                    :key="word.id"
+                    :word="word"
                     v-for="word in words"/>
         </Search>
     </div>
