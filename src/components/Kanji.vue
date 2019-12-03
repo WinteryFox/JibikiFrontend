@@ -5,7 +5,7 @@
                 <h1 class="kanji">{{kanji.literal}}</h1>
                 <div class="buttons">
                     <md-button
-                            :to="'/words?query=' + encodeURIComponent(kanji.literal + '*')">
+                            :to="'/?query=' + encodeURIComponent(kanji.literal + '*') + '&type=words'">
                         View words
                     </md-button>
                 </div>

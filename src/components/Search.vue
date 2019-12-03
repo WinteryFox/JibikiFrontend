@@ -4,7 +4,7 @@
             <label>
                 <md-icon>search</md-icon>
                 <md-field class="type">
-                    <md-select id="type" name="type" v-model="settings.type">
+                    <md-select @md-selected="search" id="type" name="type" v-model="settings.type">
                         <md-option value="all">All</md-option>
                         <md-option value="words">Words</md-option>
                         <md-option value="kanji">Kanji</md-option>
@@ -99,17 +99,10 @@
             },
 
             typing: debounce(function () {
-                if (this.settings.query !== "") {
-                    this.$router.push({
-                        name: this.$router.currentRoute.name,
-                        query: {query: this.settings.query}
-                    });
-                } else {
-                    this.$router.push({
-                        name: this.$router.currentRoute.name,
-                        query: {}
-                    });
-                }
+                this.$router.push({
+                    name: this.$router.currentRoute.name,
+                    query: this.settings
+                });
                 this.isTyping = false;
             }, 500),
 
@@ -127,21 +120,24 @@
 
         watch: {
             $route(to) {
-                if (this.$route.query.query !== undefined && this.$route.query.query !== null) {
-                    this.settings.query = to.query.query;
-                } else {
-                    this.settings.query = ""
-                }
+                if (this.$route.query.query !== undefined)
+                    this.settings.query = this.$route.query.query;
+
+                if (this.$route.query.type !== undefined)
+                    this.settings.type = this.$route.query.type;
+
                 this.$emit("search", this.settings);
             }
         },
 
         mounted() {
-            if (this.$route.query.query !== undefined && this.$route.query.query !== null) {
+            if (this.$route.query.query !== undefined)
                 this.settings.query = this.$route.query.query;
-                this.$emit("search", this.settings);
-            }
 
+            if (this.$route.query.type !== undefined)
+                this.settings.type = this.$route.query.type;
+
+            this.$emit("search", this.settings);
             this.$el.getElementsByTagName("input")[2].focus();
         }
     }

@@ -2,7 +2,24 @@
     <div>
         <Search
                 @search="search">
-            <All :key="word.id" :sentence="word.sentence" :word="word" v-for="word in words"/>
+            <div v-if="settings.type === 'words'">
+                <Word
+                        :key="word.id"
+                        :word="word"
+                        v-for="word in words"/>
+            </div>
+            <div v-if="settings.type === 'kanji'">
+                <Kanji
+                        :kanji="kanji"
+                        :key="kanji.id"
+                        v-for="kanji in kanji"/>
+            </div>
+            <div v-if="settings.type === 'sentences'">
+                <Sentence
+                        :key="sentence.id"
+                        :sentence="sentence"
+                        v-for="sentence in sentences"/>
+            </div>
         </Search>
     </div>
 </template>
@@ -10,44 +27,57 @@
 <script>
     import axios from 'axios';
     import Search from "./Search";
-    import All from "./All";
+    import Word from "./Word";
+    import Kanji from "./Kanji";
+    import Sentence from "./Sentence";
 
     export default {
         name: "Home",
 
         components: {
-            All,
-            Search
+            Search,
+            Sentence,
+            Kanji,
+            Word
         },
 
         data: () => ({
-            words: []
+            settings: {},
+            words: [],
+            kanji: [],
+            sentences: []
         }),
 
         methods: {
-            search(query) {
-                axios.get(this.$hostname + '/words?query=' + encodeURIComponent(query))
-                    .then(response => this.words = response.data)
+            search(settings) {
+                this.settings = {};
+                this.words = [];
+                this.kanji = [];
+                this.sentences = [];
+
+                if (settings.type === 'words')
+                    axios.get(this.$hostname + '/words?query=' + encodeURIComponent(settings.query))
+                        .then(response => {
+                            this.settings = settings;
+                            this.words = response.data;
+                        });
+                else if (settings.type === 'kanji')
+                    axios.get(this.$hostname + '/kanji?query=' + encodeURIComponent(settings.query))
+                        .then(response => {
+                            this.settings = settings;
+                            this.kanji = response.data;
+                        });
+                else if (settings.type === 'sentences')
+                    axios.get(this.$hostname + '/sentences?query=' + encodeURIComponent(settings.query))
+                        .then(response => {
+                            this.settings = settings;
+                            this.sentences = response.data;
+                        });
             }
         }
     }
 </script>
 
 <style scoped lang="scss">
-    .md-content {
-        margin: 30px;
-        line-height: normal;
-    }
 
-    .md-alignment-top-center {
-        text-align: center
-    }
-
-    .md-icon {
-        margin: 0;
-    }
-
-    .bar {
-        margin: 0;
-    }
 </style>
