@@ -3,9 +3,17 @@
         <md-content class="bar">
             <label>
                 <md-icon>search</md-icon>
+                <md-field class="type">
+                    <md-select id="type" name="type" v-model="settings.type">
+                        <md-option value="all">All</md-option>
+                        <md-option value="words">Words</md-option>
+                        <md-option value="kanji">Kanji</md-option>
+                        <md-option value="sentences">Sentences</md-option>
+                    </md-select>
+                </md-field>
                 <input
                         accept="text/plain"
-                        v-model="searchField"
+                        v-model="settings.query"
                         :placeholder="label"
                         @input="search"
                         autofocus/>
@@ -25,12 +33,12 @@
                     md-description="Start typing above to search for anything and everything you want!"
                     md-icon="search"
                     md-label="Time to start searching!"
-                    v-if="searchField === '' && !isTyping"/>
+                    v-if="settings.query === '' && !isTyping"/>
             <md-empty-state
                     md-description="Maybe try searching for something else?"
                     md-icon="clear"
                     md-label="No results!"
-                    v-if="searchField !== '' && isEmpty() && !isTyping && !searching"/>
+                    v-if="settings.query !== '' && isEmpty() && !isTyping && !searching"/>
             <md-progress-spinner
                     md-mode="indeterminate"
                     v-if="searching"/>
@@ -67,19 +75,22 @@
         },
 
         data: () => ({
-            searchField: "",
             isTyping: false,
-            filtersExtended: false
+            filtersExtended: false,
+            settings: {
+                query: "",
+                type: "all"
+            }
         }),
 
         methods: {
             clear() {
-                if (this.searchField !== "") {
+                if (this.settings.query !== "") {
                     this.$router.push({
                         name: this.$router.currentRoute.name,
                         query: {}
                     });
-                    this.searchField = "";
+                    this.settings.query = "";
                 }
             },
 
@@ -88,10 +99,10 @@
             },
 
             typing: debounce(function () {
-                if (this.searchField !== "") {
+                if (this.settings.query !== "") {
                     this.$router.push({
                         name: this.$router.currentRoute.name,
-                        query: {query: this.searchField}
+                        query: {query: this.settings.query}
                     });
                 } else {
                     this.$router.push({
@@ -115,42 +126,23 @@
         },
 
         watch: {
-            isDark: function () {
-                const input = this.$el.getElementsByTagName("input")[0];
-
-                if (input.classList.contains("dark")) {
-                    input.classList.remove("dark");
-                    input.classList.add("light");
-                } else {
-                    input.classList.remove("light");
-                    input.classList.add("dark");
-                }
-            },
-
             $route(to) {
                 if (this.$route.query.query !== undefined && this.$route.query.query !== null) {
-                    this.searchField = to.query.query;
+                    this.settings.query = to.query.query;
                 } else {
-                    this.searchField = ""
+                    this.settings.query = ""
                 }
-                this.$emit("search", this.searchField);
+                this.$emit("search", this.settings);
             }
         },
 
         mounted() {
             if (this.$route.query.query !== undefined && this.$route.query.query !== null) {
-                this.searchField = this.$route.query.query;
-                this.$emit("search", this.searchField);
+                this.settings.query = this.$route.query.query;
+                this.$emit("search", this.settings);
             }
 
-            const input = this.$el.getElementsByTagName("input")[0];
-
-            if (this.isDark)
-                input.classList.add("dark");
-            else
-                input.classList.remove("light");
-
-            input.focus();
+            this.$el.getElementsByTagName("input")[2].focus();
         }
     }
 </script>
@@ -172,9 +164,17 @@
 
     .bar {
         margin: 40px auto;
-        width: 50%;
+        width: 60%;
         border: 1px solid gray;
         border-radius: 25px;
+
+        .type {
+            width: 100px;
+            margin: 0;
+            padding: 0;
+            min-height: 0;
+            display: inline-block;
+        }
 
         .md-icon {
             padding: 20px;
@@ -192,28 +192,22 @@
             position: absolute;
         }
 
-        ::placeholder {
-            font-size: 14px;
-        }
-
-        .dark {
-            color: md-get-color-by-theme(dark, text-primary);
-        }
-
-        .light {
-            color: md-get-color-by-theme(light, text-primary);
-        }
-
         input:focus {
             outline: none;
         }
 
         input {
+            color: inherit;
             outline: none;
             font-size: 20px;
             background: none;
             border: none;
-            width: calc(100% - 120px);
+            width: calc(80% - 105px);
+        }
+
+        ::placeholder {
+            color: inherit;
+            font-size: 20px;
         }
     }
 </style>

@@ -1,43 +1,33 @@
 <template>
     <div>
-        <div class="bars">
-            <Search
-                    @search="search"
-                    label="Type here to search words"
-                    no-filters
-                    no-state/>
-        </div>
-        <md-content>
-            <div class="md-layout md-alignment-top-center">
-                <h1>Welcome to Jibiki</h1>
-            </div>
-            <div class="md-layout md-alignment-top-center">
-                Jibiki is an open-source free-to-use Japanese - English dictionary website
-                and API. To start searching millions of words, kanji and sentences click
-                on one of section you'd like to search for in the navigation bar.
-            </div>
-        </md-content>
+        <Search
+                @search="search">
+            <All :key="word.id" :sentence="word.sentence" :word="word" v-for="word in words"/>
+        </Search>
     </div>
 </template>
 
 <script>
+    import axios from 'axios';
     import Search from "./Search";
+    import All from "./All";
 
     export default {
         name: "Home",
 
         components: {
+            All,
             Search
         },
 
+        data: () => ({
+            words: []
+        }),
+
         methods: {
-            search(input) {
-                this.$router.push({
-                    name: 'words',
-                    query: {
-                        query: input
-                    }
-                })
+            search(query) {
+                axios.get(this.$hostname + '/words?query=' + encodeURIComponent(query))
+                    .then(response => this.words = response.data)
             }
         }
     }
