@@ -119,7 +119,7 @@
         },
 
         watch: {
-            $route(to) {
+            $route() {
                 if (this.$route.query.query !== undefined)
                     this.settings.query = this.$route.query.query;
 

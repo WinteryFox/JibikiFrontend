@@ -7,7 +7,7 @@
                     <md-tooltip>
                         Join Discord server
                     </md-tooltip>
-                    <md-icon md-src="https://discordapp.com/assets/f8389ca1a741a115313bede9ac02e2c0.svg"/>
+                    <md-icon md-src="/discord.svg"/>
                 </md-button>
                 <md-button class="md-icon-button patreon" href="https://patreon.com/Jibiki" target="_blank">
                     <md-tooltip>
