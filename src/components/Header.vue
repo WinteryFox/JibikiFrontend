@@ -1,7 +1,7 @@
 <template>
     <div class="header">
         <md-content>
-            <h3 class="logo">Jibiki <small class="text">BETA</small></h3>
+            <h3>Jibiki <small>BETA</small></h3>
             <div class="icons">
                 <md-button class="md-icon-button discord" href="https://discord.gg/aKTwN5c" target="_blank">
                     <md-tooltip>
@@ -130,11 +130,8 @@
     .header {
         position: relative;
 
-        .logo {
-            line-height: normal;
-        }
-
         h3 {
+            line-height: normal;
             color: md-get-palette-color(pink, 200);
             font-size: 40px;
             margin: 0;
@@ -145,7 +142,7 @@
             position: absolute;
             top: 50%;
             transform: translate(0, -50%);
-            right: 0;
+            right: 10px;
         }
 
         small {
@@ -161,7 +158,7 @@
                 padding: 10px 20px;
             }
 
-            .text {
+            small {
                 display: none;
             }
         }
