@@ -1,7 +1,12 @@
 <template>
     <div class="md-layout">
-        <Word :word="word"/>
-        <Sentence :sentence="sentence"/>
+        <div class="md-layout-item">
+            <Word :word="all.word"/>
+            <Sentence :sentence="all.sentence"/>
+        </div>
+        <div class="md-layout-item">
+            <Kanji :kanji="kanji" :key="kanji.id" v-for="kanji in all.kanji"/>
+        </div>
     </div>
 </template>
 
@@ -20,10 +25,7 @@
         },
 
         props: {
-            word: {
-                type: Object
-            },
-            sentence: {
+            all: {
                 type: Object
             }
         }
