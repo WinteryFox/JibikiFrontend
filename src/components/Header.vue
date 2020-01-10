@@ -1,15 +1,13 @@
 <template>
     <div class="header">
         <md-content>
-            <span>
-                <h3 class="logo">Jibiki <small class="text">BETA</small></h3>
-            </span>
+            <h3>Jibiki <small>BETA</small></h3>
             <div class="icons">
                 <md-button class="md-icon-button discord" href="https://discord.gg/aKTwN5c" target="_blank">
                     <md-tooltip>
                         Join Discord server
                     </md-tooltip>
-                    <md-icon md-src="https://discordapp.com/assets/f8389ca1a741a115313bede9ac02e2c0.svg"/>
+                    <md-icon md-src="/discord.svg"/>
                 </md-button>
                 <md-button class="md-icon-button patreon" href="https://patreon.com/Jibiki" target="_blank">
                     <md-tooltip>
@@ -46,13 +44,6 @@
                 </md-button>
             </div>
         </md-content>
-        <md-tabs md-alignment="centered" md-sync-route>
-            <md-tab id="tab-home" md-label="Home" to="/" md-icon="home" exact/>
-            <md-tab id="tab-words" md-label="Words" to="/words" md-icon="translate"/>
-            <md-tab id="tab-kanji" md-label="Kanji" to="/kanji" md-icon="/kanji.svg"/>
-            <md-tab id="tab-sentences" md-label="Sentences" to="/sentences" md-icon="translate"/>
-            <md-tab id="tab-documentation" md-label="Developer" to="/docs" md-icon="library_books"/>
-        </md-tabs>
         <div class="login">
             <md-dialog :md-active.sync="showLogin">
                 <md-dialog-title>
@@ -136,26 +127,26 @@
 <style scoped lang="scss">
     @import '~vue-material/dist/theme/engine';
 
-    .login {
-
-    }
-
     .header {
         position: relative;
 
-        .logo {
+        h3 {
             line-height: normal;
-            top: 20px;
-            margin-right: 10px;
+            color: md-get-palette-color(pink, 200);
+            font-size: 40px;
+            margin: 0;
+            padding: 10px 40px;
         }
 
-        .text {
-            top: 10px;
-            width: 100px;
+        .icons {
+            position: absolute;
+            top: 50%;
+            transform: translate(0, -50%);
+            right: 10px;
         }
 
-        .md-content {
-            top: 35px;
+        small {
+            font-size: 20px;
         }
 
         @media screen and (max-width: 768px) {
@@ -163,43 +154,13 @@
                 margin: 1px;
             }
 
-            .md-content {
-                top: 0;
-                height: 55px;
+            h3 {
+                padding: 10px 20px;
             }
 
-            .md-tabs {
-                position: fixed;
-                bottom: 0;
-                width: 100%;
-                z-index: 2;
-            }
-
-            .text {
+            small {
                 display: none;
             }
-        }
-
-        span {
-            color: md-get-palette-color(pink, 200);
-            position: absolute;
-            z-index: 2;
-            top: 50%;
-            padding-left: 25px;
-            transform: translate(0, -50%);
-            font-size: 40px;
-        }
-
-        .icons {
-            position: absolute;
-            z-index: 2;
-            top: 50%;
-            transform: translate(0, -50%);
-            right: 0;
-        }
-
-        small {
-            font-size: 20px;
         }
     }
 </style>

@@ -8,14 +8,11 @@ import './themes/dark.scss'
 import App from './App.vue'
 import Home from './components/Home.vue'
 import MissingPage from './components/MissingPage.vue'
-import WordSearch from './components/words/Search.vue'
-import KanjiSearch from './components/kanji/Search'
 import Documentation from './components/Documentation'
 import Profile from "./components/Profile";
 import VueRouter from "vue-router";
 import Vuex from 'vuex'
 import VueCookies from 'vue-cookies'
-import SentenceSearch from "./components/sentences/Search";
 import axios from 'axios'
 import qs from 'querystring'
 
@@ -36,10 +33,7 @@ VueCookies.config(-1);
 const router = new VueRouter({
     mode: 'history',
     routes: [
-        {path: '/', name: '', component: Home},
-        {path: '/words', name: 'words', component: WordSearch},
-        {path: '/kanji', name: 'kanji', component: KanjiSearch},
-        {path: '/sentences', name: 'sentences', component: SentenceSearch},
+        {path: '/', name: '/', component: Home},
         {path: '/docs', name: 'docs', component: Documentation},
         {path: '/profile', name: 'profile', component: Profile},
         {path: '*', component: MissingPage}

@@ -5,45 +5,45 @@
                 <h1 class="kanji">{{kanji.literal}}</h1>
                 <div class="buttons">
                     <md-button
-                            :to="'/words?query=' + encodeURIComponent(kanji.literal + '*')">
+                            :to="'/?query=' + encodeURIComponent(kanji.literal + '*') + '&type=words'">
                         View words
                     </md-button>
                 </div>
                 <div class="chip">
-                    <md-chip v-if="kanji.radicalName != null" class="md-raised md-primary">
-                        {{kanji.radicalName}}
+                    <md-chip class="md-raised md-primary" v-if="kanji.miscellaneous.radicalName != null">
+                        {{kanji.miscellaneous.radicalName}}
                         <md-tooltip>
                             The name of this kanji as radical
                         </md-tooltip>
                     </md-chip>
                 </div>
                 <div class="chip">
-                    <md-chip v-if="kanji.grade != null" class="md-raised md-primary">
-                        Grade {{kanji.grade}}
+                    <md-chip class="md-raised md-primary" v-if="kanji.miscellaneous.grade != null">
+                        Grade {{kanji.miscellaneous.grade}}
                         <md-tooltip>
                             The grade in which the kanji is taught in school
                         </md-tooltip>
                     </md-chip>
                 </div>
                 <div class="chip">
-                    <md-chip v-if="kanji.jlpt != null" class="md-raised md-primary">
-                        JLPT N{{kanji.jlpt}}
+                    <md-chip class="md-raised md-primary" v-if="kanji.miscellaneous.jlpt != null">
+                        JLPT N{{kanji.miscellaneous.jlpt}}
                         <md-tooltip>
                             The JLPT level this kanji is in
                         </md-tooltip>
                     </md-chip>
                 </div>
                 <div class="chip">
-                    <md-chip v-if="kanji.strokeCount != null" class="md-raised md-primary">
-                        {{kanji.strokeCount}} strokes
+                    <md-chip class="md-raised md-primary" v-if="kanji.miscellaneous.strokeCount != null">
+                        {{kanji.miscellaneous.strokeCount}} strokes
                         <md-tooltip>
                             The amount of strokes this kanji contains
                         </md-tooltip>
                     </md-chip>
                 </div>
                 <div class="chip">
-                    <md-chip v-if="kanji.frequency != null" class="md-raised md-primary">
-                        #{{kanji.frequency}}
+                    <md-chip class="md-raised md-primary" v-if="kanji.miscellaneous.frequency != null">
+                        #{{kanji.miscellaneous.frequency}}
                         <md-tooltip>
                             The frequency of this kanji
                         </md-tooltip>
@@ -52,17 +52,17 @@
             </div>
 
             <div class="md-layout-item md-size-60">
-                <div class="meaning" v-for="(meaning, i) in kanji.meaning">{{i + 1}}. {{meaning}}</div>
+                <div class="meaning" v-for="(definition, i) in kanji.definitions">{{i + 1}}. {{definition}}</div>
             </div>
 
             <div class="md-layout-item md-size-20">
                 <div>
-                    <p v-if="kanji.onyomi.length > 0">Onyomi</p>
-                    <p>{{kanji.onyomi.join(', ')}}</p>
+                    <p v-if="kanji.readings.onyomi.length > 0">Onyomi</p>
+                    <p>{{kanji.readings.onyomi.join(', ')}}</p>
                 </div>
                 <div>
-                    <p v-if="kanji.kunyomi.length > 0">Kunyomi</p>
-                    <p>{{kanji.kunyomi.join(', ')}}</p>
+                    <p v-if="kanji.readings.kunyomi.length > 0">Kunyomi</p>
+                    <p>{{kanji.readings.kunyomi.join(', ')}}</p>
                 </div>
             </div>
         </div>
