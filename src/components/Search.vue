@@ -79,7 +79,7 @@
             filtersExtended: false,
             settings: {
                 query: "",
-                type: "all"
+                type: "words"
             }
         }),
 
