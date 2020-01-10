@@ -2,6 +2,9 @@
   "parserOptions": {
     "parser": "babel-eslint"
   },
+  "plugins": [
+    "vue"
+  ],
   "rules": {
     "vue/no-use-v-if-with-v-for": "off"
   }
