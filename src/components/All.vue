@@ -2,7 +2,7 @@
     <div class="md-layout">
         <div class="md-layout-item">
             <Word :word="all.word"/>
-            <Sentence :sentence="all.sentence"/>
+            <Sentence v-if="all.sentence !== null" :sentence="all.sentence"/>
         </div>
         <div class="md-layout-item">
             <Kanji :kanji="kanji" :key="kanji.id" v-for="kanji in all.kanji"/>
