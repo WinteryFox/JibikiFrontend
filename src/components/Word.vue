@@ -42,7 +42,7 @@
                 </div>
             </div>
 
-            <div class="md-layout-item md-size-20">
+            <div class="md-layout-item md-size-15">
                 <div v-if="word.forms.length > 1">Other forms</div>
                 <div v-for="(form, i) in word.forms" v-if="i > 0">
                     <div>
@@ -50,6 +50,17 @@
                         【{{form.reading.literal}}】 <span class="note">{{form.reading.info}}</span>
                     </div>
                 </div>
+            </div>
+
+            <div class="md-layout-item md-size-5">
+                <md-button class="md-icon-button" @click="bookmark">
+                    <md-icon v-if="!isBookmarked">
+                        star_border
+                    </md-icon>
+                    <md-icon v-else>
+                        star
+                    </md-icon>
+                </md-button>
             </div>
         </div>
     </md-content>
@@ -108,8 +119,25 @@
 <script>
     export default {
         name: "Word",
+
         props: {
             word: Object
+        },
+
+        methods: {
+            bookmark() {
+                this.$store.dispatch('toggleBookmark', {type: 0, bookmark: this.word.id});
+            }
+        },
+
+        computed: {
+            isBookmarked() {
+                let bookmarks = this.$store.getters.getBookmarks;
+                if (bookmarks === null)
+                    return false;
+
+                return bookmarks.words.includes(this.word.id);
+            }
         }
     }
 </script>

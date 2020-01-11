@@ -55,15 +55,26 @@
                 <div class="meaning" v-for="(definition, i) in kanji.definitions">{{i + 1}}. {{definition}}</div>
             </div>
 
-            <div class="md-layout-item md-size-20">
+            <div class="md-layout-item md-size-15">
                 <div>
-                    <p v-if="kanji.readings.onyomi.length > 0">Onyomi</p>
-                    <p>{{kanji.readings.onyomi.join(', ')}}</p>
+                    <div class="reading" v-if="kanji.readings.onyomi.length > 0">Onyomi</div>
+                    <div>{{kanji.readings.onyomi.join(', ')}}</div>
                 </div>
                 <div>
-                    <p v-if="kanji.readings.kunyomi.length > 0">Kunyomi</p>
-                    <p>{{kanji.readings.kunyomi.join(', ')}}</p>
+                    <div class="reading" v-if="kanji.readings.kunyomi.length > 0">Kunyomi</div>
+                    <div>{{kanji.readings.kunyomi.join(', ')}}</div>
                 </div>
+            </div>
+
+            <div class="md-layout-item md-size-5">
+                <md-button class="md-icon-button" to="" @click="bookmark">
+                    <md-icon v-if="!isBookmarked">
+                        star_border
+                    </md-icon>
+                    <md-icon v-else>
+                        star
+                    </md-icon>
+                </md-button>
             </div>
         </div>
         <md-divider/>
@@ -73,8 +84,28 @@
 <script>
     export default {
         name: "Kanji",
+
         props: {
             kanji: Object
+        },
+
+        methods: {
+            bookmark() {
+                if (this.$store.user !== null)
+                    this.$store.dispatch('toggleBookmark', {type: 1, bookmark: this.kanji.id});
+                else
+                    this.$parent.$parent.register = true;
+            }
+        },
+
+        computed: {
+            isBookmarked() {
+                let bookmarks = this.$store.getters.getBookmarks;
+                if (bookmarks === null)
+                    return false;
+
+                return bookmarks.kanji.includes(this.kanji.id);
+            }
         }
     }
 </script>
@@ -106,6 +137,14 @@
             margin: 10px 0 0;
             line-height: normal;
             font-size: 36px;
+        }
+
+        .md-layout-item {
+            margin: 20px 0;
+        }
+
+        .reading {
+            padding: 10px 0;
         }
 
         .chip {

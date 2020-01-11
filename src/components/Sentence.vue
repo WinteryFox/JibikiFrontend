@@ -1,7 +1,7 @@
 <template>
     <md-content class="md-elevation-3">
         <div class="md-layout">
-            <div class="md-layout-item">
+            <div class="md-layout-item md-size-90">
                 <div class="source">
                     {{sentence.sentence}}
                 </div>
@@ -10,20 +10,34 @@
                     {{translation.sentence}}
                 </div>
             </div>
-            <md-button class="md-icon-button" @click="isExtended = !isExtended">
-                <md-tooltip v-if="!isExtended">
-                    Show translation
-                </md-tooltip>
-                <md-tooltip v-else>
-                    Hide translation
-                </md-tooltip>
-                <md-icon v-if="!isExtended">
-                    expand_more
-                </md-icon>
-                <md-icon v-else>
-                    expand_less
-                </md-icon>
-            </md-button>
+
+            <div class="md-layout-item md-size-5">
+                <md-button class="md-icon-button" @click="bookmark">
+                    <md-icon v-if="!isBookmarked">
+                        star_border
+                    </md-icon>
+                    <md-icon v-else>
+                        star
+                    </md-icon>
+                </md-button>
+            </div>
+
+            <div class="md-layout-item md-size-5">
+                <md-button class="md-icon-button" @click="isExtended = !isExtended">
+                    <md-tooltip v-if="!isExtended">
+                        Show translation
+                    </md-tooltip>
+                    <md-tooltip v-else>
+                        Hide translation
+                    </md-tooltip>
+                    <md-icon v-if="!isExtended">
+                        expand_more
+                    </md-icon>
+                    <md-icon v-else>
+                        expand_less
+                    </md-icon>
+                </md-button>
+            </div>
         </div>
     </md-content>
 </template>
@@ -31,9 +45,26 @@
 <script>
     export default {
         name: "Sentence",
+
         props: {
             sentence: Object,
             isExtended: true
+        },
+
+        methods: {
+            bookmark() {
+                this.$store.dispatch('toggleBookmark', {type: 2, bookmark: this.sentence.id});
+            }
+        },
+
+        computed: {
+            isBookmarked() {
+                let bookmarks = this.$store.getters.getBookmarks;
+                if (bookmarks === null)
+                    return false;
+
+                return bookmarks.sentences.includes(this.sentence.id);
+            }
         }
     }
 </script>
@@ -43,6 +74,15 @@
 
     .md-layout {
         margin: 15px 30px;
+
+        .md-layout-item {
+            padding: 10px 0 !important;
+        }
+
+        .source {
+            font-size: 20px;
+            margin-top: 10px;
+        }
 
         @media screen and (max-width: 768px) {
             .source {
@@ -55,7 +95,6 @@
         }
 
         .md-icon-button {
-            margin: 15px auto;
             z-index: 1;
         }
 
@@ -69,11 +108,6 @@
 
         .number {
             font-size: 16px;
-        }
-
-        .source {
-            font-size: 20px;
-            margin-bottom: 10px;
         }
     }
 </style>
