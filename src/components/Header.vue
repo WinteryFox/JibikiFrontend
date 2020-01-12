@@ -12,24 +12,35 @@
                     </md-tooltip>
                     <md-icon md-src="/discord.svg"/>
                 </md-button>
+
                 <md-button class="md-icon-button patreon" href="https://patreon.com/Jibiki" target="_blank">
                     <md-tooltip>
                         Become a Patron
                     </md-tooltip>
                     <md-icon md-src="/patreon.svg"/>
                 </md-button>
+
                 <md-button class="md-icon-button github" href="https://github.com/WinteryFox/JibikiAPI" target="_blank">
                     <md-tooltip>
                         GitHub
                     </md-tooltip>
                     <md-icon md-src="/github.svg"/>
                 </md-button>
+
+                <md-button class="md-icon-button discord" href="/docs" target="_blank">
+                    <md-tooltip>
+                        API documentation
+                    </md-tooltip>
+                    <md-icon>library_books</md-icon>
+                </md-button>
+
                 <md-button @click="changeTheme" class="md-icon-button theme">
                     <md-tooltip>
                         Switch themes
                     </md-tooltip>
                     <md-icon>invert_colors</md-icon>
                 </md-button>
+
                 <md-button @click="showLogin = true" v-if="user === undefined || user === null"
                            class="md-icon-button">
                     <md-tooltip>

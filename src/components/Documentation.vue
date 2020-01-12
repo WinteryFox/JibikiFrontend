@@ -3,6 +3,8 @@
         <md-content class="md-elevation-3">
             <div class="introduction">
                 <h1>Introduction</h1>
+                JIBIKI IS CURRENTLY IN BETA AND THE API MAY CHANGE DRASTICALLY AT ANY POINT
+                <br/><br/>
                 You've found your way to the API documentation, greetings!
                 All endpoints start with <span class="route">https://api.jibiki.app</span>
                 and every response is in JSON.
@@ -39,7 +41,7 @@
                     <h4>Example payload for <span class="route">{{doc.example}}</span></h4>
                     <pre><code><span :key="i"
                                      v-for="(line, i) in highlight(doc.payload).split(/\n/)"><span class="number">{{i + 1}}</span> <span
-                            v-html="line + '\n'" :key="line"></span></span></code></pre>
+                            v-html="line + '\n'" :key="line"/></span></code></pre>
                 </div>
             </div>
             <md-divider/>
@@ -148,6 +150,134 @@
         data: () => ({
             documentation: [
                 {
+                    "route": "/all",
+                    "type": "GET",
+                    "description": "This is a combination of the /words /kanji and /sentences endpoints",
+                    "parameters": [
+                        {
+                            "parameter": "query",
+                            "description": "The word to search for in Japanese or English",
+                            "required": "Yes"
+                        },
+                        {
+                            "parameter": "page",
+                            "description": "The page to return, pages are 0-indexed and are 50 entries long",
+                            "required": "No"
+                        }
+                    ],
+                    "example": "/all?query=house",
+                    "payload": "[\n" +
+                        "  {\n" +
+                        "    \"word\": {\n" +
+                        "      \"id\": 17578,\n" +
+                        "      \"forms\": [\n" +
+                        "        {\n" +
+                        "          \"kanji\": {\n" +
+                        "            \"info\": null,\n" +
+                        "            \"literal\": \"家\"\n" +
+                        "          },\n" +
+                        "          \"reading\": {\n" +
+                        "            \"info\": null,\n" +
+                        "            \"literal\": \"いえ\"\n" +
+                        "          }\n" +
+                        "        }\n" +
+                        "      ],\n" +
+                        "      \"senses\": [\n" +
+                        "        {\n" +
+                        "          \"definitions\": [\n" +
+                        "            \"dwelling\",\n" +
+                        "            \"house\",\n" +
+                        "            \"residence\"\n" +
+                        "          ],\n" +
+                        "          \"field_of_use\": [],\n" +
+                        "          \"miscellaneous\": [],\n" +
+                        "          \"part_of_speech\": [\n" +
+                        "            {\n" +
+                        "              \"long\": \"noun (common) (futsuumeishi)\",\n" +
+                        "              \"short\": \"n\"\n" +
+                        "            }\n" +
+                        "          ]\n" +
+                        "        },\n" +
+                        "        {\n" +
+                        "          \"definitions\": [\n" +
+                        "            \"family\",\n" +
+                        "            \"household\"\n" +
+                        "          ],\n" +
+                        "          \"field_of_use\": [],\n" +
+                        "          \"miscellaneous\": [],\n" +
+                        "          \"part_of_speech\": [\n" +
+                        "            {\n" +
+                        "              \"long\": \"noun (common) (futsuumeishi)\",\n" +
+                        "              \"short\": \"n\"\n" +
+                        "            }\n" +
+                        "          ]\n" +
+                        "        },\n" +
+                        "        {\n" +
+                        "          \"definitions\": [\n" +
+                        "            \"family name\",\n" +
+                        "            \"lineage\"\n" +
+                        "          ],\n" +
+                        "          \"field_of_use\": [],\n" +
+                        "          \"miscellaneous\": [],\n" +
+                        "          \"part_of_speech\": [\n" +
+                        "            {\n" +
+                        "              \"long\": \"noun (common) (futsuumeishi)\",\n" +
+                        "              \"short\": \"n\"\n" +
+                        "            }\n" +
+                        "          ]\n" +
+                        "        }\n" +
+                        "      ]\n" +
+                        "    },\n" +
+                        "    \"sentence\": {\n" +
+                        "      \"id\": 4856,\n" +
+                        "      \"language\": \"jpn\",\n" +
+                        "      \"sentence\": \"家に来ませんか。\",\n" +
+                        "      \"translations\": [\n" +
+                        "        {\n" +
+                        "          \"id\": 1439,\n" +
+                        "          \"language\": \"eng\",\n" +
+                        "          \"sentence\": \"Why don't you come visit us?\"\n" +
+                        "        }\n" +
+                        "      ]\n" +
+                        "    },\n" +
+                        "    \"kanji\": [\n" +
+                        "      {\n" +
+                        "        \"id\": 228,\n" +
+                        "        \"literal\": \"家\",\n" +
+                        "        \"readings\": {\n" +
+                        "          \"onyomi\": [\n" +
+                        "            \"カ\",\n" +
+                        "            \"ケ\"\n" +
+                        "          ],\n" +
+                        "          \"kunyomi\": [\n" +
+                        "            \"や\",\n" +
+                        "            \"いえ\",\n" +
+                        "            \"うち\"\n" +
+                        "          ]\n" +
+                        "        },\n" +
+                        "        \"definitions\": [\n" +
+                        "          \"expert\",\n" +
+                        "          \"family\",\n" +
+                        "          \"home\",\n" +
+                        "          \"house\",\n" +
+                        "          \"performer\",\n" +
+                        "          \"professional\"\n" +
+                        "        ],\n" +
+                        "        \"miscellaneous\": {\n" +
+                        "          \"jlpt\": 3,\n" +
+                        "          \"grade\": 2,\n" +
+                        "          \"variant\": null,\n" +
+                        "          \"frequency\": 133,\n" +
+                        "          \"radical_name\": null,\n" +
+                        "          \"stroke_count\": 10,\n" +
+                        "          \"variant_type\": null\n" +
+                        "        }\n" +
+                        "      }\n" +
+                        "    ]\n" +
+                        "  }\n" +
+                        "]"
+                },
+                {
                     "route": "/words",
                     "type": "GET",
                     "description": "Query for any word",
@@ -166,61 +296,33 @@
                     "example": "/words?query=house",
                     "payload": "[\n" +
                         "  {\n" +
-                        "    \"id\": 17578,\n" +
+                        "    \"id\": 17580,\n" +
                         "    \"forms\": [\n" +
                         "      {\n" +
-                        "        \"kanji\": \"家\",\n" +
-                        "        \"kanjiInfo\": null,\n" +
-                        "        \"reading\": \"いえ\",\n" +
-                        "        \"readingInfo\": null\n" +
+                        "        \"kanji\": {\n" +
+                        "          \"info\": null,\n" +
+                        "          \"literal\": \"家\"\n" +
+                        "        },\n" +
+                        "        \"reading\": {\n" +
+                        "          \"info\": null,\n" +
+                        "          \"literal\": \"け\"\n" +
+                        "        }\n" +
                         "      }\n" +
                         "    ],\n" +
                         "    \"senses\": [\n" +
                         "      {\n" +
-                        "        \"gloss\": [\n" +
-                        "          \"dwelling\",\n" +
-                        "          \"house\",\n" +
-                        "          \"residence\"\n" +
+                        "        \"definitions\": [\n" +
+                        "          \"house (e.g. of Tokugawa)\",\n" +
+                        "          \"family\"\n" +
                         "        ],\n" +
-                        "        \"pos\": [\n" +
+                        "        \"field_of_use\": [],\n" +
+                        "        \"miscellaneous\": [],\n" +
+                        "        \"part_of_speech\": [\n" +
                         "          {\n" +
-                        "            \"pos\": \"n\",\n" +
-                        "            \"posInfo\": \"noun (common) (futsuumeishi)\"\n" +
+                        "            \"long\": \"suffix\",\n" +
+                        "            \"short\": \"suf\"\n" +
                         "          }\n" +
-                        "        ],\n" +
-                        "        \"fld\": [],\n" +
-                        "        \"notes\": null,\n" +
-                        "        \"misc\": null\n" +
-                        "      },\n" +
-                        "      {\n" +
-                        "        \"gloss\": [\n" +
-                        "          \"family\",\n" +
-                        "          \"household\"\n" +
-                        "        ],\n" +
-                        "        \"pos\": [\n" +
-                        "          {\n" +
-                        "            \"pos\": \"n\",\n" +
-                        "            \"posInfo\": \"noun (common) (futsuumeishi)\"\n" +
-                        "          }\n" +
-                        "        ],\n" +
-                        "        \"fld\": [],\n" +
-                        "        \"notes\": null,\n" +
-                        "        \"misc\": null\n" +
-                        "      },\n" +
-                        "      {\n" +
-                        "        \"gloss\": [\n" +
-                        "          \"family name\",\n" +
-                        "          \"lineage\"\n" +
-                        "        ],\n" +
-                        "        \"pos\": [\n" +
-                        "          {\n" +
-                        "            \"pos\": \"n\",\n" +
-                        "            \"posInfo\": \"noun (common) (futsuumeishi)\"\n" +
-                        "          }\n" +
-                        "        ],\n" +
-                        "        \"fld\": [],\n" +
-                        "        \"notes\": null,\n" +
-                        "        \"misc\": null\n" +
+                        "        ]\n" +
                         "      }\n" +
                         "    ]\n" +
                         "  }\n" +
@@ -242,26 +344,32 @@
                         "  {\n" +
                         "    \"id\": 2160,\n" +
                         "    \"literal\": \"日\",\n" +
-                        "    \"meaning\": [\n" +
+                        "    \"readings\": {\n" +
+                        "      \"onyomi\": [\n" +
+                        "        \"ジツ\",\n" +
+                        "        \"ニチ\"\n" +
+                        "      ],\n" +
+                        "      \"kunyomi\": [\n" +
+                        "        \"-か\",\n" +
+                        "        \"-び\",\n" +
+                        "        \"ひ\"\n" +
+                        "      ]\n" +
+                        "    },\n" +
+                        "    \"definitions\": [\n" +
                         "      \"counter for days\",\n" +
                         "      \"day\",\n" +
                         "      \"Japan\",\n" +
                         "      \"sun\"\n" +
                         "    ],\n" +
-                        "    \"kunyomi\": [\n" +
-                        "      \"ひ\",\n" +
-                        "      \"-び\",\n" +
-                        "      \"-か\"\n" +
-                        "    ],\n" +
-                        "    \"onyomi\": [\n" +
-                        "      \"ニチ\",\n" +
-                        "      \"ジツ\"\n" +
-                        "    ],\n" +
-                        "    \"grade\": 1,\n" +
-                        "    \"strokeCount\": 4,\n" +
-                        "    \"frequency\": 1,\n" +
-                        "    \"jlpt\": 4,\n" +
-                        "    \"radicalName\": null\n" +
+                        "    \"miscellaneous\": {\n" +
+                        "      \"jlpt\": 4,\n" +
+                        "      \"grade\": 1,\n" +
+                        "      \"variant\": null,\n" +
+                        "      \"frequency\": 1,\n" +
+                        "      \"radical_name\": null,\n" +
+                        "      \"stroke_count\": 4,\n" +
+                        "      \"variant_type\": null\n" +
+                        "    }\n" +
                         "  }\n" +
                         "]"
                 },
@@ -286,8 +394,13 @@
                             "required": "No"
                         },
                         {
-                            "parameter": "language",
+                            "parameter": "source",
                             "description": "The source/primary language to show results for, can be one of jpn for Japanese or eng for English",
+                            "required": "No"
+                        },
+                        {
+                            "parameter": "target",
+                            "description": "The translations/target language to show results for, can be one of jpn for Japanese or eng for English",
                             "required": "No"
                         },
                         {
