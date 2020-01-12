@@ -1,7 +1,7 @@
 <template>
     <div class="header">
         <md-content>
-            <md-button class="brand" href="/">
+            <md-button class="brand" to="/">
                 <img alt="branding logo and text" src="/logo_text.svg"/>
             </md-button>
             <p>BETA</p>
@@ -27,7 +27,7 @@
                     <md-icon md-src="/github.svg"/>
                 </md-button>
 
-                <md-button class="md-icon-button discord" href="/docs" target="_blank">
+                <md-button class="md-icon-button discord" to="/docs">
                     <md-tooltip>
                         API documentation
                     </md-tooltip>
