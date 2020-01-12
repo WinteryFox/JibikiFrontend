@@ -41,8 +41,9 @@
                     <md-icon>invert_colors</md-icon>
                 </md-button>
 
-                <md-button @click="showLogin = true" v-if="user === undefined || user === null"
-                           class="md-icon-button">
+                <md-button @click="toggleLogin" v-if="user === undefined || user === null"
+                           class="md-icon-button"
+                           to="">
                     <md-tooltip>
                         Login or register
                     </md-tooltip>
@@ -67,14 +68,18 @@
                 <md-dialog-content>
                     <md-field>
                         <label>Email</label>
-                        <md-input name="username" required v-model="loginForm.email"/>
+                        <md-input ref="email" autocomplete="email" name="email" type="email" required
+                                  v-model="loginForm.email"
+                                  @keypress.enter="login"/>
                         <span class="md-error" v-if="loginForm.email">
                             Email is required
                         </span>
                     </md-field>
                     <md-field>
                         <label>Password</label>
-                        <md-input name="password" required type="password" v-model="loginForm.password"/>
+                        <md-input autocomplete="current-password" name="password" required type="password"
+                                  v-model="loginForm.password"
+                                  @keypress.enter="login"/>
                         <span class="md-error">
                             Password is required
                         </span>
@@ -85,7 +90,7 @@
                     <md-button @click="showLogin = false" class="md-primary">
                         Close
                     </md-button>
-                    <md-button @click="toggle" class="md-primary">
+                    <md-button @click="toggleRegister" class="md-primary">
                         Register
                     </md-button>
                     <md-button @click="login" class="md-primary">
@@ -101,21 +106,21 @@
                 <md-dialog-content>
                     <md-field>
                         <label>Username</label>
-                        <md-input name="username" required v-model="registerForm.username"/>
+                        <md-input autocomplete="password" name="username" type="text" required v-model="registerForm.username"/>
                         <span class="md-error" v-if="registerForm.username">
                             Username is required
                         </span>
                     </md-field>
                     <md-field>
                         <label>Email</label>
-                        <md-input name="email" required v-model="registerForm.email"/>
+                        <md-input autocomplete="email" name="email" type="email" required v-model="registerForm.email"/>
                         <span class="md-error" v-if="registerForm.email">
                             Email is required
                         </span>
                     </md-field>
                     <md-field>
                         <label>Password</label>
-                        <md-input name="password" type="password" required v-model="registerForm.password"/>
+                        <md-input autocomplete="new-password" name="password" type="password" required v-model="registerForm.password"/>
                         <span class="md-error" v-if="registerForm.password">
                             Password is required
                         </span>
@@ -216,7 +221,11 @@
                 this.$store.commit("toggleTheme");
             },
 
-            toggle() {
+            toggleLogin() {
+                this.showLogin = !this.showLogin;
+            },
+
+            toggleRegister() {
                 this.showLogin = false;
                 this.showRegister = true;
             },
