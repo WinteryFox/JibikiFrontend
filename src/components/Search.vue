@@ -12,6 +12,7 @@
                     </md-select>
                 </md-field>
                 <input
+                        class="searchbar"
                         accept="text/plain"
                         v-model="settings.query"
                         :placeholder="label"
@@ -163,14 +164,7 @@
         width: 60%;
         border: 1px solid gray;
         border-radius: 25px;
-
-        .type {
-            width: 100px;
-            margin: 0;
-            padding: 0;
-            min-height: 0;
-            display: inline-block;
-        }
+        position: relative;
 
         .md-icon {
             padding: 20px;
@@ -178,27 +172,34 @@
         }
 
         .clear {
-            float: right;
             position: absolute;
-            margin-left: 40px;
+            right: -6px;
         }
 
         .filters {
-            float: right;
             position: absolute;
+            right: 34px;
         }
 
-        input:focus {
-            outline: none;
+        .type {
+            width: calc(20% - 40px);
+            margin: 0;
+            padding: 0;
+            min-height: 0;
+            display: inline-block;
         }
 
-        input {
+        .searchbar {
             color: inherit;
             outline: none;
             font-size: 20px;
             background: none;
             border: none;
-            width: calc(80% - 105px);
+            width: calc(80% - 80px);
+        }
+
+        .searchbar:focus {
+            outline: none;
         }
 
         ::placeholder {

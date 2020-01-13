@@ -106,7 +106,8 @@
                 <md-dialog-content>
                     <md-field>
                         <label>Username</label>
-                        <md-input autocomplete="password" name="username" type="text" required v-model="registerForm.username"/>
+                        <md-input autocomplete="password" name="username" type="text" required
+                                  v-model="registerForm.username"/>
                         <span class="md-error" v-if="registerForm.username">
                             Username is required
                         </span>
@@ -120,7 +121,8 @@
                     </md-field>
                     <md-field>
                         <label>Password</label>
-                        <md-input autocomplete="new-password" name="password" type="password" required v-model="registerForm.password"/>
+                        <md-input autocomplete="new-password" name="password" type="password" required
+                                  v-model="registerForm.password"/>
                         <span class="md-error" v-if="registerForm.password">
                             Password is required
                         </span>
@@ -153,7 +155,7 @@
             img {
                 display: inline-block;
                 width: 200px;
-                height: 100px;
+                height: auto;
             }
         }
 
@@ -176,11 +178,15 @@
                 margin: 1px;
             }
 
-            h3 {
-                padding: 10px 20px;
+            .brand {
+                img {
+                    display: inline-block;
+                    width: 90px;
+                    height: 30px;
+                }
             }
 
-            small {
+            p {
                 display: none;
             }
         }
