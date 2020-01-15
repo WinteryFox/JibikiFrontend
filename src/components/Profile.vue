@@ -9,7 +9,7 @@
                 {{user.username}} <span class="md-subhead">({{user.snowflake}})</span>
             </div>
             <div class="md-subhead">
-                {{user.creation}}
+                {{creation}}
             </div>
             <div class="md-subhead">
                 {{user.email}}
@@ -23,6 +23,12 @@
         <md-card-actions>
             <md-button @click="logout" class="logout">Logout</md-button>
         </md-card-actions>
+
+        <div
+                v-if="bookmarks !== undefined"
+                v-for="word in bookmarks.words">
+            {{word}}
+        </div>
     </md-card>
 </template>
 
@@ -47,6 +53,14 @@
         },
 
         computed: {
+            bookmarks() {
+                return this.$store.getters.getBookmarks
+            },
+
+            creation() {
+                return new Date(Number((BigInt(this.user.snowflake) >> BigInt(22)) + BigInt(1546300800000)));
+            },
+
             user() {
                 return this.$store.getters.getUser
             }
@@ -58,9 +72,6 @@
     @import '~vue-material/dist/theme/engine';
 
     .md-card {
-        margin: auto auto;
-        width: 60%;
-
         .md-button.logout {
             color: md-get-palette-color(red, 400) !important;
         }
