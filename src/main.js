@@ -45,8 +45,7 @@ const store = new Vuex.Store({
 
     state: {
         isDark: VueCookies.get("isDark") === "true",
-        user: null,
-        bookmarks: null
+        user: null
     },
 
     getters: {
@@ -56,10 +55,6 @@ const store = new Vuex.Store({
 
         getUser: (state) => {
             return state.user;
-        },
-
-        getBookmarks: (state) => {
-            return state.bookmarks;
         }
     },
 
@@ -76,10 +71,6 @@ const store = new Vuex.Store({
 
         setUser(state, user) {
             state.user = user;
-        },
-
-        setBookmarks(state, bookmarks) {
-            state.bookmarks = bookmarks;
         }
     },
 
@@ -92,59 +83,34 @@ const store = new Vuex.Store({
                 })
                 .then(response => {
                     store.commit('setUser', response.data);
-                    store.dispatch('getBookmarks');
-                })
-                .catch(err => {
                 })
         },
 
-        toggleBookmark(store, payload) {
-            let state = store.getters.getBookmarks;
-            if (state === null)
-                return;
-
-            let bookmarks;
-            if (payload.type === 0)
-                bookmarks = state.words;
-            else if (payload.type === 1)
-                bookmarks = state.kanji;
-            else
-                bookmarks = state.sentences;
-
-            if (bookmarks.includes(payload.bookmark))
-                axios.delete(
-                    Vue.prototype.$hostname + '/users/bookmarks?type=' + encodeURIComponent(payload.type) + '&bookmark=' + encodeURIComponent(payload.bookmark),
-                    {
-                        withCredentials: true
-                    }
-                ).then(res => {
-                    if (res.status === 204)
-                        store.dispatch('getBookmarks').then(ignored => {});
-                });
-            else
-                axios.put(
-                    Vue.prototype.$hostname + '/users/bookmarks?type=' + encodeURIComponent(payload.type) + '&bookmark=' + encodeURIComponent(payload.bookmark),
-                    '',
-                    {
-                        withCredentials: true
-                    }
-                ).then(res => {
-                    if (res.status === 204)
-                        store.dispatch('getBookmarks').then(ignored => {});
-                });
-        },
-
-        getBookmarks(store) {
-            axios.get(
-                Vue.prototype.$hostname + '/users/bookmarks',
+        addBookmark(store, payload) {
+            axios.put(
+                Vue.prototype.$hostname + '/users/bookmarks?type=' + encodeURIComponent(payload.type) + '&bookmark=' + encodeURIComponent(payload.bookmark),
+                '',
                 {
                     withCredentials: true
-                })
-                .then(response => {
-                    store.commit('setBookmarks', response.data);
-                })
-                .catch(ignored => {
-                })
+                }
+            ).then(res => {
+                if (res.status === 204)
+                    store.dispatch('getUser').then(ignored => {
+                    });
+            });
+        },
+
+        removeBookmark(store, payload) {
+            axios.delete(
+                Vue.prototype.$hostname + '/users/bookmarks?type=' + encodeURIComponent(payload.type) + '&bookmark=' + encodeURIComponent(payload.bookmark),
+                {
+                    withCredentials: true
+                }
+            ).then(res => {
+                if (res.status === 204)
+                    store.dispatch('getUser').then(ignored => {
+                    });
+            });
         },
 
         getToken(store, form) {
@@ -157,10 +123,11 @@ const store = new Vuex.Store({
                     },
                     withCredentials: true
                 })
-                .then(response => {
-                    store.dispatch('getUser');
+                .then(res => {
+                    if (res.status === 201)
+                        store.dispatch('getUser');
                 })
-                .catch(err => alert("Invalid email or password"))
+                .catch(() => alert("Invalid email or password"));
         },
 
         register(store, form) {
@@ -172,23 +139,22 @@ const store = new Vuex.Store({
                         'Content-Type': 'application/x-www-form-urlencoded'
                     }
                 })
-                .then(() => {
-                    store.dispatch(
-                        'getToken',
-                        {
-                            email: form.email,
-                            password: form.password
-                        }
-                    );
+                .then(res => {
+                    if (res.status === 201)
+                        store.dispatch(
+                            'getToken',
+                            {
+                                email: form.email,
+                                password: form.password
+                            }
+                        );
                 })
-                .catch(() => {
-                    alert("An account with that email already exists")
-                })
+                .catch(() => alert("An account with that email already exists"));
         }
     }
 });
 
-store.dispatch('getUser').then(ignored => {
+store.dispatch('getUser').then(() => {
 });
 
 if (store.getters.isDark)

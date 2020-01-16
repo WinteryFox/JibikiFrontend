@@ -60,7 +60,7 @@
             </div>
 
             <div class="md-layout-item md-size-5">
-                <Bookmark/>
+                <Bookmark :type="1" :id="kanji.id"/>
             </div>
         </div>
         <md-divider/>
@@ -75,20 +75,6 @@
         components: {Bookmark},
         props: {
             kanji: Object
-        },
-
-        methods: {
-
-        },
-
-        computed: {
-            isBookmarked() {
-                let bookmarks = this.$store.getters.getBookmarks;
-                if (bookmarks === null)
-                    return false;
-
-                return bookmarks.kanji.includes(this.kanji.id);
-            }
         }
     }
 </script>

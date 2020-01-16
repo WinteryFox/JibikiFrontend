@@ -12,14 +12,7 @@
             </div>
 
             <div class="md-layout-item md-size-5">
-                <md-button class="md-icon-button" @click="bookmark">
-                    <md-icon v-if="!isBookmarked">
-                        star_border
-                    </md-icon>
-                    <md-icon v-else>
-                        star
-                    </md-icon>
-                </md-button>
+                <Bookmark :type="2" :id="sentence.id"/>
             </div>
 
             <div class="md-layout-item md-size-5">
@@ -43,28 +36,13 @@
 </template>
 
 <script>
+    import Bookmark from "./Bookmark";
     export default {
         name: "Sentence",
-
+        components: {Bookmark},
         props: {
             sentence: Object,
             isExtended: true
-        },
-
-        methods: {
-            bookmark() {
-                this.$store.dispatch('toggleBookmark', {type: 2, bookmark: this.sentence.id});
-            }
-        },
-
-        computed: {
-            isBookmarked() {
-                let bookmarks = this.$store.getters.getBookmarks;
-                if (bookmarks === null)
-                    return false;
-
-                return bookmarks.sentences.includes(this.sentence.id);
-            }
         }
     }
 </script>
