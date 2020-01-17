@@ -60,14 +60,7 @@
             </div>
 
             <div class="md-layout-item md-size-5">
-                <md-button class="md-icon-button" to="" @click="bookmark">
-                    <md-icon v-if="!isBookmarked">
-                        star_border
-                    </md-icon>
-                    <md-icon v-else>
-                        star
-                    </md-icon>
-                </md-button>
+                <Bookmark :type="1" :id="kanji.id"/>
             </div>
         </div>
         <md-divider/>
@@ -75,30 +68,13 @@
 </template>
 
 <script>
+    import Bookmark from "./Bookmark";
+
     export default {
         name: "Kanji",
-
+        components: {Bookmark},
         props: {
             kanji: Object
-        },
-
-        methods: {
-            bookmark() {
-                if (this.$store.user !== null)
-                    this.$store.dispatch('toggleBookmark', {type: 1, bookmark: this.kanji.id});
-                else
-                    this.$parent.$parent.register = true;
-            }
-        },
-
-        computed: {
-            isBookmarked() {
-                let bookmarks = this.$store.getters.getBookmarks;
-                if (bookmarks === null)
-                    return false;
-
-                return bookmarks.kanji.includes(this.kanji.id);
-            }
         }
     }
 </script>

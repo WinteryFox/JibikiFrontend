@@ -53,14 +53,7 @@
             </div>
 
             <div class="md-layout-item md-size-5">
-                <md-button class="md-icon-button" @click="bookmark">
-                    <md-icon v-if="!isBookmarked">
-                        star_border
-                    </md-icon>
-                    <md-icon v-else>
-                        star
-                    </md-icon>
-                </md-button>
+                <Bookmark :type="0" :id="word.id"/>
             </div>
         </div>
     </md-content>
@@ -117,27 +110,12 @@
 </style>
 
 <script>
+    import Bookmark from "./Bookmark";
     export default {
         name: "Word",
-
+        components: {Bookmark},
         props: {
             word: Object
-        },
-
-        methods: {
-            bookmark() {
-                this.$store.dispatch('toggleBookmark', {type: 0, bookmark: this.word.id});
-            }
-        },
-
-        computed: {
-            isBookmarked() {
-                let bookmarks = this.$store.getters.getBookmarks;
-                if (bookmarks === null)
-                    return false;
-
-                return bookmarks.words.includes(this.word.id);
-            }
         }
     }
 </script>
