@@ -5,7 +5,7 @@
                 <div class="source">
                     {{sentence.sentence}}
                 </div>
-                <div class="translation" v-for="translation in sentence.translations" v-if="isExtended">
+                <div class="translation" v-for="translation in sentence.translations" v-if="isExtendedLocally">
                     <md-divider/>
                     {{translation.sentence}}
                 </div>
@@ -16,14 +16,14 @@
             </div>
 
             <div class="md-layout-item md-size-5">
-                <md-button class="md-icon-button" @click="isExtended = !isExtended">
-                    <md-tooltip v-if="!isExtended">
+                <md-button class="md-icon-button" @click="isExtendedLocally = !isExtendedLocally">
+                    <md-tooltip v-if="!isExtendedLocally">
                         Show translation
                     </md-tooltip>
                     <md-tooltip v-else>
                         Hide translation
                     </md-tooltip>
-                    <md-icon v-if="!isExtended">
+                    <md-icon v-if="!isExtendedLocally">
                         expand_more
                     </md-icon>
                     <md-icon v-else>
@@ -42,7 +42,18 @@
         components: {Bookmark},
         props: {
             sentence: Object,
-            isExtended: true
+            isExtended: {
+                type: Boolean,
+                default: true
+            }
+        },
+        data: () => ({
+            isExtendedLocally: true
+        }),
+        watch: {
+            isExtended(to) {
+                this.isExtendedLocally = to;
+            }
         }
     }
 </script>

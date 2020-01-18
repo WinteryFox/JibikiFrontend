@@ -94,8 +94,8 @@ const store = new Vuex.Store({
                     withCredentials: true
                 }
             ).then(res => {
-                if (res.status === 204)
-                    store.dispatch('getUser').then(ignored => {
+                if (res.status === 201)
+                    store.dispatch('getUser').then(() => {
                     });
             });
         },
@@ -107,8 +107,8 @@ const store = new Vuex.Store({
                     withCredentials: true
                 }
             ).then(res => {
-                if (res.status === 204)
-                    store.dispatch('getUser').then(ignored => {
+                if (res.status === 200)
+                    store.dispatch('getUser').then(() => {
                     });
             });
         },
