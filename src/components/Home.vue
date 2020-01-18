@@ -1,16 +1,16 @@
 <template>
     <div>
-        <md-button class="md-icon-button" v-if="settings.type === 'sentences'" @click="isExtended = !isExtended">
-            <md-icon v-if="isExtended">
-                expand_less
-            </md-icon>
-            <md-icon v-else>
-                expand_more
-            </md-icon>
-        </md-button>
-
         <Search
                 @search="search">
+            <md-button class="md-icon-button" v-if="settings.type === 'sentences'" @click="isExtended = !isExtended">
+                <md-icon v-if="isExtended">
+                    expand_less
+                </md-icon>
+                <md-icon v-else>
+                    expand_more
+                </md-icon>
+            </md-button>
+
             <div v-if="settings.type === 'all'">
                 <All
                         :all="all"
@@ -109,5 +109,14 @@
     .md-icon-button {
         position: absolute;
         right: calc(5% - 25px);
+        top: 90px;
+    }
+
+    @media screen and (max-width: 768px) {
+        .md-icon-button {
+            position: relative;
+            left: calc(50% - 20px);
+            top: -20px;
+        }
     }
 </style>
