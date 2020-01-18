@@ -1,5 +1,14 @@
 <template>
     <div>
+        <md-button class="md-icon-button" v-if="settings.type === 'sentences'" @click="isExtended = !isExtended">
+            <md-icon v-if="isExtended">
+                expand_less
+            </md-icon>
+            <md-icon v-else>
+                expand_more
+            </md-icon>
+        </md-button>
+
         <Search
                 @search="search">
             <div v-if="settings.type === 'all'">
@@ -22,6 +31,7 @@
             </div>
             <div v-if="settings.type === 'sentences'">
                 <Sentence
+                        :is-extended="isExtended"
                         :key="sentence.id"
                         :sentence="sentence"
                         v-for="sentence in sentences"/>
@@ -54,7 +64,8 @@
             all: [],
             words: [],
             kanji: [],
-            sentences: []
+            sentences: [],
+            isExtended: true
         }),
 
         methods: {
@@ -95,5 +106,8 @@
 </script>
 
 <style scoped lang="scss">
-
+    .md-icon-button {
+        position: absolute;
+        right: calc(5% - 25px);
+    }
 </style>
