@@ -124,7 +124,7 @@ const store = new Vuex.Store({
                     withCredentials: true
                 })
                 .then(res => {
-                    if (res.status === 201)
+                    if (res.status === 200)
                         store.dispatch('getUser');
                 })
                 .catch(() => alert("Invalid email or password"));
