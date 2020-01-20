@@ -21,7 +21,7 @@
                 <md-button class="md-icon-button clear" @click="clear">
                     <md-icon>clear</md-icon>
                 </md-button>
-                <md-button @click="filtersExtended = !filtersExtended" class="md-icon-button filters" v-if="!noFilters">
+                <md-button @click="filtersExtended = !filtersExtended" class="md-icon-button filters">
                     <md-icon>filter_list</md-icon>
                 </md-button>
             </label>
@@ -29,7 +29,7 @@
                 <slot name="filters"/>
             </div>
         </md-content>
-        <div v-if="!noState">
+        <div>
             <md-empty-state
                     md-description="Start typing above to search for anything and everything you want!"
                     md-icon="search"
@@ -39,10 +39,10 @@
                     md-description="Maybe try searching for something else?"
                     md-icon="clear"
                     md-label="No results!"
-                    v-if="settings.query !== '' && isEmpty() && !isTyping && !searching"/>
+                    v-if="settings.query !== '' && !hasResults && !isTyping && !isSearching"/>
             <md-progress-spinner
                     md-mode="indeterminate"
-                    v-if="searching"/>
+                    v-if="isSearching"/>
             <div class="content">
                 <slot/>
             </div>
@@ -61,15 +61,11 @@
                 type: String,
                 default: "Type here to search"
             },
-            searching: {
+            isSearching: {
                 type: Boolean,
                 default: false
             },
-            noState: {
-                type: Boolean,
-                default: false
-            },
-            noFilters: {
+            hasResults: {
                 type: Boolean,
                 default: false
             }
@@ -95,15 +91,14 @@
                 }
             },
 
-            isEmpty() {
-                return this.$slots.default === undefined;
-            },
-
             typing: debounce(function () {
-                this.$router.push({
-                    name: this.$router.currentRoute.name,
-                    query: this.settings
-                });
+                if (this.settings.query !== '')
+                    this.$router.push({
+                        name: this.$router.currentRoute.name,
+                        query: this.settings
+                    });
+                else
+                    this.$router.push('/');
                 this.isTyping = false;
             }, 500),
 
