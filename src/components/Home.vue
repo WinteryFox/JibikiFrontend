@@ -13,27 +13,31 @@
                 </md-icon>
             </md-button>
 
-            <All
-                    v-if="settings.type === 'all'"
-                    :all="all"
-                    :key="all.id"
-                    v-for="all in data"/>
-            <Word
-                    v-else-if="settings.type === 'words'"
-                    :key="word.id"
-                    :word="word"
-                    v-for="word in data"/>
-            <Kanji
-                    v-else-if="settings.type === 'kanji'"
-                    :key="kanji.id"
-                    :kanji="kanji"
-                    v-for="kanji in data"/>
-            <Sentence
-                    v-else-if="settings.type === 'sentences'"
-                    :is-extended="isExtended"
-                    :key="sentence.id"
-                    :sentence="sentence"
-                    v-for="sentence in data"/>
+            <div v-if="settings.type === 'all'">
+                <All
+                        :all="all"
+                        :key="all.id"
+                        v-for="all in data"/>
+            </div>
+            <div v-else-if="settings.type === 'words'">
+                <Word
+                        :key="word.id"
+                        :word="word"
+                        v-for="word in data"/>
+            </div>
+            <div v-else-if="settings.type === 'kanji'">
+                <Kanji
+                        :key="kanji.id"
+                        :kanji="kanji"
+                        v-for="kanji in data"/>
+            </div>
+            <div v-else-if="settings.type === 'sentences'">
+                <Sentence
+                        :is-extended="isExtended"
+                        :key="sentence.id"
+                        :sentence="sentence"
+                        v-for="sentence in data"/>
+            </div>
         </Search>
     </div>
 </template>
