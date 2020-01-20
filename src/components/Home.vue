@@ -1,6 +1,8 @@
 <template>
     <div>
         <Search
+                :has-results="data.length > 0"
+                :is-searching="isSearching"
                 @search="search">
             <md-button class="md-icon-button" v-if="settings.type === 'sentences'" @click="isExtended = !isExtended">
                 <md-icon v-if="isExtended">
@@ -11,31 +13,27 @@
                 </md-icon>
             </md-button>
 
-            <div v-if="settings.type === 'all'">
-                <All
-                        :all="all"
-                        :key="all.id"
-                        v-for="all in all"/>
-            </div>
-            <div v-if="settings.type === 'words'">
-                <Word
-                        :key="word.id"
-                        :word="word"
-                        v-for="word in words"/>
-            </div>
-            <div v-if="settings.type === 'kanji'">
-                <Kanji
-                        :key="kanji.id"
-                        :kanji="kanji"
-                        v-for="kanji in kanji"/>
-            </div>
-            <div v-if="settings.type === 'sentences'">
-                <Sentence
-                        :is-extended="isExtended"
-                        :key="sentence.id"
-                        :sentence="sentence"
-                        v-for="sentence in sentences"/>
-            </div>
+            <All
+                    v-if="settings.type === 'all'"
+                    :all="all"
+                    :key="all.id"
+                    v-for="all in data"/>
+            <Word
+                    v-else-if="settings.type === 'words'"
+                    :key="word.id"
+                    :word="word"
+                    v-for="word in data"/>
+            <Kanji
+                    v-else-if="settings.type === 'kanji'"
+                    :key="kanji.id"
+                    :kanji="kanji"
+                    v-for="kanji in data"/>
+            <Sentence
+                    v-else-if="settings.type === 'sentences'"
+                    :is-extended="isExtended"
+                    :key="sentence.id"
+                    :sentence="sentence"
+                    v-for="sentence in data"/>
         </Search>
     </div>
 </template>
@@ -61,45 +59,26 @@
 
         data: () => ({
             settings: {},
-            all: [],
-            words: [],
-            kanji: [],
-            sentences: [],
-            isExtended: true
+            data: [],
+            isExtended: true,
+            isSearching: false
         }),
 
         methods: {
             search(settings) {
-                this.settings = {};
-                this.all = [];
-                this.words = [];
-                this.kanji = [];
-                this.sentences = [];
+                this.isSearching = true;
+                this.data = [];
+                this.settings = JSON.parse(JSON.stringify(settings));
 
-                if (settings.type === 'all')
-                    axios.get(this.$hostname + '/all?query=' + encodeURIComponent(settings.query))
-                        .then(response => {
-                            this.settings = settings;
-                            this.all = response.data;
-                        });
-                else if (settings.type === 'words')
-                    axios.get(this.$hostname + '/words?query=' + encodeURIComponent(settings.query))
-                        .then(response => {
-                            this.settings = settings;
-                            this.words = response.data;
-                        });
-                else if (settings.type === 'kanji')
-                    axios.get(this.$hostname + '/kanji?query=' + encodeURIComponent(settings.query))
-                        .then(response => {
-                            this.settings = settings;
-                            this.kanji = response.data;
-                        });
-                else if (settings.type === 'sentences')
-                    axios.get(this.$hostname + '/sentences?query=' + encodeURIComponent(settings.query))
-                        .then(response => {
-                            this.settings = settings;
-                            this.sentences = response.data;
-                        });
+                axios.get(this.$hostname + '/' + settings.type + '?query=' + encodeURIComponent(settings.query))
+                    .then(response => {
+                        this.data = response.data;
+                        this.isSearching = false;
+                    })
+                    .catch(e => {
+                        this.isSearching = false;
+                        alert(e.message);
+                    });
             }
         }
     }
