@@ -98,7 +98,7 @@
                         query: this.settings
                     });
                 else
-                    this.$router.push('/');
+                    this.$router.push('/').catch(() => {}); // Ignore NavigationDuplicated
                 this.isTyping = false;
             }, 500),
 
