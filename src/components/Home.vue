@@ -13,31 +13,27 @@
                 </md-icon>
             </md-button>
 
-            <div v-if="settings.type === 'all'">
-                <All
-                        :all="all"
-                        :key="all.id"
-                        v-for="all in data"/>
-            </div>
-            <div v-else-if="settings.type === 'words'">
-                <Word
-                        :key="word.id"
-                        :word="word"
-                        v-for="word in data"/>
-            </div>
-            <div v-else-if="settings.type === 'kanji'">
-                <Kanji
-                        :key="kanji.id"
-                        :kanji="kanji"
-                        v-for="kanji in data"/>
-            </div>
-            <div v-else-if="settings.type === 'sentences'">
-                <Sentence
-                        :is-extended="isExtended"
-                        :key="sentence.id"
-                        :sentence="sentence"
-                        v-for="sentence in data"/>
-            </div>
+            <All
+                    v-if="settings.type === 'all'"
+                    :all="all"
+                    :key="all.id"
+                    v-for="all in data"/>
+            <Word
+                    v-else-if="settings.type === 'words'"
+                    :key="word.id"
+                    :word="word"
+                    v-for="word in data"/>
+            <Kanji
+                    v-else-if="settings.type === 'kanji'"
+                    :key="kanji.id"
+                    :kanji="kanji"
+                    v-for="kanji in data"/>
+            <Sentence
+                    v-else-if="settings.type === 'sentences'"
+                    :is-extended="isExtended"
+                    :key="sentence.id"
+                    :sentence="sentence"
+                    v-for="sentence in data"/>
         </Search>
     </div>
 </template>
@@ -70,22 +66,12 @@
 
         methods: {
             search(settings) {
-                this.data = [];
                 this.isSearching = true;
+                this.data = [];
+                this.settings = JSON.parse(JSON.stringify(settings));
 
-                let endpoint = '/all';
-                if (settings.type === 'all')
-                    endpoint = '/all';
-                else if (settings.type === 'words')
-                    endpoint = '/words';
-                else if (settings.type === 'kanji')
-                    endpoint = '/kanji';
-                else if (settings.type === 'sentences')
-                    endpoint = '/sentences';
-
-                axios.get(this.$hostname + endpoint + '?query=' + encodeURIComponent(settings.query))
+                axios.get(this.$hostname + '/' + settings.type + '?query=' + encodeURIComponent(settings.query))
                     .then(response => {
-                        this.settings = settings;
                         this.data = response.data;
                         this.isSearching = false;
                     })
