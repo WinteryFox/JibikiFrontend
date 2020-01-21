@@ -113,6 +113,9 @@
                     || this.settings.type === undefined)
                     return;
 
+                this.settings.query = this.$route.query.query;
+                this.settings.type = this.$route.query.type;
+
                 this.$emit("search", this.settings);
             }
         },
