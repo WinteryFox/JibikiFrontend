@@ -84,6 +84,8 @@ const store = new Vuex.Store({
                 .then(response => {
                     store.commit('setUser', response.data);
                 })
+                .catch(() => {
+                })
         },
 
         addBookmark(store, payload) {
