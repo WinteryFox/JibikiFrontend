@@ -98,7 +98,8 @@
                         query: this.settings
                     });
                 else
-                    this.$router.push('/').catch(() => {}); // Ignore NavigationDuplicated
+                    this.$router.push('/').catch(() => {
+                    }); // Ignore NavigationDuplicated
                 this.isTyping = false;
             }, 500),
 
@@ -106,6 +107,14 @@
                 this.isTyping = true;
                 this.typing();
             },
+
+            emit() {
+                if (this.settings.query === undefined
+                    || this.settings.type === undefined)
+                    return;
+
+                this.$emit("search", this.settings);
+            }
         },
 
         computed: {
@@ -116,24 +125,12 @@
 
         watch: {
             $route() {
-                if (this.$route.query.query !== undefined)
-                    this.settings.query = this.$route.query.query;
-
-                if (this.$route.query.type !== undefined)
-                    this.settings.type = this.$route.query.type;
-
-                this.$emit("search", this.settings);
+                this.emit();
             }
         },
 
         mounted() {
-            if (this.$route.query.query !== undefined)
-                this.settings.query = this.$route.query.query;
-
-            if (this.$route.query.type !== undefined)
-                this.settings.type = this.$route.query.type;
-
-            this.$emit("search", this.settings);
+            this.emit();
             this.$el.getElementsByTagName("input")[2].focus();
         }
     }

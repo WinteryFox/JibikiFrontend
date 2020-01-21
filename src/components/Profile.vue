@@ -54,9 +54,9 @@
 
 <script>
     import axios from 'axios'
-    import Word from "./Word";
-    import Kanji from "./Kanji";
-    import Sentence from "./Sentence";
+    import Word from "./cards/Word";
+    import Kanji from "./cards/Kanji";
+    import Sentence from "./cards/Sentence";
 
     export default {
         name: "Profile",

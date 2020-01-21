@@ -68,7 +68,7 @@
 </template>
 
 <script>
-    import Bookmark from "./Bookmark";
+    import Bookmark from "../Bookmark";
 
     export default {
         name: "Kanji",

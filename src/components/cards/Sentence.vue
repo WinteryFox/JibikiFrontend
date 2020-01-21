@@ -36,7 +36,7 @@
 </template>
 
 <script>
-    import Bookmark from "./Bookmark";
+    import Bookmark from "../Bookmark";
     export default {
         name: "Sentence",
         components: {Bookmark},
@@ -59,7 +59,7 @@
 </script>
 
 <style scoped lang="scss">
-    @import '../../node_modules/vue-material/dist/theme/engine';
+    @import '../../../node_modules/vue-material/dist/theme/engine';
 
     .md-layout {
         margin: 15px 30px;

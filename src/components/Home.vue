@@ -45,10 +45,10 @@
 <script>
     import axios from 'axios';
     import Search from "./Search";
-    import All from "./All";
-    import Word from "./Word";
-    import Kanji from "./Kanji";
-    import Sentence from "./Sentence";
+    import All from "./cards/All";
+    import Word from "./cards/Word";
+    import Kanji from "./cards/Kanji";
+    import Sentence from "./cards/Sentence";
 
     export default {
         name: "Home",
@@ -69,20 +69,23 @@
         }),
 
         methods: {
-            search(settings) {
+            async search(settings) {
                 this.isSearching = true;
                 this.data = [];
                 this.settings = JSON.parse(JSON.stringify(settings));
 
-                axios.get(this.$hostname + '/' + settings.type + '?query=' + encodeURIComponent(settings.query))
-                    .then(response => {
-                        this.data = response.data;
-                        this.isSearching = false;
-                    })
-                    .catch(e => {
-                        this.isSearching = false;
-                        alert(e.message);
-                    });
+                if (settings.query !== '')
+                    await axios.get(this.$hostname + '/' + settings.type + '?query=' + encodeURIComponent(settings.query))
+                        .then(response => {
+                            this.data = response.data;
+                        })
+                        .catch(e => {
+                            alert(e.message);
+                        });
+                else
+                    this.data = [];
+
+                this.isSearching = false;
             }
         }
     }

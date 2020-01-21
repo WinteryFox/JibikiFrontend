@@ -60,7 +60,7 @@
 </template>
 
 <style scoped lang="scss">
-    @import '../../node_modules/vue-material/dist/theme/engine';
+    @import '../../../node_modules/vue-material/dist/theme/engine';
 
     .md-layout {
         margin: 15px 30px;
@@ -110,7 +110,7 @@
 </style>
 
 <script>
-    import Bookmark from "./Bookmark";
+    import Bookmark from "../Bookmark";
     export default {
         name: "Word",
         components: {Bookmark},
