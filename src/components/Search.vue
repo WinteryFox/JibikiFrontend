@@ -110,8 +110,12 @@
 
             emit() {
                 if (this.settings.query === undefined
-                    || this.settings.type === undefined)
+                    || this.settings.type === undefined
+                    || this.settings.query === ''
+                    || this.settings.type === '')
                     return;
+
+                console.log(this.settings.query);
 
                 this.settings.query = this.$route.query.query;
                 this.settings.type = this.$route.query.type;
