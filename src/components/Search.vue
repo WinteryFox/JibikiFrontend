@@ -111,6 +111,9 @@
             emit() {
                 if (this.$route.query.query !== undefined)
                     this.settings.query = this.$route.query.query;
+                else
+                    this.settings.query = '';
+
                 if (this.$route.query.type !== undefined)
                     this.settings.type = this.$route.query.type;
 
