@@ -11,6 +11,12 @@
                 <md-icon v-else>
                     expand_more
                 </md-icon>
+                <md-tooltip v-if="isExtended">
+                    Collapse all translations
+                </md-tooltip>
+                <md-tooltip v-else>
+                    Expand all translations
+                </md-tooltip>
             </md-button>
 
             <div v-if="settings.type === 'all'">
@@ -94,7 +100,7 @@
 <style scoped lang="scss">
     .md-icon-button {
         position: absolute;
-        right: calc(5% - 25px);
+        right: calc(5% - 20px);
         top: 90px;
     }
 

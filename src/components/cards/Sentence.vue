@@ -30,6 +30,25 @@
                         expand_less
                     </md-icon>
                 </md-button>
+
+                <md-button v-if="hasAudio" class="md-icon-button" @click="playAudio(sentence.audio_uri)">
+                    <md-icon>
+                        volume_up
+                    </md-icon>
+                    <md-tooltip>
+                        Play audio
+                    </md-tooltip>
+                </md-button>
+                <div v-else>
+                    <md-button class="md-icon-button" disabled>
+                        <md-icon>
+                            volume_off
+                        </md-icon>
+                    </md-button>
+                    <md-tooltip>
+                        This sentence has no audio
+                    </md-tooltip>
+                </div>
             </div>
         </div>
     </md-content>
@@ -37,6 +56,7 @@
 
 <script>
     import Bookmark from "../Bookmark";
+
     export default {
         name: "Sentence",
         components: {Bookmark},
@@ -50,9 +70,19 @@
         data: () => ({
             isExtendedLocally: true
         }),
+        methods: {
+            playAudio(uri) {
+                new Audio(uri).play();
+            }
+        },
         watch: {
             isExtended(to) {
                 this.isExtendedLocally = to;
+            }
+        },
+        computed: {
+            hasAudio() {
+                return this.sentence.audio_uri !== null
             }
         }
     }
@@ -84,6 +114,7 @@
         }
 
         .md-icon-button {
+            margin: auto auto;
             z-index: 1;
         }
 
