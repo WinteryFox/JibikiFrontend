@@ -1,6 +1,6 @@
 <template>
     <div v-if="this.$store.getters.getUser === null">
-        <md-button class="md-icon-button" to="" @click="bookmark" disabled>
+        <md-button class="md-icon-button md-dense" to="" @click="bookmark" disabled>
             <md-icon v-if="!isBookmarked">
                 star_border
             </md-icon>
@@ -9,7 +9,7 @@
             Please log in to use the bookmark feature
         </md-tooltip>
     </div>
-    <md-button v-else class="md-icon-button" to="" @click="bookmark">
+    <md-button v-else class="md-icon-button md-dense" to="" @click="bookmark">
         <md-icon v-if="isBookmarked">
             star
         </md-icon>
@@ -64,6 +64,14 @@
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+    div {
+        max-width: 40px;
+        display: inline-flex;
+        float: right;
+    }
 
+    button {
+        margin: 0;
+    }
 </style>
