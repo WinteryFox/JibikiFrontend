@@ -1,7 +1,7 @@
 <template>
     <md-content class="md-elevation-3">
         <div class="md-layout">
-            <div class="md-layout-item md-size-90">
+            <div class="md-layout-item">
                 <div class="source">
                     <SentencePart :sentence="sentence"/>
                 </div>
@@ -11,8 +11,8 @@
                 </div>
             </div>
 
-            <div class="md-layout-item md-size-5">
-                <md-button class="md-icon-button" @click="isExtendedLocally = !isExtendedLocally">
+            <div id="buttons" class="md-layout-item">
+                <md-button class="md-icon-button md-dense" @click="isExtendedLocally = !isExtendedLocally">
                     <md-tooltip v-if="!isExtendedLocally">
                         Show translation
                     </md-tooltip>
@@ -70,24 +70,22 @@
             padding: 10px 0 !important;
         }
 
-        .source {
-            font-size: 20px;
-            margin-top: 10px;
-        }
-
         @media screen and (max-width: 768px) {
             .source {
                 padding-top: 10px;
             }
-
-            .md-icon-button {
-                margin: 2px auto !important;
-            }
         }
 
-        .md-icon-button {
-            margin: auto auto;
-            z-index: 1;
+        #buttons {
+            width: 32px;
+            max-width: 32px;
+            height: 32px;
+            max-height: 32px;
+            margin-top: 1px;
+
+            button {
+                margin: 0;
+            }
         }
 
         .md-divider {

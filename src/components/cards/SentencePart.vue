@@ -57,7 +57,11 @@
     #sentence {
         display: inline-flex;
         margin: 0;
-        max-width: calc(100% - 80px)
+        font-size: 20px;
+        height: 20px;
+        max-height: 20px;
+        width: calc(100% - 64px);
+        max-width: calc(100% - 64px);
     }
 
     button {
@@ -66,11 +70,10 @@
 
     #buttons {
         display: inline-flex;
-        height: 40px;
-        max-height: 40px;
-        width: 80px;
-        max-width: 80px;
-        float: right;
+        height: 32px;
+        max-height: 32px;
+        width: 64px;
+        max-width: 64px;
     }
 
     #audio-disabled {
