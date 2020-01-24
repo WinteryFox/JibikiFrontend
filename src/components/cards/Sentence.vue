@@ -3,16 +3,12 @@
         <div class="md-layout">
             <div class="md-layout-item md-size-90">
                 <div class="source">
-                    {{sentence.sentence}}
+                    <SentencePart :sentence="sentence"/>
                 </div>
                 <div class="translation" v-for="translation in sentence.translations" v-if="isExtendedLocally">
                     <md-divider/>
-                    {{translation.sentence}}
+                    <SentencePart :sentence="translation"/>
                 </div>
-            </div>
-
-            <div class="md-layout-item md-size-5">
-                <Bookmark :type="2" :id="sentence.id"/>
             </div>
 
             <div class="md-layout-item md-size-5">
@@ -30,25 +26,6 @@
                         expand_less
                     </md-icon>
                 </md-button>
-
-                <md-button v-if="hasAudio" class="md-icon-button" @click="playAudio(sentence.audio_uri)">
-                    <md-icon>
-                        volume_up
-                    </md-icon>
-                    <md-tooltip>
-                        Play audio
-                    </md-tooltip>
-                </md-button>
-                <div v-else>
-                    <md-button class="md-icon-button" disabled>
-                        <md-icon>
-                            volume_off
-                        </md-icon>
-                    </md-button>
-                    <md-tooltip>
-                        This sentence has no audio
-                    </md-tooltip>
-                </div>
             </div>
         </div>
     </md-content>
@@ -56,10 +33,13 @@
 
 <script>
     import Bookmark from "../Bookmark";
+    import SentencePart from "./SentencePart";
 
     export default {
         name: "Sentence",
-        components: {Bookmark},
+
+        components: {SentencePart, Bookmark},
+
         props: {
             sentence: Object,
             isExtended: {
@@ -67,24 +47,16 @@
                 default: true
             }
         },
+
         data: () => ({
             isExtendedLocally: true
         }),
-        methods: {
-            playAudio(uri) {
-                new Audio(uri).play();
-            }
-        },
+
         watch: {
             isExtended(to) {
                 this.isExtendedLocally = to;
             }
         },
-        computed: {
-            hasAudio() {
-                return this.sentence.audio_uri !== null
-            }
-        }
     }
 </script>
 
