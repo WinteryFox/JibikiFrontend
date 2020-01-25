@@ -3,46 +3,80 @@
         <md-content class="bar">
             <label>
                 <md-icon>search</md-icon>
+
                 <md-field class="type">
-                    <md-select @md-selected="search" id="type" name="type" v-model="settings.type">
+                    <md-select @md-selected="search" id="type" name="type" v-model="settings.api.type">
                         <md-option value="all">All</md-option>
                         <md-option value="words">Words</md-option>
                         <md-option value="kanji">Kanji</md-option>
                         <md-option value="sentences">Sentences</md-option>
                     </md-select>
                 </md-field>
+
                 <input
                         class="searchbar"
                         accept="text/plain"
-                        v-model="settings.query"
+                        v-model="settings.api.query"
                         :placeholder="label"
                         @input="search"
                         autofocus/>
+
                 <md-button class="md-icon-button clear" @click="clear">
                     <md-icon>clear</md-icon>
+                    <md-tooltip>
+                        Clear search area
+                    </md-tooltip>
                 </md-button>
+
                 <md-button @click="filtersExtended = !filtersExtended" class="md-icon-button filters">
-                    <md-icon>filter_list</md-icon>
+                    <md-icon v-if="filtersExtended">
+                        menu_open
+                    </md-icon>
+                    <md-icon v-else>
+                        menu
+                    </md-icon>
+                    <md-tooltip v-if="filtersExtended">
+                        Hide filters
+                    </md-tooltip>
+                    <md-tooltip v-else>
+                        Show filters
+                    </md-tooltip>
                 </md-button>
             </label>
-            <div v-if="filtersExtended">
-                <slot name="filters"/>
+
+            <div id="filters" v-if="filtersExtended">
+                <md-divider/>
+                <p id="filters-header">Filters</p>
+
+                <div v-if="settings.api.type === 'words' || settings.api.type === 'all'">
+                    All/Word filters are not supported yet
+                </div>
+
+                <div v-else-if="settings.api.type === 'kanji'">
+                    Kanji filters coming soon lol
+                </div>
+
+                <div v-else-if="settings.api.type === 'sentences'">
+                    <SentenceFilters @filtersUpdate="updateFilters"/>
+                </div>
             </div>
         </md-content>
+
         <div>
             <md-empty-state
                     md-description="Start typing above to search for anything and everything you want!"
                     md-icon="search"
                     md-label="Time to start searching!"
-                    v-if="settings.query === '' && !isTyping"/>
+                    v-if="settings.api.query === '' && !isTyping"/>
             <md-empty-state
                     md-description="Maybe try searching for something else?"
                     md-icon="clear"
                     md-label="No results!"
-                    v-if="settings.query !== '' && !hasResults && !isTyping && !isSearching"/>
+                    v-if="settings.api.query !== '' && !hasResults && !isTyping && !isSearching"/>
             <md-progress-spinner
                     md-mode="indeterminate"
                     v-if="isSearching"/>
+
             <div class="content">
                 <slot/>
             </div>
@@ -52,10 +86,11 @@
 
 <script>
     import debounce from "lodash.debounce";
+    import SentenceFilters from "./SentenceFilters";
 
     export default {
         name: "Search",
-
+        components: {SentenceFilters},
         props: {
             label: {
                 type: String,
@@ -75,8 +110,11 @@
             isTyping: false,
             filtersExtended: false,
             settings: {
-                query: "",
-                type: "words"
+                api: {
+                    query: "",
+                    type: "words"
+                },
+                filters: {}
             }
         }),
 
@@ -92,10 +130,10 @@
             },
 
             typing: debounce(function () {
-                if (this.settings.query !== '')
+                if (this.settings.api.query !== '')
                     this.$router.push({
                         name: this.$router.currentRoute.name,
-                        query: this.settings
+                        query: this.settings.api
                     });
                 else
                     this.$router.push('/').catch(() => {
@@ -110,14 +148,19 @@
 
             emit() {
                 if (this.$route.query.query !== undefined)
-                    this.settings.query = this.$route.query.query;
+                    this.settings.api.query = this.$route.query.query;
                 else
-                    this.settings.query = '';
+                    this.settings.api.query = '';
 
                 if (this.$route.query.type !== undefined)
-                    this.settings.type = this.$route.query.type;
+                    this.settings.api.type = this.$route.query.type;
 
                 this.$emit("search", this.settings);
+            },
+
+            updateFilters(updated) {
+                this.settings.filters = updated;
+                this.emit();
             }
         },
 
@@ -172,9 +215,19 @@
             right: -6px;
         }
 
-        .filters {
-            position: absolute;
-            right: 34px;
+        #filters {
+            margin: 0 5px 5px 5px;
+            padding: 0 10px 10px 10px;
+            border-radius: 25px;
+
+            .md-divider {
+                margin-bottom: 10px;
+            }
+
+            #filters-header {
+                margin: 0 0 10px 0;
+                text-align: center;
+            }
         }
 
         .type {

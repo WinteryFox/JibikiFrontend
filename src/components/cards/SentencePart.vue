@@ -58,8 +58,6 @@
         display: inline-flex;
         margin: 0;
         font-size: 20px;
-        height: 20px;
-        max-height: 20px;
         width: calc(100% - 64px);
         max-width: calc(100% - 64px);
     }
