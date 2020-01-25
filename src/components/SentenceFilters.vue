@@ -1,19 +1,14 @@
 <template>
     <div>
-        <md-field>
-            <label>Language</label>
-
-            <md-select v-model="filters.source" name="language" id="language">
-                <md-option value="eng">
-                    English (英語)
-                </md-option>
-                <md-option value="jpn">
-                    Japanese (日本語)
-                </md-option>
-            </md-select>
-
-            <MultiSlider/>
-        </md-field>
+        <md-button @click="toggleSource">
+            <md-icon v-if="filters.source === 'eng'" class="flag" md-src="/flags/eng.svg"/>
+            <md-icon v-else class="flag" md-src="/flags/jpn.svg"/>
+            <md-icon class="flag">
+                swap_horizontal
+            </md-icon>
+            <md-icon v-if="filters.source === 'eng'" class="flag" md-src="/flags/jpn.svg"/>
+            <md-icon v-else class="flag" md-src="/flags/eng.svg"/>
+        </md-button>
     </div>
 </template>
 
@@ -28,6 +23,15 @@
             }
         }),
 
+        methods: {
+            toggleSource() {
+                if (this.filters.source === 'eng')
+                    this.filters.source = 'jpn';
+                else
+                    this.filters.source = 'eng';
+            }
+        },
+
         watch: {
             filters: {
                 handler() {
@@ -40,5 +44,9 @@
 </script>
 
 <style scoped>
-
+    .flag {
+        display: inline-block;
+        padding: 0;
+        margin: 0;
+    }
 </style>
