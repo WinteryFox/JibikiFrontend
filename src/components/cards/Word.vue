@@ -25,13 +25,25 @@
             <div class="md-layout-item md-size-60">
                 <div v-for="(sens, i) in word.senses">
                     <div class="chips">
+                        <md-chip class="jlpt" v-if="word.jlpt !== null">
+                            JLPT N{{word.jlpt}}
+                            <md-tooltip>
+                                The JLPT level this word is from, one of N5, N4, N3, N2 or N1
+                            </md-tooltip>
+                        </md-chip>
+
                         <md-chip class="md-primary" v-bind:key="pos.short" v-for="pos in sens.part_of_speech">
                             {{pos.short}}
-                            <md-tooltip>{{pos.long}}</md-tooltip>
+                            <md-tooltip>
+                                {{pos.long}}
+                            </md-tooltip>
                         </md-chip>
+
                         <md-chip class="md-accent" v-bind:key="fld.short" v-for="fld in sens.field_of_use">
                             {{fld.short}}
-                            <md-tooltip>{{fld.long}}</md-tooltip>
+                            <md-tooltip>
+                                {{fld.long}}
+                            </md-tooltip>
                         </md-chip>
                     </div>
 
@@ -105,6 +117,10 @@
         .kanji {
             font-size: 36px;
             line-height: normal;
+        }
+
+        .jlpt {
+            background-color: md-get-palette-color(pink, 500);
         }
     }
 </style>
