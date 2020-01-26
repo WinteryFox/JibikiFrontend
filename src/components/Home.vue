@@ -55,6 +55,7 @@
     import Word from "./cards/Word";
     import Kanji from "./cards/Kanji";
     import Sentence from "./cards/Sentence";
+    import querystring from 'querystring';
 
     export default {
         name: "Home",
@@ -78,10 +79,18 @@
             async search(settings) {
                 this.isSearching = true;
                 this.data = [];
-                this.settings = JSON.parse(JSON.stringify(settings));
+                this.settings = JSON.parse(JSON.stringify(settings.api));
 
-                if (settings.query !== '')
-                    await axios.get(this.$hostname + '/' + settings.type + '?query=' + encodeURIComponent(settings.query))
+                if (this.settings.query !== '')
+                    await axios.get(
+                        this.$hostname
+                        + '/'
+                        + this.settings.type
+                        + '?query='
+                        + encodeURIComponent(this.settings.query)
+                        + '&'
+                        + querystring.stringify(settings.filters)
+                    )
                         .then(response => {
                             this.data = response.data;
                         })

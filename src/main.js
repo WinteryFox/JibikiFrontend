@@ -76,7 +76,7 @@ const store = new Vuex.Store({
 
     actions: {
         getUser(store) {
-            axios.get(
+            return axios.get(
                 Vue.prototype.$hostname + '/users/@me',
                 {
                     withCredentials: true
@@ -89,7 +89,7 @@ const store = new Vuex.Store({
         },
 
         addBookmark(store, payload) {
-            axios.put(
+            return axios.put(
                 Vue.prototype.$hostname + '/users/bookmarks?type=' + encodeURIComponent(payload.type) + '&bookmark=' + encodeURIComponent(payload.bookmark),
                 '',
                 {
@@ -103,7 +103,7 @@ const store = new Vuex.Store({
         },
 
         removeBookmark(store, payload) {
-            axios.delete(
+            return axios.delete(
                 Vue.prototype.$hostname + '/users/bookmarks?type=' + encodeURIComponent(payload.type) + '&bookmark=' + encodeURIComponent(payload.bookmark),
                 {
                     withCredentials: true
@@ -116,7 +116,7 @@ const store = new Vuex.Store({
         },
 
         getToken(store, form) {
-            axios.post(
+            return axios.post(
                 Vue.prototype.$hostname + '/users/login',
                 qs.stringify(form),
                 {
@@ -133,7 +133,7 @@ const store = new Vuex.Store({
         },
 
         register(store, form) {
-            axios.post(
+            return axios.post(
                 Vue.prototype.$hostname + '/users/create',
                 qs.stringify(form),
                 {
@@ -157,6 +157,7 @@ const store = new Vuex.Store({
 });
 
 store.dispatch('getUser').then(() => {
+}).catch(() => {
 });
 
 if (store.getters.isDark)
