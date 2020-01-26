@@ -9,17 +9,30 @@
             <md-icon v-if="filters.source === 'eng'" class="flag" md-src="/flags/jpn.svg"/>
             <md-icon v-else class="flag" md-src="/flags/eng.svg"/>
         </md-button>
+
+        <md-field>
+            <label>Minimum amount of characters</label>
+            <md-input v-model="filters.minLength"/>
+            <span class="md-suffix"> characters</span>
+        </md-field>
+
+        <md-field>
+            <label>Maximum amount of characters</label>
+            <md-input v-model="filters.maxLength"/>
+            <span class="md-suffix"> characters</span>
+        </md-field>
     </div>
 </template>
 
 <script>
-    import MultiSlider from "../MultiSlider";
     export default {
         name: "SentenceFilters",
-        components: {MultiSlider},
+
         data: () => ({
             filters: {
-                source: 'eng'
+                source: 'eng',
+                minLength: 0,
+                maxLength: 1000
             }
         }),
 

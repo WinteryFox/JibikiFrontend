@@ -236,16 +236,20 @@
                 this.showRegister = true;
             },
 
-            login() {
-                this.$store.dispatch('getToken', this.loginForm);
-                this.$store.dispatch('getUser');
-                this.showLogin = false;
-                this.showSnackbar = true;
+            async login() {
+                await this.$store.dispatch('getToken', this.loginForm);
+                this.$store.dispatch('getUser')
+                    .then(() => {
+                        this.showLogin = false;
+                        this.showSnackbar = true;
+                    });
             },
 
             register() {
-                this.$store.dispatch('register', this.registerForm);
-                this.showRegister = false;
+                this.$store.dispatch('register', this.registerForm)
+                .then(() => {
+                    this.showRegister = false;
+                });
             }
         },
 

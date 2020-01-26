@@ -86,7 +86,7 @@
 
 <script>
     import debounce from "lodash.debounce";
-    import SentenceFilters from "./SentenceFilters";
+    import SentenceFilters from "./filters/SentenceFilters";
 
     export default {
         name: "Search",
