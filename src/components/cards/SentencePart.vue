@@ -1,5 +1,11 @@
 <template>
     <div>
+        <div class="chips">
+            <md-chip class="md-primary" :key="tag" v-for="tag in sentence.tags">
+                {{tag}}
+            </md-chip>
+        </div>
+
         <p id="sentence">{{sentence.sentence}}</p>
 
         <div id="buttons">
@@ -76,5 +82,9 @@
 
     #audio-disabled {
         display: inline-flex;
+    }
+
+    .chips {
+        margin-bottom: 0.3em;
     }
 </style>
